@@ -6,7 +6,8 @@
         "lint": "eslint . --fix"
     },
     "workspaces": [
-        "server"
+        "server",
+        "ui"
     ],
     "lint-staged": {
         "*.{js,jsx,tsx,ts}": [

@@ -1,0 +1,22 @@
+{
+    "name": "ui",
+    "scripts": {
+        "build": "rollup --config"
+    },
+    "dependencies": {
+        "@fluentui/react-components": "^9.30.4",
+        "@fluentui/react-icons": "^2.0.214",
+        "normalize.css": "^8.0.1",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "react-router-dom": "^6.15.0",
+        "zustand": "^4.4.1"
+    },
+    "devDependencies": {
+        "@types/react": "^18.2.21",
+        "@types/react-dom": "^18.2.7",
+        "rollup-plugin-copy": "^3.5.0",
+        "rollup-plugin-postcss": "^4.0.2"
+    },
+    "type": "module"
+}
