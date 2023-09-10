@@ -1,0 +1,16 @@
+{
+    "name": "server",
+    "scripts": {
+        "build": "rollup -c",
+        "dev": "node ../dist/server.js"
+    },
+    "dependencies": {
+        "koa": "^2.14.2",
+        "koa-static": "^5.0.0"
+    },
+    "devDependencies": {
+        "@types/koa": "^2.13.8",
+        "@types/koa-static": "^4.0.2"
+    },
+    "type": "module"
+}

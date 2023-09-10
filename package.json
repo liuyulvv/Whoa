@@ -1,11 +1,16 @@
 {
     "name": "whoa",
     "scripts": {
+        "build": "pnpm -r build",
+        "dev": "pnpm --filter ./server dev",
         "lint": "eslint . --fix"
     },
+    "workspaces": [
+        "server"
+    ],
     "lint-staged": {
         "*.{js,jsx,tsx,ts}": [
-            "npm run lint"
+            "pnpm lint"
         ]
     },
     "devDependencies": {
