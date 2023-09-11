@@ -13,7 +13,8 @@ const useStyles = makeStyles({
         height: '64px',
         display: 'flex',
         alignItems: 'center',
-        backgroundColor: 'rgb(246,248,250)'
+        backgroundColor: 'rgb(246,248,250)',
+        zIndex: '1000'
     },
     mainContainer: {
         display: 'flex',

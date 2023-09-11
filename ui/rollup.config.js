@@ -15,7 +15,7 @@ const GLOBAL = `const process = {
 export default {
     input: 'src/main.tsx',
     output: {
-        file: '../dist/script/bundle.js',
+        file: '../dist/script/Bundle.js',
         format: 'es',
         sourcemap: true,
         banner: GLOBAL
@@ -33,6 +33,8 @@ export default {
     ],
     onwarn(warning, warn) {
         if (warning.code === 'EVAL') return;
+        if (warning.plugin === 'typescript' && warning.pluginCode === 'TS2339') return;
+        if (warning.code === 'CIRCULAR_DEPENDENCY') return;
         warn(warning);
     }
 };

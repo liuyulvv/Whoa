@@ -1,4 +1,5 @@
 import { makeStyles } from '@fluentui/react-components';
+import { useEffect, useRef } from 'react';
 
 const useStyles = makeStyles({
     main: {
@@ -22,10 +23,30 @@ const useStyles = makeStyles({
 
 export default () => {
     const styles = useStyles();
+    const mainContainer = useRef<HTMLDivElement>(null);
+    const mainCanvas = useRef<HTMLCanvasElement>(null);
+
+    const resize = () => {
+        window.WhoaCanvas.width = window.WhoaCanvasContainer.clientWidth;
+        window.WhoaCanvas.height = window.WhoaCanvasContainer.clientHeight;
+        window.WhoaEvent.pub('WHOA_WINDOW_RESIZE');
+    };
+
+    useEffect(() => {
+        const { current: container } = mainContainer;
+        const { current: canvas } = mainCanvas;
+        if (!window || !container || !canvas) return;
+        window.WhoaCanvas = canvas;
+        window.WhoaCanvasContainer = container;
+        window.addEventListener('resize', resize);
+        return () => {
+            window.removeEventListener('resize', resize);
+        };
+    });
 
     return (
-        <div className={styles.main}>
-            <canvas className={styles.canvas} id="main_canvas" />;
+        <div ref={mainContainer} className={styles.main}>
+            <canvas ref={mainCanvas} className={styles.canvas} id="main_canvas" />;
         </div>
     );
 };

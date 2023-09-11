@@ -8,7 +8,7 @@ import { createLeftMenuStore } from './store';
 const useStyles = makeStyles({
     aside: {
         position: 'relative',
-        zIndex: '2',
+        zIndex: '1000',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
