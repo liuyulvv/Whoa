@@ -7,7 +7,10 @@
     },
     "workspaces": [
         "server",
-        "ui"
+        "ui",
+        "event",
+        "babylon",
+        "entry"
     ],
     "lint-staged": {
         "*.{js,jsx,tsx,ts}": [

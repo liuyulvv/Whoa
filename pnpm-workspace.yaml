@@ -1,3 +1,6 @@
 packages:
     - 'server'
     - 'ui'
+    - 'event'
+    - 'babylon'
+    - 'entry'
