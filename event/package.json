@@ -1,0 +1,7 @@
+{
+    "name": "event",
+    "scripts": {
+        "build": "rollup --config"
+    },
+    "type": "module"
+}
