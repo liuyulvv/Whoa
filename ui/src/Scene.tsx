@@ -39,6 +39,7 @@ export default () => {
         window.WhoaCanvas = canvas;
         window.WhoaCanvasContainer = container;
         window.addEventListener('resize', resize);
+        resize();
         return () => {
             window.removeEventListener('resize', resize);
         };
