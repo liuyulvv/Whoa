@@ -1,0 +1,15 @@
+import resolve from '@rollup/plugin-node-resolve';
+import terser from '@rollup/plugin-terser';
+import typescript from '@rollup/plugin-typescript';
+
+export default [
+    {
+        input: 'src/WhoaEvent.ts',
+        output: {
+            file: '../dist/script/event.js',
+            format: 'es',
+            sourcemap: true
+        },
+        plugins: [resolve(), terser(), typescript({ module: 'ESNext' })]
+    }
+];
