@@ -1,5 +1,11 @@
-const modules = ['./Event.js', './Bundle.js', './Babylon.js'];
+const modules = ['./event.js', './bundle.js', './babylon.js', './interaction.js'];
 
-modules.forEach(async (module) => {
-    await import(module);
-});
+async function load() {
+    for (const module of modules) {
+        await import(module);
+    }
+}
+
+await load();
+
+export {};
