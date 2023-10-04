@@ -1,4 +1,4 @@
-const modules = ['./WhoaEvent.js', './Bundle.js', './Babylon.js'];
+const modules = ['./WhoaEvent.js', './WhoaUI.js', './Babylon.js'];
 
 modules.forEach(async (module) => {
     await import(module);

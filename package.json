@@ -7,8 +7,8 @@
     },
     "workspaces": [
         "server",
-        "ui",
         "WhoaEvent",
+        "WhoaUI",
         "babylon",
         "entry"
     ],
