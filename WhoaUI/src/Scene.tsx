@@ -27,8 +27,8 @@ export default () => {
     const mainCanvas = useRef<HTMLCanvasElement>(null);
 
     const resize = () => {
-        WhoaCanvas.width = WhoaCanvasContainer.clientWidth;
-        WhoaCanvas.height = WhoaCanvasContainer.clientHeight;
+        window.WhoaCanvas.width = window.WhoaCanvasContainer.clientWidth;
+        window.WhoaCanvas.height = window.WhoaCanvasContainer.clientHeight;
         WhoaEvent.pub('WHOA_WINDOW_RESIZE');
     };
 

@@ -6,7 +6,7 @@ export default [
     {
         input: 'src/index.ts',
         output: {
-            file: '../dist/script/WhoaEvent.js',
+            file: '../dist/script/WhoaFramework.js',
             format: 'es',
             sourcemap: true
         },

@@ -1,4 +1,4 @@
-export class WhoaEvent {
+class WhoaEvent {
     private static instance: WhoaEvent;
     private subscribers: { [key: string]: Array<() => void> };
 
@@ -38,4 +38,4 @@ export class WhoaEvent {
     }
 }
 
-window.WhoaEvent = WhoaEvent.get();
+export default WhoaEvent;

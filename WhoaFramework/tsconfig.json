@@ -2,8 +2,8 @@
     "compilerOptions": {
         "target": "ESNext",
         "module": "ESNext",
-        "outDir": "../dist",
-        "rootDir": "./src",
+        "outDir": ".",
+        "rootDir": "..",
         "baseUrl": ".",
         "allowJs": false,
         "skipLibCheck": true,

@@ -1,6 +1,7 @@
 packages:
     - 'server'
-    - 'ui'
-    - 'event'
-    - 'babylon'
+    - 'WhoaEvent'
+    - 'WhoaFramework'
+    - 'WhoaUI'
+    - 'Whoa3D'
     - 'entry'

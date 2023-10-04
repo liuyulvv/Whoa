@@ -15,7 +15,7 @@ const GLOBAL = `const process = {
 export default {
     input: 'src/main.tsx',
     output: {
-        file: '../dist/script/bundle.js',
+        file: '../dist/script/WhoaUI.js',
         format: 'es',
         sourcemap: true,
         banner: GLOBAL
@@ -30,10 +30,5 @@ export default {
         copy({
             targets: [{ src: 'public/index.html', dest: '../dist/' }]
         })
-    ],
-    onwarn(warning, warn) {
-        if (warning.code === 'EVAL') return;
-        if (warning.code === 'CIRCULAR_DEPENDENCY') return;
-        warn(warning);
-    }
+    ]
 };
