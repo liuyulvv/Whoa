@@ -1,5 +1,5 @@
-class Event {
-    private static instance: Event;
+class WhoaEvent {
+    private static instance: WhoaEvent;
     private subscribers: { [key: string]: Array<() => void> };
 
     private constructor() {
@@ -7,10 +7,10 @@ class Event {
     }
 
     public static get() {
-        if (!Event.instance) {
-            Event.instance = new Event();
+        if (!WhoaEvent.instance) {
+            WhoaEvent.instance = new WhoaEvent();
         }
-        return Event.instance;
+        return WhoaEvent.instance;
     }
 
     public sub(key: string, callback: () => void) {
@@ -38,4 +38,4 @@ class Event {
     }
 }
 
-export default Event;
+export default WhoaEvent;

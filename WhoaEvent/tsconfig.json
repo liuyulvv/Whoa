@@ -3,7 +3,7 @@
         "target": "ESNext",
         "module": "ESNext",
         "outDir": ".",
-        "rootDir": "./src",
+        "rootDir": "..",
         "baseUrl": ".",
         "allowJs": false,
         "skipLibCheck": true,

@@ -1,6 +1,6 @@
 packages:
     - 'server'
     - 'ui'
-    - 'event'
+    - 'WhoaEvent'
     - 'babylon'
     - 'entry'
