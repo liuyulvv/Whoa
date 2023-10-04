@@ -8,8 +8,9 @@
     "workspaces": [
         "server",
         "WhoaEvent",
+        "WhoaFramework",
         "WhoaUI",
-        "babylon",
+        "Whoa3D",
         "entry"
     ],
     "lint-staged": {
