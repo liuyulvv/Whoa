@@ -9,10 +9,5 @@ export default {
         format: 'es',
         sourcemap: true
     },
-    plugins: [resolve(), terser(), typescript({ module: 'ESNext' })],
-    onwarn(warning, warn) {
-        if (warning.code === 'EVAL') return;
-        if (warning.plugin === 'typescript' && warning.pluginCode === 'TS2339') return;
-        warn(warning);
-    }
+    plugins: [resolve(), terser(), typescript({ module: 'ESNext' })]
 };
