@@ -4,4 +4,6 @@ packages:
     - 'WhoaFramework'
     - 'WhoaUI'
     - 'Whoa3D'
+    - 'WhoaGeometry'
+    - 'WhoaInteraction'
     - 'entry'

@@ -1,0 +1,7 @@
+{
+    "name": "geometry",
+    "scripts": {
+        "build": "rollup --config"
+    },
+    "type": "module"
+}

@@ -1,0 +1,7 @@
+{
+    "name": "interaction",
+    "scripts": {
+        "build": "rollup --config"
+    },
+    "type": "module"
+}
