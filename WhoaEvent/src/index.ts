@@ -1,3 +1,3 @@
-import Event from './WhoaEvent';
+import Event from './Event';
 
 window.WhoaEvent = Event.get();
