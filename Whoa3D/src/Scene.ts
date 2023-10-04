@@ -19,7 +19,7 @@ class Scene {
     private cameraMode: CameraMode;
 
     private constructor() {
-        this.canvas = <HTMLCanvasElement>document.getElementById('main_canvas');
+        this.canvas = WhoaCanvas;
         this.engine = new BabylonEngine(this.canvas);
         this.scene = new BabylonScene(this.engine);
         this.scene.clearColor = new Color4(1.0, 1.0, 1.0, 1.0);
@@ -32,10 +32,11 @@ class Scene {
         this.engine.runRenderLoop(() => {
             this.scene.render();
         });
-        window.WhoaEvent.sub('WHOA_WINDOW_RESIZE', () => {
+        WhoaEvent.sub('WHOA_WINDOW_RESIZE', () => {
             this.resize();
         });
         this.resize();
+        window.WhoaScene = this;
     }
 
     public static get(): Scene {
@@ -61,14 +62,14 @@ class Scene {
         this.camera2D.attachControl(this.engine.getRenderingCanvas(), true);
         this.scene.activeCamera = this.camera2D;
         this.cameraMode = CameraMode.MODE_2D;
-        window.WhoaEvent.pub('WHOA_CHANGE_TO_2D');
+        WhoaEvent.pub('WHOA_CHANGE_TO_2D');
     }
 
     public changeTo3D(): void {
         this.camera3D.attachControl(this.engine.getRenderingCanvas(), true);
         this.scene.activeCamera = this.camera3D;
         this.cameraMode = CameraMode.MODE_3D;
-        window.WhoaEvent.pub('WHOA_CHANGE_TO_3D');
+        WhoaEvent.pub('WHOA_CHANGE_TO_3D');
     }
 
     public getWorldPos(pos: Vector2): Vector3 {
@@ -85,7 +86,7 @@ class Scene {
 
     public getScreenPos(pos: Vector3): Vector2 {
         const res = new Vector2();
-        if (window.WhoaScene.getCameraMode() == CameraMode.MODE_2D) {
+        if (this.getCameraMode() == CameraMode.MODE_2D) {
             const project = Vector3.Project(
                 new Vector3(pos.x, pos.y, pos.z),
                 Matrix.Identity(),

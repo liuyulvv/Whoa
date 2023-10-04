@@ -1,5 +1,5 @@
 enum CameraMode {
-    MODE_2D = 0,
+    MODE_2D,
     MODE_3D
 }
 
