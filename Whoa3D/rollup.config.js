@@ -5,7 +5,7 @@ import typescript from '@rollup/plugin-typescript';
 export default {
     input: 'src/index.ts',
     output: {
-        file: '../dist/script/Babylon.js',
+        file: '../dist/script/Whoa3D.js',
         format: 'es',
         sourcemap: true
     },
