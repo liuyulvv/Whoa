@@ -28,6 +28,7 @@ module.exports = {
     plugins: ['@typescript-eslint', 'prettier'],
     rules: {
         'prettier/prettier': 'error',
+        '@typescript-eslint/triple-slash-reference': 'off',
         camelcase: [
             'error',
             {
