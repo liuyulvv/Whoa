@@ -1,10 +1,9 @@
+import Interaction from './Interaction';
 import { MouseButton } from './Mouse';
-import WhoaInteraction from './WhoaInteraction';
 
-window.WhoaInteraction = WhoaInteraction.get();
+window.WhoaInteraction = Interaction.get();
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 (<any>window).Whoa.WhoaInteraction = {
-    MouseButton: MouseButton,
-    WhoaInteraction: WhoaInteraction
+    MouseButton: MouseButton
 };

@@ -1,8 +1,8 @@
 import Keyboard from './Keyboard';
 import Mouse from './Mouse';
 
-class WhoaInteraction {
-    private static instance: WhoaInteraction;
+class Interaction {
+    private static instance: Interaction;
     private mouse: Mouse;
     private keyboard: Keyboard;
 
@@ -11,11 +11,11 @@ class WhoaInteraction {
         this.keyboard = Keyboard.get();
     }
 
-    public static get(): WhoaInteraction {
-        if (!WhoaInteraction.instance) {
-            WhoaInteraction.instance = new WhoaInteraction();
+    public static get(): Interaction {
+        if (!Interaction.instance) {
+            Interaction.instance = new Interaction();
         }
-        return WhoaInteraction.instance;
+        return Interaction.instance;
     }
 
     public isLeftPressed(): boolean {
@@ -31,4 +31,4 @@ class WhoaInteraction {
     }
 }
 
-export default WhoaInteraction;
+export default Interaction;
