@@ -4,7 +4,6 @@ import {
     Scene as BabylonScene,
     Color4,
     Matrix,
-    Vector2,
     Vector3
 } from '@babylonjs/core';
 import CameraMode from './CameraMode';
@@ -72,23 +71,24 @@ class Scene {
         WhoaEvent.pub('WHOA_CHANGE_TO_3D');
     }
 
-    public getWorldPos(pos: Vector2): Vector3 {
-        const res = Vector3.Unproject(
-            new Vector3(pos.x, pos.y, 0),
+    public getWorldPos(point: Whoa.WhoaGeometry.Point2D): Whoa.WhoaGeometry.Point3D {
+        const unproject = Vector3.Unproject(
+            new Vector3(point.x, point.y, 0),
             this.engine.getRenderWidth(),
             this.engine.getRenderHeight(),
             Matrix.Identity(),
             this.scene.getViewMatrix(),
             this.scene.getProjectionMatrix()
         );
+        const res = new Whoa.WhoaGeometry.Point3D(unproject.x, unproject.y, unproject.z);
         return res;
     }
 
-    public getScreenPos(pos: Vector3): Vector2 {
-        const res = new Vector2();
+    public getScreenPos(point: Whoa.WhoaGeometry.Point3D): Whoa.WhoaGeometry.Point2D {
+        const res = new Whoa.WhoaGeometry.Point2D();
         if (this.getCameraMode() == CameraMode.MODE_2D) {
             const project = Vector3.Project(
-                new Vector3(pos.x, pos.y, pos.z),
+                new Vector3(point.x, point.y, point.z),
                 Matrix.Identity(),
                 this.scene.getTransformMatrix(),
                 this.camera2D.viewport.toGlobal(this.engine.getRenderWidth(), this.engine.getRenderHeight())
@@ -97,7 +97,7 @@ class Scene {
             res.y = project.y;
         } else {
             const project = Vector3.Project(
-                new Vector3(pos.x, pos.y, pos.z),
+                new Vector3(point.x, point.y, point.z),
                 Matrix.Identity(),
                 this.scene.getTransformMatrix(),
                 this.camera3D.viewport.toGlobal(this.engine.getRenderWidth(), this.engine.getRenderHeight())
