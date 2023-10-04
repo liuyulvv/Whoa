@@ -60,36 +60,9 @@ importers:
         specifier: ^5.2.2
         version: 5.2.2
 
-  babylon:
-    dependencies:
-      '@babylonjs/core':
-        specifier: ^6.20.1
-        version: 6.20.1
-      '@babylonjs/materials':
-        specifier: ^6.20.1
-        version: 6.20.1(@babylonjs/core@6.20.1)
+  WhoaEvent: {}
 
-  entry: {}
-
-  event: {}
-
-  server:
-    dependencies:
-      koa:
-        specifier: ^2.14.2
-        version: 2.14.2
-      koa-static:
-        specifier: ^5.0.0
-        version: 5.0.0
-    devDependencies:
-      '@types/koa':
-        specifier: ^2.13.8
-        version: 2.13.8
-      '@types/koa-static':
-        specifier: ^4.0.2
-        version: 4.0.2
-
-  ui:
+  WhoaUI:
     dependencies:
       '@fluentui/react-components':
         specifier: ^9.30.4
@@ -125,6 +98,33 @@ importers:
       rollup-plugin-postcss:
         specifier: ^4.0.2
         version: 4.0.2(postcss@8.4.29)
+
+  babylon:
+    dependencies:
+      '@babylonjs/core':
+        specifier: ^6.20.1
+        version: 6.20.1
+      '@babylonjs/materials':
+        specifier: ^6.20.1
+        version: 6.20.1(@babylonjs/core@6.20.1)
+
+  entry: {}
+
+  server:
+    dependencies:
+      koa:
+        specifier: ^2.14.2
+        version: 2.14.2
+      koa-static:
+        specifier: ^5.0.0
+        version: 5.0.0
+    devDependencies:
+      '@types/koa':
+        specifier: ^2.13.8
+        version: 2.13.8
+      '@types/koa-static':
+        specifier: ^4.0.2
+        version: 4.0.2
 
 packages:
 
