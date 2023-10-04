@@ -1,7 +1,9 @@
-declare namespace WhoaFramework {
-    enum EntityType {
-        NONE,
-        GROUND,
-        FLOOR
+declare namespace Whoa {
+    export namespace WhoaFramework {
+        export enum EntityType {
+            NONE,
+            GROUND,
+            FLOOR
+        }
     }
 }

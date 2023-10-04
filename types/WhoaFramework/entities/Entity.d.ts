@@ -1,5 +1,7 @@
-declare namespace WhoaFramework {
-    export class Entity {
-        public constructor();
+declare namespace Whoa {
+    export namespace WhoaFramework {
+        export class Entity {
+            public constructor();
+        }
     }
 }
