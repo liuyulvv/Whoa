@@ -7,32 +7,31 @@ import {
     Vector3
 } from '@babylonjs/core';
 import CameraMode from './CameraMode';
+import MaterialManager from './MaterialManager';
 import Mesh from './Mesh';
 import MeshManager from './MeshManager';
 
 export default class Scene {
     private static instance: Scene;
-    private canvas: HTMLCanvasElement;
-    private engine: BabylonEngine;
-    private scene: BabylonScene;
-    private camera2D: ArcRotateCamera;
-    private camera3D: ArcRotateCamera;
+    private readonly canvas: HTMLCanvasElement;
+    private readonly engine: BabylonEngine;
+    private readonly scene: BabylonScene;
+    private readonly camera2D: ArcRotateCamera;
+    private readonly camera3D: ArcRotateCamera;
+    private readonly meshManager: MeshManager;
+    private readonly materialManager: MaterialManager;
+    private readonly groundMesh: Mesh;
     private cameraMode: CameraMode;
-    private meshManager: MeshManager;
-
-    private groundMesh: Mesh;
 
     private constructor() {
         this.canvas = WhoaCanvas;
         this.engine = new BabylonEngine(this.canvas);
         this.scene = new BabylonScene(this.engine);
         this.scene.clearColor = new Color4(1.0, 1.0, 1.0, 1.0);
-        this.cameraMode = CameraMode.MODE_2D;
         this.camera2D = new ArcRotateCamera('2D', 0, 0, 10, Vector3.Zero(), this.scene);
         this.camera2D.inputs.clear();
         this.camera2D.inputs.addMouseWheel();
         this.camera3D = new ArcRotateCamera('3D', 0, 0, 10, Vector3.Zero(), this.scene);
-        this.changeTo2D();
         this.engine.runRenderLoop(() => {
             this.scene.render();
         });
@@ -40,9 +39,12 @@ export default class Scene {
             this.resize();
         });
         this.meshManager = new MeshManager(this.scene);
+        this.materialManager = new MaterialManager(this.scene);
         this.groundMesh = this.meshManager.createGround();
-        window.WhoaScene = this;
+        this.cameraMode = CameraMode.MODE_2D;
         this.resize();
+        this.changeTo2D();
+        window.WhoaScene = this;
     }
 
     public static get(): Scene {
@@ -113,5 +115,13 @@ export default class Scene {
             res.y = project.y;
         }
         return res;
+    }
+
+    public getMeshManager(): MeshManager {
+        return this.meshManager;
+    }
+
+    public getMaterialManager(): MaterialManager {
+        return this.materialManager;
     }
 }
