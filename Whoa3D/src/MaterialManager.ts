@@ -1,5 +1,4 @@
 import { Material as BabylonMaterial, Scene } from '@babylonjs/core';
-import { v4 as uuid } from 'uuid';
 import Material from './Material';
 
 export default class MaterialManager {
@@ -11,15 +10,22 @@ export default class MaterialManager {
         this.materials = new Map<string, Material>();
     }
 
-    public createMaterial(): Material {
-        const materialID = uuid();
-        const babylonMaterial = new BabylonMaterial(materialID, this.scene);
-        const material = new Material(materialID, babylonMaterial);
-        this.materials.set(materialID, material);
-        return material;
+    public destroyMaterial(materialID: string): void {
+        const material = this.materials.get(materialID);
+        if (material) {
+            material.material.dispose();
+            this.materials.delete(materialID);
+        }
     }
 
     public getMaterialByID(materialID: string): Material | undefined {
         return this.materials.get(materialID);
+    }
+
+    public createMaterial(materialID: string): Material {
+        const babylonMaterial = new BabylonMaterial(materialID, this.scene);
+        const material = new Material(materialID, babylonMaterial);
+        this.materials.set(materialID, material);
+        return material;
     }
 }

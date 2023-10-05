@@ -1,6 +1,6 @@
 import { Mesh as BabylonMesh } from '@babylonjs/core';
 import { v4 as uuid } from 'uuid';
-import Scene from './Scene';
+import Material from './Material';
 
 export default class Mesh {
     private meshID: string;
@@ -19,11 +19,7 @@ export default class Mesh {
         this.mesh.dispose();
     }
 
-    public setMaterial(materialID: string) {
-        const materialManager = Scene.get().getMaterialManager();
-        const material = materialManager.getMaterialByID(materialID);
-        if (material) {
-            this.mesh.material = material.material;
-        }
+    public setMaterial(material: Material): void {
+        this.mesh.material = material.material;
     }
 }

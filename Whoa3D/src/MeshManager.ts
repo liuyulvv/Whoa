@@ -13,11 +13,16 @@ export default class MeshManager {
         this.meshes = new Map<string, Mesh>();
     }
 
-    public destroyMesh(id: string): void {
-        const mesh = this.meshes.get(id);
+    public destroyMesh(meshID: string): void {
+        const mesh = this.meshes.get(meshID);
         if (mesh) {
             mesh.destroy();
+            this.meshes.delete(meshID);
         }
+    }
+
+    public getMeshById(meshID: string): Mesh | undefined {
+        return this.meshes.get(meshID);
     }
 
     public createGround(): Mesh {
@@ -35,15 +40,10 @@ export default class MeshManager {
         return mesh;
     }
 
-    // public createPlane(id: string): Mesh {
-    //     return this.builder.CreatePlane(id, {}, this.scene);
-    // }
-
-    // public createBox(id: string): Mesh {
-    //     return this.builder.CreateBox(id, {}, this.scene);
-    // }
-
-    // public createCylinder(id: string): Mesh {
-    //     return this.builder.CreateCylinder(id, {}, this.scene);
-    // }
+    public createBox(meshID: string): Mesh {
+        const babylonMesh = this.builder.CreateBox(meshID, {}, this.scene);
+        const mesh = new Mesh(babylonMesh);
+        this.meshes.set(mesh.id, mesh);
+        return mesh;
+    }
 }
