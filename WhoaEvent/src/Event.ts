@@ -1,4 +1,4 @@
-class Event {
+export default class Event {
     private static instance: Event;
     private subscribers: { [key: string]: Array<() => void> };
 
@@ -37,5 +37,3 @@ class Event {
         }
     }
 }
-
-export default Event;

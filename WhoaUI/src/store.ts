@@ -21,4 +21,4 @@ const createLeftMenuStore = create<LeftMenuStore>()((set) => ({
     setChecked: (checked) => set({ checked: checked })
 }));
 
-export { createLeftMenuStore };
+export default createLeftMenuStore;

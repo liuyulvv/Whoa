@@ -1,7 +1,7 @@
 import Keyboard from './Keyboard';
 import Mouse from './Mouse';
 
-class Interaction {
+export default class Interaction {
     private static instance: Interaction;
     private mouse: Mouse;
     private keyboard: Keyboard;
@@ -30,5 +30,3 @@ class Interaction {
         return this.mouse.isRightPressed();
     }
 }
-
-export default Interaction;

@@ -1,4 +1,4 @@
-class Keyboard {
+export default class Keyboard {
     private static instance: Keyboard;
     private canvas: HTMLCanvasElement;
 
@@ -30,5 +30,3 @@ class Keyboard {
 
     // private onKeyUp(event: KeyboardEvent) {}
 }
-
-export default Keyboard;

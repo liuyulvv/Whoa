@@ -3,7 +3,7 @@ import { ArrowExportLtrFilled, ArrowExportRtlFilled } from '@fluentui/react-icon
 import Customization, { CustomizationIcon } from './Customization';
 import House, { HouseIcon } from './House';
 import Ornamentation, { OrnamentationIcon } from './Ornamentation';
-import { createLeftMenuStore } from './store';
+import createLeftMenuStore from './store';
 
 const useStyles = makeStyles({
     aside: {

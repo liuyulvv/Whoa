@@ -6,7 +6,7 @@ import {
     LineRegular,
     bundleIcon
 } from '@fluentui/react-icons';
-import { createLeftMenuStore } from './store';
+import createLeftMenuStore from './store';
 
 const useStyles = makeStyles({
     container: {
