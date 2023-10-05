@@ -7,8 +7,10 @@ import {
     Vector3
 } from '@babylonjs/core';
 import CameraMode from './CameraMode';
+import Mesh from './Mesh';
+import MeshManager from './MeshManager';
 
-class Scene {
+export default class Scene {
     private static instance: Scene;
     private canvas: HTMLCanvasElement;
     private engine: BabylonEngine;
@@ -16,6 +18,9 @@ class Scene {
     private camera2D: ArcRotateCamera;
     private camera3D: ArcRotateCamera;
     private cameraMode: CameraMode;
+    private meshManager: MeshManager;
+
+    private groundMesh: Mesh;
 
     private constructor() {
         this.canvas = WhoaCanvas;
@@ -34,8 +39,10 @@ class Scene {
         WhoaEvent.sub('WHOA_WINDOW_RESIZE', () => {
             this.resize();
         });
-        this.resize();
+        this.meshManager = new MeshManager(this.scene);
+        this.groundMesh = this.meshManager.createGround();
         window.WhoaScene = this;
+        this.resize();
     }
 
     public static get(): Scene {
@@ -108,5 +115,3 @@ class Scene {
         return res;
     }
 }
-
-export default Scene;
