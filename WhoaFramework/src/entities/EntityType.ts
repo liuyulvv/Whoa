@@ -1,6 +1,5 @@
 enum EntityType {
     NONE,
-    GROUND,
     FLOOR
 }
 
