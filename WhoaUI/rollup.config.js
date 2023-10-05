@@ -30,5 +30,9 @@ export default {
         copy({
             targets: [{ src: 'public/index.html', dest: '../dist/' }]
         })
-    ]
+    ],
+    onwarn(warning, warn) {
+        if (warning.code === 'CIRCULAR_DEPENDENCY') return;
+        warn(warning);
+    }
 };
