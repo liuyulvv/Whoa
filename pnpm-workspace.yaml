@@ -1,9 +1,9 @@
 packages:
     - 'server'
     - 'WhoaEvent'
-    - 'WhoaFramework'
     - 'WhoaUI'
     - 'Whoa3D'
+    - 'WhoaFramework'
     - 'WhoaGeometry'
     - 'WhoaInteraction'
     - 'entry'

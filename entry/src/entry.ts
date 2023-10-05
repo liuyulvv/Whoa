@@ -1,8 +1,8 @@
 const modules = [
     './WhoaEvent.js',
-    './WhoaFramework.js',
     './WhoaUI.js',
     './Whoa3D.js',
+    './WhoaFramework.js',
     './WhoaGeometry.js',
     './WhoaInteraction.js'
 ];
