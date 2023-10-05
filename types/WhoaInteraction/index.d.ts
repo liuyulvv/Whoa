@@ -1,9 +1,8 @@
 declare namespace Whoa {
     class WhoaInteraction {
-        static get(): WhoaInteraction;
-        isLeftPressed(): boolean;
-        isMidPressed(): boolean;
-        isRightPressed(): boolean;
+        public isLeftPressed(): boolean;
+        public isMidPressed(): boolean;
+        public isRightPressed(): boolean;
     }
 }
 
