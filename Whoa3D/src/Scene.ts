@@ -128,12 +128,12 @@ export default class Scene {
         return this.materialManager;
     }
 
-    public onEntityHover(): void {
+    public setEntityHoverColor(): void {
         this.scene.getBoundingBoxRenderer().frontColor = Color3.FromHexString('#479ef5');
         this.scene.getBoundingBoxRenderer().backColor = Color3.FromHexString('#479ef5');
     }
 
-    public onEntitySelect(): void {
+    public setEntitySelectColor(): void {
         this.scene.getBoundingBoxRenderer().frontColor = Color3.FromHexString('#5b5fc7');
         this.scene.getBoundingBoxRenderer().backColor = Color3.FromHexString('#5b5fc7');
     }

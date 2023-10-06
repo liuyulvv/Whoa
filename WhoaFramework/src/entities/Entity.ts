@@ -35,7 +35,7 @@ export default abstract class Entity {
         this.info = info;
         this.mesh = Whoa3D.getMeshManager().createBox(this.entityID);
         this.material = Whoa3D.getMaterialManager().createMaterial(this.entityID);
-        // this.mesh.setMaterial(this.material);
+        this.mesh.setMaterial(this.material);
         this.hovered = info.hovered;
         this.selected = info.selected;
         this.visible = info.visible;

@@ -1,10 +1,10 @@
-import { Material as BabylonMaterial } from '@babylonjs/core';
+import { StandardMaterial } from '@babylonjs/core';
 
 export default class Material {
     private materialID: string;
-    private readonly babylonMaterial: BabylonMaterial;
+    private readonly babylonMaterial: StandardMaterial;
 
-    public constructor(id: string, material: BabylonMaterial) {
+    public constructor(id: string, material: StandardMaterial) {
         this.materialID = id;
         this.babylonMaterial = material;
     }
@@ -13,7 +13,7 @@ export default class Material {
         return this.materialID;
     }
 
-    public get material(): BabylonMaterial {
+    public get material(): StandardMaterial {
         return this.babylonMaterial;
     }
 }

@@ -13,7 +13,7 @@ export default class MeshManager {
         this.meshes = new Map<string, Mesh>();
     }
 
-    public destroyMesh(meshID: string): void {
+    public destroyMeshByID(meshID: string): void {
         const mesh = this.meshes.get(meshID);
         if (mesh) {
             mesh.destroy();
@@ -21,7 +21,7 @@ export default class MeshManager {
         }
     }
 
-    public getMeshById(meshID: string): Mesh | undefined {
+    public getMeshByID(meshID: string): Mesh | undefined {
         return this.meshes.get(meshID);
     }
 

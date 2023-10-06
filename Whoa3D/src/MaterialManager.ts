@@ -1,4 +1,4 @@
-import { Material as BabylonMaterial, Scene } from '@babylonjs/core';
+import { Color3, Scene, StandardMaterial } from '@babylonjs/core';
 import Material from './Material';
 
 export default class MaterialManager {
@@ -23,7 +23,8 @@ export default class MaterialManager {
     }
 
     public createMaterial(materialID: string): Material {
-        const babylonMaterial = new BabylonMaterial(materialID, this.scene);
+        const babylonMaterial = new StandardMaterial(materialID, this.scene);
+        babylonMaterial.emissiveColor = new Color3(0.10196078431372549, 0.9215686274509803, 1);
         const material = new Material(materialID, babylonMaterial);
         this.materials.set(materialID, material);
         return material;
