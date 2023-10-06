@@ -35,14 +35,14 @@ export default class MeshManager {
         babylonMaterial.useMaxLine = true;
         babylonMaterial.opacity = 0.99;
         babylonMesh.material = babylonMaterial;
-        const mesh = new Mesh(babylonMesh);
+        const mesh = new Mesh(meshID, babylonMesh);
         this.meshes.set(mesh.id, mesh);
         return mesh;
     }
 
     public createBox(meshID: string): Mesh {
         const babylonMesh = this.builder.CreateBox(meshID, {}, this.scene);
-        const mesh = new Mesh(babylonMesh);
+        const mesh = new Mesh(meshID, babylonMesh);
         this.meshes.set(mesh.id, mesh);
         return mesh;
     }
