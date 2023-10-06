@@ -9,6 +9,7 @@ export default class Interaction {
     private constructor() {
         this.mouse = Mouse.get();
         this.keyboard = Keyboard.get();
+        this.registerEvent();
     }
 
     public static get(): Interaction {
@@ -16,6 +17,31 @@ export default class Interaction {
             Interaction.instance = new Interaction();
         }
         return Interaction.instance;
+    }
+
+    private registerEvent(): void {
+        WhoaEvent.sub('START_DRAW_LINE', () => {
+            Whoa3D.changeTo2D();
+            const createInfo: Whoa.WhoaFramework.EntityCreateInfo = {
+                role: Whoa.WhoaFramework.EntityRole.ROOT,
+                type: Whoa.WhoaFramework.EntityType.WALL,
+                hovered: true,
+                selected: true,
+                visible: true,
+                pickable: true,
+                movable: true,
+                width: 1,
+                height: 1,
+                depth: 1
+            };
+            Whoa.WhoaFramework.EntityManager.get().createWall(createInfo);
+        });
+
+        WhoaEvent.sub('STOP_DRAW_LINE', () => {});
+
+        WhoaEvent.sub('START_DRAW_BORDER', () => {});
+
+        WhoaEvent.sub('STOP_DRAW_BORDER', () => {});
     }
 
     public isLeftPressed(): boolean {
