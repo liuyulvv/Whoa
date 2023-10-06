@@ -1,9 +1,11 @@
+import { v4 as uuid } from 'uuid';
+
 export default class Event {
     private static instance: Event;
-    private subscribers: { [key: string]: Array<() => void> };
+    private subscribers: Map<string, Map<string, () => void>>;
 
     private constructor() {
-        this.subscribers = {};
+        this.subscribers = new Map();
     }
 
     public static get() {
@@ -13,25 +15,24 @@ export default class Event {
         return Event.instance;
     }
 
-    public sub(key: string, callback: () => void) {
-        if (!this.subscribers[key]) {
-            this.subscribers[key] = [];
+    public sub(eventName: string, callback: () => void): string {
+        const eventID = uuid();
+        if (!this.subscribers.get(eventName)) {
+            this.subscribers.set(eventName, new Map());
         }
-        this.subscribers[key].push(callback);
+        this.subscribers.get(eventName)?.set(eventID, callback);
+        return eventID;
     }
 
-    public unsub(key: string, callback: () => void) {
-        if (this.subscribers[key]) {
-            const index = this.subscribers[key].indexOf(callback);
-            if (index != -1) {
-                this.subscribers[key].splice(index, 1);
-            }
+    public unsub(eventName: string, eventID: string): void {
+        if (this.subscribers.get(eventName)) {
+            this.subscribers.get(eventName)?.delete(eventID);
         }
     }
 
-    public pub(key: string) {
-        if (this.subscribers[key]) {
-            this.subscribers[key].forEach((callback) => {
+    public pub(eventName: string) {
+        if (this.subscribers.get(eventName)) {
+            this.subscribers.get(eventName)?.forEach((callback) => {
                 callback();
             });
         }

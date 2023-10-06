@@ -3,5 +3,11 @@
     "scripts": {
         "build": "rollup --config"
     },
-    "type": "module"
+    "type": "module",
+    "dependencies": {
+        "uuid": "^9.0.1"
+    },
+    "devDependencies": {
+        "@types/uuid": "^9.0.4"
+    }
 }
