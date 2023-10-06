@@ -10,6 +10,10 @@ declare namespace Whoa {
             selected: boolean;
             visible: boolean;
             pickable: boolean;
+            movable: boolean;
+            width: number;
+            height: number;
+            depth: number;
         }
 
         export class Entity {
@@ -20,6 +24,9 @@ declare namespace Whoa {
             public get isSelected(): boolean;
             public get isVisible(): boolean;
             public get isPickable(): boolean;
+            public get width(): number;
+            public get height(): number;
+            public get depth(): number;
             public destroy(): void;
             public showBoundingBox(): void;
             public hideBoundingBox(): void;

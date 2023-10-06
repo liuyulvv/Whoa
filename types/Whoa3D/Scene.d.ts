@@ -19,8 +19,9 @@ declare namespace Whoa {
             public getScreenPos(pos: WhoaGeometry.Point3D): WhoaGeometry.Point2D;
             public getMeshManager(): MeshManager;
             public getMaterialManager(): MaterialManager;
-            public onEntityHover(): void;
-            public onEntitySelect(): void;
+            public setEntityHoverColor(): void;
+            public setEntitySelectColor(): void;
+            public pickEntity(): PickInfo;
         }
     }
 }

@@ -1,8 +1,8 @@
 declare namespace Whoa {
     class WhoaEvent {
-        public sub(key: string, callback: () => void): void;
-        public unsub(key: string, callback: () => void): void;
-        public pub(key: string): void;
+        public sub(eventName: string, callback: () => void): string;
+        public unsub(eventName: string, eventID: string): void;
+        public pub(eventName: string);
     }
 }
 

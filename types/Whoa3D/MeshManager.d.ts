@@ -3,8 +3,8 @@
 declare namespace Whoa {
     export namespace Whoa3D {
         export class MeshManager {
-            public destroyMesh(meshID: string): void;
-            public getMeshById(meshID: string): Mesh | undefined;
+            public destroyMeshByID(meshID: string): void;
+            public getMeshByID(meshID: string): Mesh | undefined;
             public createBox(meshID: string): Mesh;
         }
     }

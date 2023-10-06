@@ -4,8 +4,9 @@ declare namespace Whoa {
     export namespace WhoaFramework {
         export class EntityManager {
             public static get(): EntityManager;
-            public createEntity(info: EntityCreateInfo): Entity;
+            public createWall(info: EntityCreateInfo): Entity;
             public destroyEntityByID(entityID: string): void;
+            public getAllEntity(): Entity[];
             public getEntityByID(entityID: string): Entity | undefined;
         }
     }
