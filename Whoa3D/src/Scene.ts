@@ -2,6 +2,7 @@ import {
     ArcRotateCamera,
     Engine as BabylonEngine,
     Scene as BabylonScene,
+    Color3,
     Color4,
     Matrix,
     Vector3
@@ -10,6 +11,11 @@ import CameraMode from './CameraMode';
 import MaterialManager from './MaterialManager';
 import Mesh from './Mesh';
 import MeshManager from './MeshManager';
+
+export interface PickInfo {
+    hit: boolean;
+    meshID: string;
+}
 
 export default class Scene {
     private static instance: Scene;
@@ -122,5 +128,24 @@ export default class Scene {
 
     public getMaterialManager(): MaterialManager {
         return this.materialManager;
+    }
+
+    public onEntityHover(): void {
+        this.scene.getBoundingBoxRenderer().frontColor = Color3.FromHexString('#479ef5');
+        this.scene.getBoundingBoxRenderer().backColor = Color3.FromHexString('#479ef5');
+    }
+
+    public onEntitySelect(): void {
+        this.scene.getBoundingBoxRenderer().frontColor = Color3.FromHexString('#5b5fc7');
+        this.scene.getBoundingBoxRenderer().backColor = Color3.FromHexString('#5b5fc7');
+    }
+
+    public pickEntity(): PickInfo {
+        const babylonPickInfo = this.scene.pick(this.scene.pointerX, this.scene.pointerY);
+        const pickInfo: PickInfo = {
+            hit: babylonPickInfo.hit,
+            meshID: babylonPickInfo.pickedMesh ? babylonPickInfo.pickedMesh.id : ''
+        };
+        return pickInfo;
     }
 }
