@@ -76,7 +76,15 @@ importers:
         specifier: ^9.0.4
         version: 9.0.4
 
-  WhoaEvent: {}
+  WhoaEvent:
+    dependencies:
+      uuid:
+        specifier: ^9.0.1
+        version: 9.0.1
+    devDependencies:
+      '@types/uuid':
+        specifier: ^9.0.4
+        version: 9.0.4
 
   WhoaFramework:
     dependencies:
