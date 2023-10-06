@@ -16,18 +16,22 @@ export default class EntityManager {
         return EntityManager.instance;
     }
 
-    public create(info: EntityCreateInfo): Entity {
+    public createEntity(info: EntityCreateInfo): Entity {
         const entityID = uuid();
         const entity = new Entity(entityID, info);
         this.entities.set(entityID, entity);
         return entity;
     }
 
-    public destroy(entityID: string): void {
+    public destroyEntityByID(entityID: string): void {
         const entity = this.entities.get(entityID);
         if (entity) {
             this.entities.delete(entityID);
             entity.destroy();
         }
+    }
+
+    public getEntityByID(entityID: string): Entity | undefined {
+        return this.entities.get(entityID);
     }
 }
