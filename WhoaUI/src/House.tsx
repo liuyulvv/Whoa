@@ -33,14 +33,16 @@ export default () => {
         <div className={styles.container}>
             <CompoundButton
                 icon={<LineRegular />}
-                secondaryContent="人之生也直，罔之生也幸而免"
+                secondaryContent="人之生也直,罔之生也幸而免"
                 className={styles.element}
                 appearance={check == 'line' ? 'primary' : 'subtle'}
                 onClick={() => {
                     if (check == 'line') {
                         setCheck('');
+                        WhoaEvent.pub('STOP_DRAW_LINE');
                     } else {
                         setCheck('line');
+                        WhoaEvent.pub('START_DRAW_LINE');
                     }
                 }}
             >
@@ -48,14 +50,16 @@ export default () => {
             </CompoundButton>
             <CompoundButton
                 icon={<BorderOutsideThickRegular />}
-                secondaryContent="不以规矩，不能成方圆"
+                secondaryContent="不以规矩,不能成方圆"
                 className={styles.element}
                 appearance={check == 'border' ? 'primary' : 'subtle'}
                 onClick={() => {
                     if (check == 'border') {
                         setCheck('');
+                        WhoaEvent.pub('STOP_DRAW_BORDER');
                     } else {
                         setCheck('border');
+                        WhoaEvent.pub('START_DRAW_BORDER');
                     }
                 }}
             >
