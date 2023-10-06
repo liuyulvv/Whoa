@@ -6,6 +6,11 @@
 
 declare namespace Whoa {
     export namespace Whoa3D {
+        export interface PickInfo {
+            hit: boolean;
+            meshID: string;
+        }
+
         export class WhoaScene {
             public getCameraMode(): CameraMode;
             public changeTo2D(): void;
@@ -14,6 +19,8 @@ declare namespace Whoa {
             public getScreenPos(pos: WhoaGeometry.Point3D): WhoaGeometry.Point2D;
             public getMeshManager(): MeshManager;
             public getMaterialManager(): MaterialManager;
+            public onEntityHover(): void;
+            public onEntitySelect(): void;
         }
     }
 }

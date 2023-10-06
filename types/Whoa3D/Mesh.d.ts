@@ -6,6 +6,8 @@ declare namespace Whoa {
             public get id(): string;
             public destroy(): void;
             public setMaterial(material: Material): void;
+            public showBoundingBox(): void;
+            public hideBoundingBox(): void;
         }
     }
 }
