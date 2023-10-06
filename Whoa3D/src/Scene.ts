@@ -44,7 +44,6 @@ export default class Scene {
         this.cameraMode = CameraMode.MODE_2D;
         this.resize();
         this.changeTo2D();
-        window.WhoaScene = this;
     }
 
     public static get(): Scene {
