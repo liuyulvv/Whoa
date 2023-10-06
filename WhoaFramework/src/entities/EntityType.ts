@@ -1,6 +1,6 @@
 enum EntityType {
     NONE,
-    FLOOR
+    WALL
 }
 
 export default EntityType;
