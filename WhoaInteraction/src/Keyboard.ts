@@ -41,7 +41,7 @@ export default class Keyboard {
             if (event.key == '2') {
                 Whoa3D.changeTo2D();
             } else if (event.key == '3') {
-                Whoa3D.changeTo2D();
+                Whoa3D.changeTo3D();
             }
         }
     }
