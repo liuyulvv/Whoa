@@ -1,13 +1,5 @@
-import {
-    ArcRotateCamera,
-    Engine as BabylonEngine,
-    Scene as BabylonScene,
-    Color3,
-    Color4,
-    Matrix,
-    Vector3
-} from '@babylonjs/core';
-import CameraMode from './CameraMode';
+import { Engine as BabylonEngine, Scene as BabylonScene, Color3, Color4, Matrix, Vector3 } from '@babylonjs/core';
+import { Camera2D, Camera3D, CameraMode } from './Camera';
 import MaterialManager from './MaterialManager';
 import Mesh from './Mesh';
 import MeshManager from './MeshManager';
@@ -22,8 +14,8 @@ export default class Scene {
     private readonly canvas: HTMLCanvasElement;
     private readonly engine: BabylonEngine;
     private readonly scene: BabylonScene;
-    private readonly camera2D: ArcRotateCamera;
-    private readonly camera3D: ArcRotateCamera;
+    private readonly camera2D: Camera2D;
+    private readonly camera3D: Camera3D;
     private readonly meshManager: MeshManager;
     private readonly materialManager: MaterialManager;
     private readonly groundMesh: Mesh;
@@ -34,10 +26,8 @@ export default class Scene {
         this.engine = new BabylonEngine(this.canvas);
         this.scene = new BabylonScene(this.engine);
         this.scene.clearColor = new Color4(1.0, 1.0, 1.0, 1.0);
-        this.camera2D = new ArcRotateCamera('2D', 0, 0, 10, Vector3.Zero(), this.scene);
-        this.camera2D.inputs.clear();
-        this.camera2D.inputs.addMouseWheel();
-        this.camera3D = new ArcRotateCamera('3D', 0, 0, 10, Vector3.Zero(), this.scene);
+        this.camera2D = new Camera2D(this.engine, this.scene);
+        this.camera3D = new Camera3D(this.engine, this.scene);
         this.engine.runRenderLoop(() => {
             this.scene.render();
         });
@@ -61,6 +51,7 @@ export default class Scene {
 
     public resize(): void {
         this.engine.resize();
+        this.camera2D.setOrthoCameraTopBottom(this.canvas.height / this.canvas.width);
     }
 
     public release(): void {
@@ -72,14 +63,12 @@ export default class Scene {
     }
 
     public changeTo2D(): void {
-        this.camera2D.attachControl(this.engine.getRenderingCanvas(), true);
-        this.scene.activeCamera = this.camera2D;
+        this.camera2D.attach();
         this.cameraMode = CameraMode.MODE_2D;
     }
 
     public changeTo3D(): void {
-        this.camera3D.attachControl(this.engine.getRenderingCanvas(), true);
-        this.scene.activeCamera = this.camera3D;
+        this.camera3D.attach();
         this.cameraMode = CameraMode.MODE_3D;
     }
 
