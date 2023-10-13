@@ -13,7 +13,8 @@
         "WhoaFramework",
         "WhoaGeometry",
         "WhoaInteraction",
-        "entry"
+        "entry",
+        "assets"
     ],
     "lint-staged": {
         "*.{js,jsx,tsx,ts}": [

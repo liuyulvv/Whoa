@@ -1,0 +1,10 @@
+{
+    "name": "assets",
+    "scripts": {
+        "build": "rollup --config"
+    },
+    "type": "module",
+    "devDependencies": {
+        "rollup-plugin-copy": "^3.5.0"
+    }
+}
