@@ -1,5 +1,6 @@
 import { v4 as uuid } from 'uuid';
 import Entity, { EntityCreateInfo } from './Entity';
+import EntityOrnament, { EntityOrnamentCreateInfo } from './EntityOrnament';
 import EntityWall from './EntityWall';
 
 export default class EntityManager {
@@ -17,9 +18,16 @@ export default class EntityManager {
         return EntityManager.instance;
     }
 
-    public createWall(info: EntityCreateInfo): Entity {
+    public createWall(info: EntityCreateInfo): EntityWall {
         const entityID = uuid();
         const entity = new EntityWall(entityID, info);
+        this.entities.set(entityID, entity);
+        return entity;
+    }
+
+    public createOrnament(info: EntityOrnamentCreateInfo): EntityOrnament {
+        const entityID = uuid();
+        const entity = new EntityOrnament(entityID, info);
         this.entities.set(entityID, entity);
         return entity;
     }

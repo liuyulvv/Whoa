@@ -39,7 +39,23 @@ export default class Interaction {
 
         WhoaEvent.sub('STOP_DRAW_LINE', () => {});
 
-        WhoaEvent.sub('START_DRAW_BORDER', () => {});
+        WhoaEvent.sub('START_DRAW_BORDER', () => {
+            const createInfo: Whoa.WhoaFramework.EntityOrnamentCreateInfo = {
+                role: Whoa.WhoaFramework.EntityRole.ROOT,
+                type: Whoa.WhoaFramework.EntityType.WALL,
+                hovered: true,
+                selected: true,
+                visible: true,
+                pickable: true,
+                movable: true,
+                width: 1,
+                height: 1,
+                depth: 1,
+                meshURL: 'assets/models/',
+                meshName: 'light.glb'
+            };
+            Whoa.WhoaFramework.EntityManager.get().createOrnament(createInfo);
+        });
 
         WhoaEvent.sub('STOP_DRAW_BORDER', () => {});
     }

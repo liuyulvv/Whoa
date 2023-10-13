@@ -1,6 +1,7 @@
 enum EntityType {
     NONE,
-    WALL
+    WALL,
+    ORNAMENT
 }
 
 export default EntityType;
