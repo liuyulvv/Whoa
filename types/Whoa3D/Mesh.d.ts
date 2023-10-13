@@ -8,6 +8,9 @@ declare namespace Whoa {
             public setMaterial(material: Material): void;
             public showBoundingBox(): void;
             public hideBoundingBox(): void;
+            public rotateLocalX(radian: number): void;
+            public rotateLocalY(radian: number): void;
+            public rotateLocalZ(radian: number): void;
         }
     }
 }

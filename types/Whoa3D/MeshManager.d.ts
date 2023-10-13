@@ -6,6 +6,7 @@ declare namespace Whoa {
             public destroyMeshByID(meshID: string): void;
             public getMeshByID(meshID: string): Mesh | undefined;
             public createBox(meshID: string): Mesh;
+            public importMeshAsync(baseURL: string, meshName: string, entityID: string): Promise<Mesh[]>;
         }
     }
 }
