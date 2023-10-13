@@ -1,4 +1,5 @@
-import { MeshBuilder, Scene } from '@babylonjs/core';
+import { Mesh as BabylonMesh, BoundingInfo, MeshBuilder, Scene, SceneLoader, Vector3 } from '@babylonjs/core';
+import '@babylonjs/loaders/glTF';
 import { GridMaterial } from '@babylonjs/materials';
 import { v4 as uuid } from 'uuid';
 import Mesh from './Mesh';
@@ -45,5 +46,28 @@ export default class MeshManager {
         const mesh = new Mesh(meshID, babylonMesh);
         this.meshes.set(mesh.id, mesh);
         return mesh;
+    }
+
+    public importMeshAsync(baseURL: string, meshName: string, entityID: string) {
+        return SceneLoader.ImportMeshAsync('', baseURL, meshName, this.scene).then((result) => {
+            const meshes: Mesh[] = [];
+            result.meshes.forEach((mesh) => {
+                mesh.id = entityID;
+                const childMeshes = mesh.getChildMeshes();
+                if (childMeshes.length > 0) {
+                    let min = childMeshes[0].getBoundingInfo().boundingBox.minimumWorld;
+                    let max = childMeshes[0].getBoundingInfo().boundingBox.maximumWorld;
+                    for (let i = 0; i < childMeshes.length; i++) {
+                        const meshMin = childMeshes[i].getBoundingInfo().boundingBox.minimumWorld;
+                        const meshMax = childMeshes[i].getBoundingInfo().boundingBox.maximumWorld;
+                        min = Vector3.Minimize(min, meshMin);
+                        max = Vector3.Maximize(max, meshMax);
+                    }
+                    mesh.setBoundingInfo(new BoundingInfo(min, max));
+                    meshes.push(new Mesh(entityID, mesh as BabylonMesh));
+                }
+            });
+            return meshes;
+        });
     }
 }

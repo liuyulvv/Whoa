@@ -1,4 +1,4 @@
-import { Mesh as BabylonMesh } from '@babylonjs/core';
+import { Mesh as BabylonMesh, Vector3 } from '@babylonjs/core';
 import Material from './Material';
 
 export default class Mesh {
@@ -28,5 +28,17 @@ export default class Mesh {
 
     public hideBoundingBox(): void {
         this.mesh.showBoundingBox = false;
+    }
+
+    public rotateLocalX(radian: number): void {
+        this.mesh.rotate(new Vector3(1, 0, 0), radian);
+    }
+
+    public rotateLocalY(radian: number): void {
+        this.mesh.rotate(new Vector3(0, 1, 0), radian);
+    }
+
+    public rotateLocalZ(radian: number): void {
+        this.mesh.rotate(new Vector3(0, 0, 1), radian);
     }
 }
