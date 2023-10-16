@@ -26,6 +26,11 @@ export default class Scene {
         this.engine = new BabylonEngine(this.canvas);
         this.scene = new BabylonScene(this.engine);
         this.scene.clearColor = new Color4(1.0, 1.0, 1.0, 1.0);
+        const helper = this.scene.createDefaultEnvironment({
+            createGround: false,
+            createSkybox: false
+        });
+        helper?.setMainColor(new Color3(1.0, 1.0, 1.0));
         this.camera2D = new Camera2D(this.engine, this.scene);
         this.camera3D = new Camera3D(this.engine, this.scene);
         this.engine.runRenderLoop(() => {
@@ -37,9 +42,9 @@ export default class Scene {
         this.meshManager = new MeshManager(this.scene);
         this.materialManager = new MaterialManager(this.scene);
         this.groundMesh = this.meshManager.createGround();
-        this.cameraMode = CameraMode.MODE_2D;
         this.resize();
-        this.changeTo2D();
+        this.cameraMode = CameraMode.MODE_3D;
+        this.changeTo3D();
     }
 
     public static get(): Scene {

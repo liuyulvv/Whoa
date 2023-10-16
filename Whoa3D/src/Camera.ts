@@ -68,7 +68,7 @@ export class Camera3D {
     public constructor(engine: BabylonEngine, scene: BabylonScene) {
         this.engine = engine;
         this.scene = scene;
-        this.camera = new ArcRotateCamera('3D', 0, 0, 10, Vector3.Zero(), this.scene);
+        this.camera = new ArcRotateCamera('3D', -Math.PI / 2, 0, 10, Vector3.Zero(), this.scene);
     }
 
     public attach() {
