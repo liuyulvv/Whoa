@@ -3,6 +3,7 @@
         "onwarn",
         "Parens",
         "pickable",
+        "Skybox",
         "Unproject",
         "unsub",
         "zustand"
