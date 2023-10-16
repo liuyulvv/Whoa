@@ -2,7 +2,8 @@
     "name": "whoa",
     "scripts": {
         "build": "pnpm -r build",
-        "dev": "pnpm --filter ./server dev",
+        "dev": "pnpm -r dev",
+        "serve": "pnpm --filter ./server serve",
         "lint": "eslint . --fix"
     },
     "workspaces": [

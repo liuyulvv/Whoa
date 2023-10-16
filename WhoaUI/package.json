@@ -1,7 +1,8 @@
 {
     "name": "ui",
     "scripts": {
-        "build": "rollup --config"
+        "dev": "rollup -c rollup.config.dev.js",
+        "build": "rollup -c rollup.config.prod.js"
     },
     "dependencies": {
         "@fluentui/react-components": "^9.34.0",
