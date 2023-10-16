@@ -52,7 +52,7 @@ export default class Interaction {
                 height: 1,
                 depth: 1,
                 meshURL: 'assets/models/',
-                meshName: 'light.glb'
+                meshName: 'deer.glb'
             };
             Whoa.WhoaFramework.EntityManager.get().createOrnament(createInfo);
         });

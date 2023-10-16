@@ -1,4 +1,12 @@
-import { Mesh as BabylonMesh, BoundingInfo, MeshBuilder, Scene, SceneLoader, Vector3 } from '@babylonjs/core';
+import {
+    AxesViewer,
+    Mesh as BabylonMesh,
+    BoundingInfo,
+    MeshBuilder,
+    Scene,
+    SceneLoader,
+    Vector3
+} from '@babylonjs/core';
 import '@babylonjs/loaders/glTF';
 import { GridMaterial } from '@babylonjs/materials';
 import { v4 as uuid } from 'uuid';
@@ -38,6 +46,10 @@ export default class MeshManager {
         babylonMesh.material = babylonMaterial;
         const mesh = new Mesh(meshID, babylonMesh);
         this.meshes.set(mesh.id, mesh);
+        const axes = new AxesViewer(this.scene);
+        axes.xAxis.parent = babylonMesh;
+        axes.xAxis.parent = babylonMesh;
+        axes.xAxis.parent = babylonMesh;
         return mesh;
     }
 
