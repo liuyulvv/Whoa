@@ -28,7 +28,7 @@ export default class Keyboard {
     }
 
     private register() {
-        this.canvas.addEventListener('keydown', (event: KeyboardEvent) => {
+        document.addEventListener('keydown', (event: KeyboardEvent) => {
             this.onKeyDown(event);
         });
         // this.canvas.addEventListener('keyup', (event: KeyboardEvent) => {
