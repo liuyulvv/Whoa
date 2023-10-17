@@ -1,25 +1,11 @@
-import Entity, { EntityCreateInfo } from './Entity';
+import EntityModel, { EntityModelCreateInfo } from './EntityModel';
 
-export interface EntityOrnamentCreateInfo extends EntityCreateInfo {
-    meshURL: string;
-    meshName: string;
-}
-
-export default class EntityOrnament extends Entity {
-    public constructor(entityID: string, info: EntityOrnamentCreateInfo) {
+export default class EntityOrnament extends EntityModel {
+    public constructor(entityID: string, info: EntityModelCreateInfo) {
         super(entityID, info);
-        Whoa3D.getMeshManager()
-            .importMeshAsync(info.meshURL, info.meshName, this.entityID)
-            .then((meshes) => {
-                if (meshes.length > 0) {
-                    this.loadModel(meshes[0]);
-                }
-            });
     }
 
-    private loadModel(mesh: Whoa.Whoa3D.Mesh) {
-        this.mesh.destroy();
-        this.mesh = mesh;
-        this.mesh.rotateLocalX((90 / 180) * Math.PI);
+    public onSelect(selected?: boolean): void {
+        super.onSelect(selected);
     }
 }

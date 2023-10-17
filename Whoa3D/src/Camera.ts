@@ -5,6 +5,7 @@ import {
     Scene as BabylonScene,
     Viewport as BabylonViewport,
     Camera,
+    IPointerEvent,
     Nullable,
     PointerTouch,
     Vector3
@@ -113,9 +114,11 @@ class Camera2DPointersInput extends ArcRotateCameraPointersInput {
 
 class Camera3DPointersInput extends ArcRotateCameraPointersInput {
     private static instance: Camera3DPointersInput;
+    private picked: boolean;
 
     private constructor() {
         super();
+        this.picked = false;
     }
 
     public static getInstance(): Camera3DPointersInput {
@@ -125,11 +128,28 @@ class Camera3DPointersInput extends ArcRotateCameraPointersInput {
         return Camera3DPointersInput.instance;
     }
 
+    onButtonDown(evt: IPointerEvent): void {
+        if (evt.button == 0) {
+            const pickInfo = Whoa3D.pickEntity();
+            if (pickInfo.hit && pickInfo.meshID != 'ground') {
+                this.picked = true;
+            } else {
+                this.picked = false;
+            }
+        }
+    }
+
     onTouch(point: Nullable<PointerTouch>, offsetX: number, offsetY: number): void {
-        if (this._ctrlKey || this._shiftKey || this._altKey || this._metaKey) {
+        if (this._ctrlKey || this._shiftKey || this._altKey || this._metaKey || this.picked) {
             return;
         }
         WhoaInteraction.setPointerTouch(true);
         super.onTouch(point, offsetX, offsetY);
+    }
+
+    onButtonUp(evt: IPointerEvent): void {
+        if (evt.button == 0) {
+            this.picked = false;
+        }
     }
 }

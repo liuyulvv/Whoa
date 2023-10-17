@@ -1,4 +1,4 @@
-import { Mesh as BabylonMesh, Vector3 } from '@babylonjs/core';
+import { Mesh as BabylonMesh, Color3, Vector3 } from '@babylonjs/core';
 import Material from './Material';
 
 export default class Mesh {
@@ -12,6 +12,27 @@ export default class Mesh {
 
     public get id(): string {
         return this.meshID;
+    }
+
+    public show(): void {
+        this.mesh.isVisible = true;
+    }
+
+    public hide(): void {
+        this.mesh.isVisible = true;
+    }
+
+    public showOverlay(): void {
+        this.mesh.getChildMeshes().forEach((mesh) => {
+            mesh.overlayColor = Color3.Red();
+            mesh.renderOverlay = true;
+        });
+    }
+
+    public hideOverlay(): void {
+        this.mesh.getChildMeshes().forEach((mesh) => {
+            mesh.renderOverlay = false;
+        });
     }
 
     public destroy(): void {

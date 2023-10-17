@@ -90,6 +90,22 @@ export default abstract class Entity {
         return this.entityDepth;
     }
 
+    public show(): void {
+        this.mesh.show();
+    }
+
+    public hide(): void {
+        this.mesh.hide();
+    }
+
+    public showOverlay(): void {
+        this.mesh.showOverlay();
+    }
+
+    public hideOverlay(): void {
+        this.mesh.hideOverlay();
+    }
+
     public destroy(): void {
         Whoa3D.getMeshManager().destroyMeshByID(this.entityID);
         Whoa3D.getMaterialManager().destroyMaterial(this.entityID);
