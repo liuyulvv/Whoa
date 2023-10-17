@@ -24,7 +24,7 @@ export class Camera2D {
     public constructor(engine: BabylonEngine, scene: BabylonScene) {
         this.engine = engine;
         this.scene = scene;
-        this.camera = new ArcRotateCamera('2D', -Math.PI / 2, 0, 10, Vector3.Zero(), this.scene);
+        this.camera = new ArcRotateCamera('2D', Math.PI / 2, 0, 10, Vector3.Zero(), this.scene);
         this.camera.lowerBetaLimit = -10;
         this.camera.upperBetaLimit = 10;
         this.camera.lowerAlphaLimit = -10;
@@ -71,7 +71,7 @@ export class Camera3D {
     public constructor(engine: BabylonEngine, scene: BabylonScene) {
         this.engine = engine;
         this.scene = scene;
-        this.camera = new ArcRotateCamera('3D', -Math.PI / 2, 0, 10, Vector3.Zero(), this.scene);
+        this.camera = new ArcRotateCamera('3D', Math.PI / 2, 0, 10, Vector3.Zero(), this.scene);
         this.camera.inputs.clear();
         this.camera.inputs.addMouseWheel();
         this.camera.inputs.add(Camera3DPointersInput.getInstance());

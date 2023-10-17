@@ -26,6 +26,7 @@ export default class Scene {
         this.engine = new BabylonEngine(this.canvas);
         this.scene = new BabylonScene(this.engine);
         this.scene.clearColor = new Color4(1.0, 1.0, 1.0, 1.0);
+        this.scene.useRightHandedSystem = true;
         const helper = this.scene.createDefaultEnvironment({
             createGround: false,
             createSkybox: false
