@@ -2,6 +2,6 @@
 
 declare namespace Whoa {
     export namespace WhoaFramework {
-        export class EntityOrnament extends EntityModel {}
+        export class EntityControl extends EntityModel {}
     }
 }

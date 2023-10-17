@@ -16,7 +16,7 @@ declare namespace Whoa {
             depth: number;
         }
 
-        export class Entity {
+        export abstract class Entity {
             public get id(): string;
             public get role(): EntityRole;
             public get type(): EntityType;
@@ -27,11 +27,13 @@ declare namespace Whoa {
             public get width(): number;
             public get height(): number;
             public get depth(): number;
+            public show(): void;
+            public hide(): void;
             public destroy(): void;
             public showBoundingBox(): void;
             public hideBoundingBox(): void;
-            public onHover(hover: boolean = true);
-            public onSelect(selected: boolean = true);
+            public onHover(hover: boolean);
+            public onSelect(selected: boolean);
         }
     }
 }
