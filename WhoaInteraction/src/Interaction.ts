@@ -21,36 +21,37 @@ export default class Interaction {
 
     private registerEvent(): void {
         WhoaEvent.sub('START_DRAW_LINE', () => {
-            Whoa3D.changeTo2D();
-            const createInfo: Whoa.WhoaFramework.EntityCreateInfo = {
+            const createInfo: Whoa.WhoaFramework.EntityModelCreateInfo = {
                 role: Whoa.WhoaFramework.EntityRole.ROOT,
-                type: Whoa.WhoaFramework.EntityType.WALL,
+                type: Whoa.WhoaFramework.EntityType.ORNAMENT,
                 hovered: false,
                 selected: false,
                 visible: true,
                 pickable: true,
                 movable: true,
-                width: 1,
-                height: 1,
-                depth: 1
+                width: 1000,
+                height: 1000,
+                depth: 1000,
+                meshURL: 'assets/models/',
+                meshName: 'arrow_2D.glb'
             };
-            Whoa.WhoaFramework.EntityManager.get().createWall(createInfo);
+            Whoa.WhoaFramework.EntityManager.get().createControl(createInfo);
         });
 
         WhoaEvent.sub('STOP_DRAW_LINE', () => {});
 
         WhoaEvent.sub('START_DRAW_BORDER', () => {
-            const createInfo: Whoa.WhoaFramework.EntityOrnamentCreateInfo = {
+            const createInfo: Whoa.WhoaFramework.EntityModelCreateInfo = {
                 role: Whoa.WhoaFramework.EntityRole.ROOT,
-                type: Whoa.WhoaFramework.EntityType.WALL,
+                type: Whoa.WhoaFramework.EntityType.ORNAMENT,
                 hovered: false,
                 selected: false,
                 visible: true,
                 pickable: true,
                 movable: true,
-                width: 1,
-                height: 1,
-                depth: 1,
+                width: 30,
+                height: 30,
+                depth: 30,
                 meshURL: 'assets/models/',
                 meshName: 'deer.glb'
             };
