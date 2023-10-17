@@ -9,7 +9,6 @@ import {
 } from '@babylonjs/core';
 import '@babylonjs/loaders/glTF';
 import { GridMaterial } from '@babylonjs/materials';
-import { v4 as uuid } from 'uuid';
 import Mesh from './Mesh';
 
 export default class MeshManager {
@@ -35,7 +34,7 @@ export default class MeshManager {
     }
 
     public createGround(): Mesh {
-        const meshID = uuid();
+        const meshID = 'ground';
         const babylonMesh = this.builder.CreateGround(meshID, { width: 100, height: 100 }, this.scene);
         const babylonMaterial = new GridMaterial(meshID, this.scene);
         babylonMaterial.majorUnitFrequency = 5;

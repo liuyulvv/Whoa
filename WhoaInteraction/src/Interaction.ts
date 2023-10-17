@@ -25,8 +25,8 @@ export default class Interaction {
             const createInfo: Whoa.WhoaFramework.EntityCreateInfo = {
                 role: Whoa.WhoaFramework.EntityRole.ROOT,
                 type: Whoa.WhoaFramework.EntityType.WALL,
-                hovered: true,
-                selected: true,
+                hovered: false,
+                selected: false,
                 visible: true,
                 pickable: true,
                 movable: true,
@@ -43,8 +43,8 @@ export default class Interaction {
             const createInfo: Whoa.WhoaFramework.EntityOrnamentCreateInfo = {
                 role: Whoa.WhoaFramework.EntityRole.ROOT,
                 type: Whoa.WhoaFramework.EntityType.WALL,
-                hovered: true,
-                selected: true,
+                hovered: false,
+                selected: false,
                 visible: true,
                 pickable: true,
                 movable: true,
@@ -70,5 +70,9 @@ export default class Interaction {
 
     public isRightPressed(): boolean {
         return this.mouse.isRightPressed();
+    }
+
+    public setPointerTouch(touch: boolean): void {
+        this.mouse.setPointerTouch(touch);
     }
 }
