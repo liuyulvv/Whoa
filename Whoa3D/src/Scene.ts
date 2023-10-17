@@ -43,8 +43,8 @@ export default class Scene {
         this.materialManager = new MaterialManager(this.scene);
         this.groundMesh = this.meshManager.createGround();
         this.resize();
-        this.cameraMode = CameraMode.MODE_3D;
-        this.changeTo3D();
+        this.cameraMode = CameraMode.MODE_2D;
+        this.changeTo2D();
     }
 
     public static get(): Scene {
