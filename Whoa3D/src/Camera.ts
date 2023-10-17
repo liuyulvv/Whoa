@@ -89,6 +89,7 @@ export class Camera3D {
 
 class Camera2DPointersInput extends ArcRotateCameraPointersInput {
     private static instance: Camera2DPointersInput;
+    private pickedGround = false;
 
     private constructor() {
         super();
@@ -101,13 +102,38 @@ class Camera2DPointersInput extends ArcRotateCameraPointersInput {
         return Camera2DPointersInput.instance;
     }
 
+    onButtonDown(evt: IPointerEvent): void {
+        if (evt.button == 0) {
+            const pickInfo = Whoa3D.pickEntity();
+            if (pickInfo.hit && pickInfo.meshID == 'ground') {
+                this.pickedGround = true;
+            } else {
+                this.pickedGround = false;
+            }
+        }
+    }
+
     onTouch(point: Nullable<PointerTouch>, offsetX: number, offsetY: number): void {
         if (this._ctrlKey || this._shiftKey || this._altKey || this._metaKey) {
             return;
         }
-        if (this._buttonsPressed == 2) {
-            this.camera.inertialPanningX += -offsetX / this.panningSensibility;
-            this.camera.inertialPanningY += offsetY / this.panningSensibility;
+        WhoaInteraction.setPointerTouch(true);
+        if (this.pickedGround) {
+            if (this._buttonsPressed == 1 || this._buttonsPressed == 2) {
+                this.camera.inertialPanningX += -offsetX / this.panningSensibility;
+                this.camera.inertialPanningY += offsetY / this.panningSensibility;
+            }
+        } else {
+            if (this._buttonsPressed == 2) {
+                this.camera.inertialPanningX += -offsetX / this.panningSensibility;
+                this.camera.inertialPanningY += offsetY / this.panningSensibility;
+            }
+        }
+    }
+
+    onButtonUp(evt: IPointerEvent): void {
+        if (evt.button == 0) {
+            this.pickedGround = false;
         }
     }
 }
