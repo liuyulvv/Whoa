@@ -14,6 +14,9 @@ declare namespace Whoa {
             width: number;
             height: number;
             depth: number;
+            meshURL: string;
+            meshName: string;
+            rotation: number[];
         }
 
         export abstract class Entity {

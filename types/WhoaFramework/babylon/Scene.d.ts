@@ -1,11 +1,11 @@
-/// <reference path="../WhoaGeometry/Point2D.d.ts" />
-/// <reference path="../WhoaGeometry/Point3D.d.ts" />
+/// <reference path="../../WhoaGeometry/Point2D.d.ts" />
+/// <reference path="../../WhoaGeometry/Point3D.d.ts" />
 /// <reference path="CameraMode.d.ts" />
-/// <reference path="MeshManager.d.d.ts" />
+/// <reference path="MeshManager.d.ts" />
 /// <reference path="MaterialManager.d.ts" />
 
 declare namespace Whoa {
-    export namespace Whoa3D {
+    export namespace WhoaFramework {
         export interface PickInfo {
             hit: boolean;
             meshID: string;
@@ -27,4 +27,4 @@ declare namespace Whoa {
 }
 
 // eslint-disable-next-line no-var
-declare var Whoa3D: Whoa.Whoa3D.WhoaScene;
+declare var WhoaScene: Whoa.WhoaFramework.WhoaScene;

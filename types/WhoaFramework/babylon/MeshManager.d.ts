@@ -1,7 +1,7 @@
 /// <reference path="Mesh.d.ts" />
 
 declare namespace Whoa {
-    export namespace Whoa3D {
+    export namespace WhoaFramework {
         export class MeshManager {
             public destroyMeshByID(meshID: string): void;
             public getMeshByID(meshID: string): Mesh | undefined;

@@ -1,7 +1,7 @@
 /// <reference path="Material.d.ts" />
 
 declare namespace Whoa {
-    export namespace Whoa3D {
+    export namespace WhoaFramework {
         export class Mesh {
             public get id(): string;
             public show(): void;
