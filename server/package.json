@@ -1,6 +1,7 @@
 {
     "name": "server",
     "scripts": {
+        "dev": "rollup -c",
         "build": "rollup -c",
         "serve": "node ../dist/server.js"
     },

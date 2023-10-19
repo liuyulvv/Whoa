@@ -1,6 +1,7 @@
 {
     "name": "entry",
     "scripts": {
+        "dev": "rollup --config",
         "build": "rollup --config"
     },
     "type": "module"
