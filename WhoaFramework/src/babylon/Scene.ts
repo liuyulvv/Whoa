@@ -71,11 +71,13 @@ export default class Scene {
     public changeTo2D(): void {
         this.camera2D.attach();
         this.cameraMode = CameraMode.MODE_2D;
+        WhoaEvent.pub('CHANGE_CAMERA_TO_2D');
     }
 
     public changeTo3D(): void {
         this.camera3D.attach();
         this.cameraMode = CameraMode.MODE_3D;
+        WhoaEvent.pub('CHANGE_CAMERA_TO_3D');
     }
 
     public getWorldPos(point: Whoa.WhoaGeometry.Point2D): Whoa.WhoaGeometry.Point3D {

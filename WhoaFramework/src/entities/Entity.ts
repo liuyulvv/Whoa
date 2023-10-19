@@ -1,5 +1,9 @@
+import Material from 'src/babylon/Material';
+import Mesh from 'src/babylon/Mesh';
+import Scene from 'src/babylon/Scene';
 import EntityRole from './EntityRole';
 import EntityType from './EntityType';
+import { AxesViewer } from '@babylonjs/core';
 
 export interface EntityCreateInfo {
     role: EntityRole;
@@ -12,13 +16,16 @@ export interface EntityCreateInfo {
     width: number;
     height: number;
     depth: number;
+    meshURL: string;
+    meshName: string;
+    rotation: number[];
 }
 
 export default abstract class Entity {
     protected info: EntityCreateInfo;
     protected entityID: string;
-    protected mesh: Whoa.Whoa3D.Mesh;
-    protected material: Whoa.Whoa3D.Material;
+    protected mesh: Mesh;
+    protected material: Material;
 
     protected hovered: boolean;
     protected selected: boolean;
@@ -33,8 +40,8 @@ export default abstract class Entity {
     public constructor(entityID: string, info: EntityCreateInfo) {
         this.entityID = entityID;
         this.info = info;
-        this.mesh = Whoa3D.getMeshManager().createBox(this.entityID);
-        this.material = Whoa3D.getMaterialManager().createMaterial(this.entityID);
+        this.mesh = Scene.get().getMeshManager().createBox(this.entityID);
+        this.material = Scene.get().getMaterialManager().createMaterial(this.entityID);
         this.mesh.setMaterial(this.material);
         this.hovered = info.hovered;
         this.selected = info.selected;
@@ -107,8 +114,8 @@ export default abstract class Entity {
     }
 
     public destroy(): void {
-        Whoa3D.getMeshManager().destroyMeshByID(this.entityID);
-        Whoa3D.getMaterialManager().destroyMaterial(this.entityID);
+        Scene.get().getMeshManager().destroyMeshByID(this.entityID);
+        Scene.get().getMaterialManager().destroyMaterial(this.entityID);
         Whoa.WhoaFramework.EntityManager.get().destroyEntityByID(this.entityID);
     }
 
@@ -124,10 +131,10 @@ export default abstract class Entity {
         if (this.hovered != hover) {
             this.hovered = hover;
             if (this.hovered) {
-                Whoa3D.setEntityHoverColor();
+                Scene.get().setEntityHoverColor();
                 this.showBoundingBox();
             } else if (this.selected) {
-                Whoa3D.setEntitySelectColor();
+                Scene.get().setEntitySelectColor();
                 this.showBoundingBox();
             } else {
                 this.hideBoundingBox();
@@ -139,10 +146,10 @@ export default abstract class Entity {
         if (this.selected != selected) {
             this.selected = selected;
             if (this.selected) {
-                Whoa3D.setEntitySelectColor();
+                Scene.get().setEntitySelectColor();
                 this.showBoundingBox();
             } else if (this.hovered) {
-                Whoa3D.setEntityHoverColor();
+                Scene.get().setEntityHoverColor();
                 this.showBoundingBox();
             } else {
                 this.hideBoundingBox();

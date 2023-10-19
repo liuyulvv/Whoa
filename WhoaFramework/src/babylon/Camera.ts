@@ -104,7 +104,7 @@ class Camera2DPointersInput extends ArcRotateCameraPointersInput {
 
     onButtonDown(evt: IPointerEvent): void {
         if (evt.button == 0) {
-            const pickInfo = Whoa3D.pickEntity();
+            const pickInfo = WhoaScene.pickEntity();
             if (pickInfo.hit && pickInfo.meshID == 'ground') {
                 this.pickedGround = true;
             } else {
@@ -156,7 +156,7 @@ class Camera3DPointersInput extends ArcRotateCameraPointersInput {
 
     onButtonDown(evt: IPointerEvent): void {
         if (evt.button == 0) {
-            const pickInfo = Whoa3D.pickEntity();
+            const pickInfo = WhoaScene.pickEntity();
             if (pickInfo.hit && pickInfo.meshID != 'ground') {
                 this.picked = true;
             } else {
