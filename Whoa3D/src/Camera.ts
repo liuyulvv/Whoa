@@ -34,7 +34,7 @@ export class Camera2D {
         this.camera.orthoRight = 10;
         this.camera.inputs.clear();
         this.camera.inputs.addMouseWheel();
-        this.camera.inputs.add(Camera2DPointersInput.getInstance());
+        this.camera.inputs.add(Camera2DPointersInput.get());
         this.oldRadius = this.camera.radius;
         scene.onBeforeRenderObservable.add(() => {
             const canvas = this.engine.getRenderingCanvas();
@@ -74,7 +74,7 @@ export class Camera3D {
         this.camera = new ArcRotateCamera('3D', Math.PI / 2, 0, 10, Vector3.Zero(), this.scene);
         this.camera.inputs.clear();
         this.camera.inputs.addMouseWheel();
-        this.camera.inputs.add(Camera3DPointersInput.getInstance());
+        this.camera.inputs.add(Camera3DPointersInput.get());
     }
 
     public attach() {
@@ -95,7 +95,7 @@ class Camera2DPointersInput extends ArcRotateCameraPointersInput {
         super();
     }
 
-    public static getInstance(): Camera2DPointersInput {
+    public static get(): Camera2DPointersInput {
         if (!Camera2DPointersInput.instance) {
             Camera2DPointersInput.instance = new Camera2DPointersInput();
         }
@@ -147,7 +147,7 @@ class Camera3DPointersInput extends ArcRotateCameraPointersInput {
         this.picked = false;
     }
 
-    public static getInstance(): Camera3DPointersInput {
+    public static get(): Camera3DPointersInput {
         if (!Camera3DPointersInput.instance) {
             Camera3DPointersInput.instance = new Camera3DPointersInput();
         }

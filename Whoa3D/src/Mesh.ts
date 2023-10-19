@@ -16,10 +16,16 @@ export default class Mesh {
 
     public show(): void {
         this.mesh.isVisible = true;
+        this.mesh.getChildMeshes().forEach((mesh) => {
+            mesh.isVisible = true;
+        });
     }
 
     public hide(): void {
-        this.mesh.isVisible = true;
+        this.mesh.isVisible = false;
+        this.mesh.getChildMeshes().forEach((mesh) => {
+            mesh.isVisible = false;
+        });
     }
 
     public showOverlay(): void {
