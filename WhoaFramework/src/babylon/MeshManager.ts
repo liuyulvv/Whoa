@@ -36,6 +36,7 @@ export default class MeshManager {
     public createGround(): Mesh {
         const meshID = 'ground';
         const babylonMesh = this.builder.CreateGround(meshID, { width: 100, height: 100 }, this.scene);
+        babylonMesh.isPickable = false;
         const babylonMaterial = new GridMaterial(meshID, this.scene);
         babylonMaterial.majorUnitFrequency = 5;
         babylonMaterial.minorUnitVisibility = 0.5;
