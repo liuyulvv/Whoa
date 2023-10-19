@@ -21,7 +21,7 @@ export default class Interaction {
 
     private registerEvent(): void {
         WhoaEvent.sub('START_DRAW_LINE', () => {
-            const createInfo: Whoa.WhoaFramework.EntityModelCreateInfo = {
+            const createInfo: Whoa.WhoaFramework.EntityCreateInfo = {
                 role: Whoa.WhoaFramework.EntityRole.ROOT,
                 type: Whoa.WhoaFramework.EntityType.ORNAMENT,
                 hovered: false,
@@ -33,15 +33,16 @@ export default class Interaction {
                 height: 1000,
                 depth: 1000,
                 meshURL: 'assets/models/',
-                meshName: 'arrow_2D.glb'
+                meshName: 'arrow_move.glb',
+                rotation: [-Math.PI / 2, 0, 0]
             };
-            Whoa.WhoaFramework.EntityManager.get().createControl(createInfo);
+            Whoa.WhoaFramework.EntityManager.get().createOrnament(createInfo);
         });
 
         WhoaEvent.sub('STOP_DRAW_LINE', () => {});
 
         WhoaEvent.sub('START_DRAW_BORDER', () => {
-            const createInfo: Whoa.WhoaFramework.EntityModelCreateInfo = {
+            const createInfo: Whoa.WhoaFramework.EntityCreateInfo = {
                 role: Whoa.WhoaFramework.EntityRole.ROOT,
                 type: Whoa.WhoaFramework.EntityType.ORNAMENT,
                 hovered: false,
@@ -53,7 +54,8 @@ export default class Interaction {
                 height: 30,
                 depth: 30,
                 meshURL: 'assets/models/',
-                meshName: 'deer.glb'
+                meshName: 'deer.glb',
+                rotation: [0, 0, 0]
             };
             Whoa.WhoaFramework.EntityManager.get().createOrnament(createInfo);
         });

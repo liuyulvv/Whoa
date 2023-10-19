@@ -77,22 +77,29 @@ export default class Mouse {
         const mouseButton = this.getMouseButton(event);
         this.position.x = event.offsetX;
         this.position.y = event.offsetY;
-        const pickInfo = Whoa3D.pickEntity();
+        const pickInfo = WhoaScene.pickEntity();
         const entities = Whoa.WhoaFramework.EntityManager.get().getAllEntity();
         if (!this.pointerTouch) {
             if (pickInfo.hit) {
-                if (pickInfo.meshID != 'ground') {
-                    entities.forEach((entity) => {
-                        if (entity.id == pickInfo.meshID) {
-                            entity.onSelect(true);
-                        } else {
+                if (
+                    pickInfo.meshID != 'ControlRotate2D' &&
+                    pickInfo.meshID != 'ControlRotate3D' &&
+                    pickInfo.meshID != 'ControlMove2D' &&
+                    pickInfo.meshID != 'ControlMove3D'
+                ) {
+                    if (pickInfo.meshID != 'ground') {
+                        entities.forEach((entity) => {
+                            if (entity.id == pickInfo.meshID) {
+                                entity.onSelect(true);
+                            } else {
+                                entity.onSelect(false);
+                            }
+                        });
+                    } else {
+                        entities.forEach((entity) => {
                             entity.onSelect(false);
-                        }
-                    });
-                } else {
-                    entities.forEach((entity) => {
-                        entity.onSelect(false);
-                    });
+                        });
+                    }
                 }
             } else {
                 entities.forEach((entity) => {
@@ -122,7 +129,7 @@ export default class Mouse {
         }
         this.position.x = event.offsetX;
         this.position.y = event.offsetY;
-        const pickInfo = Whoa3D.pickEntity();
+        const pickInfo = WhoaScene.pickEntity();
         const entities = Whoa.WhoaFramework.EntityManager.get().getAllEntity();
         if (pickInfo.hit) {
             entities.forEach((entity) => {
