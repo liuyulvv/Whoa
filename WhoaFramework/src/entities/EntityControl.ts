@@ -12,12 +12,12 @@ export abstract class EntityControl extends EntityModel {
         this.subID = '';
     }
 
-    public onHover(hover?: boolean): void {
-        if (hover) {
-            this.showOverlay();
-        } else {
-            this.hideOverlay();
-        }
+    public onEnter(): void {
+        this.showOverlay();
+    }
+
+    public onLeave(): void {
+        this.hideOverlay();
     }
 
     public attach(entity: Entity) {

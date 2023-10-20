@@ -127,18 +127,19 @@ export default abstract class Entity {
         this.mesh.hideBoundingBox();
     }
 
-    public onHover(hover: boolean = true) {
-        if (this.hovered != hover) {
-            this.hovered = hover;
-            if (this.hovered) {
-                Scene.get().setEntityHoverColor();
-                this.showBoundingBox();
-            } else if (this.selected) {
-                Scene.get().setEntitySelectColor();
-                this.showBoundingBox();
-            } else {
-                this.hideBoundingBox();
-            }
+    public onEnter(): void {
+        this.hovered = true;
+        Scene.get().setEntityHoverColor();
+        this.showBoundingBox();
+    }
+
+    public onLeave(): void {
+        this.hovered = false;
+        if (this.selected) {
+            Scene.get().setEntitySelectColor();
+            this.showBoundingBox();
+        } else {
+            this.hideBoundingBox();
         }
     }
 

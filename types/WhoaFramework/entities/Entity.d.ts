@@ -35,7 +35,8 @@ declare namespace Whoa {
             public destroy(): void;
             public showBoundingBox(): void;
             public hideBoundingBox(): void;
-            public onHover(hover: boolean);
+            public onEnter(): void;
+            public onLeave(): void;
             public onSelect(selected: boolean);
         }
     }

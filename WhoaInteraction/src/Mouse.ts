@@ -14,9 +14,14 @@ export default class Mouse {
     private pointerTouch: boolean = false;
     private position: Whoa.WhoaGeometry.Point2D;
 
+    private lastHoverEntity: Whoa.WhoaFramework.Entity | undefined;
+    private lastSelectEntity: Whoa.WhoaFramework.Entity | undefined;
+
     private constructor() {
         this.canvas = WhoaCanvas;
         this.position = new Whoa.WhoaGeometry.Point2D();
+        this.lastHoverEntity = undefined;
+        this.lastSelectEntity = undefined;
         this.register();
     }
 
@@ -77,34 +82,20 @@ export default class Mouse {
         const mouseButton = this.getMouseButton(event);
         this.position.x = event.offsetX;
         this.position.y = event.offsetY;
-        const pickInfo = WhoaScene.pickEntity();
-        const entities = Whoa.WhoaFramework.EntityManager.get().getAllEntity();
         if (!this.pointerTouch) {
+            const pickInfo = WhoaScene.pickEntity();
             if (pickInfo.hit) {
-                if (
-                    pickInfo.meshID != 'ControlRotate2D' &&
-                    pickInfo.meshID != 'ControlRotate3D' &&
-                    pickInfo.meshID != 'ControlMove2D' &&
-                    pickInfo.meshID != 'ControlMove3D'
-                ) {
-                    if (pickInfo.meshID != 'ground') {
-                        entities.forEach((entity) => {
-                            if (entity.id == pickInfo.meshID) {
-                                entity.onSelect(true);
-                            } else {
-                                entity.onSelect(false);
-                            }
-                        });
-                    } else {
-                        entities.forEach((entity) => {
-                            entity.onSelect(false);
-                        });
+                const entity = Whoa.WhoaFramework.EntityManager.get().getEntityByID(pickInfo.meshID);
+                if (entity?.type != Whoa.WhoaFramework.EntityType.CONTROL) {
+                    if (this.lastSelectEntity != entity) {
+                        this.lastSelectEntity?.onSelect(false);
+                        this.lastSelectEntity = entity;
+                        this.lastSelectEntity?.onSelect(true);
                     }
                 }
             } else {
-                entities.forEach((entity) => {
-                    entity.onSelect(false);
-                });
+                this.lastSelectEntity?.onSelect(false);
+                this.lastSelectEntity = undefined;
             }
         }
         switch (mouseButton) {
@@ -130,19 +121,16 @@ export default class Mouse {
         this.position.x = event.offsetX;
         this.position.y = event.offsetY;
         const pickInfo = WhoaScene.pickEntity();
-        const entities = Whoa.WhoaFramework.EntityManager.get().getAllEntity();
         if (pickInfo.hit) {
-            entities.forEach((entity) => {
-                if (pickInfo.meshID != 'ground' && entity.id == pickInfo.meshID) {
-                    entity.onHover(true);
-                } else {
-                    entity.onHover(false);
-                }
-            });
+            const entity = Whoa.WhoaFramework.EntityManager.get().getEntityByID(pickInfo.meshID);
+            if (this.lastHoverEntity != entity) {
+                this.lastHoverEntity?.onLeave();
+                this.lastHoverEntity = entity;
+                this.lastHoverEntity?.onEnter();
+            }
         } else {
-            entities.forEach((entity) => {
-                entity.onHover(false);
-            });
+            this.lastHoverEntity?.onLeave();
+            this.lastHoverEntity = undefined;
         }
     }
 
