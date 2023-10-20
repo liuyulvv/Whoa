@@ -26,9 +26,9 @@ export abstract class EntityControl extends EntityModel {
     }
 
     public detach() {
-        this.hide();
         WhoaEvent.unsub('CHANGE_CAMERA_TO_2D', this.subID);
         WhoaEvent.unsub('CHANGE_CAMERA_TO_3D', this.subID);
+        this.hide();
     }
 }
 
@@ -65,7 +65,7 @@ export class EntityControlRotate2D extends EntityControl {
     public attach(entity: Entity) {
         this.entity = entity;
         this.show();
-        WhoaEvent.sub('CHANGE_CAMERA_TO_3D', () => {
+        this.subID = WhoaEvent.sub('CHANGE_CAMERA_TO_3D', () => {
             EntityControlRotate3D.get().attach(entity);
             this.detach();
         });
@@ -109,7 +109,7 @@ export class EntityControlRotate3D extends EntityControl {
     public attach(entity: Entity) {
         this.entity = entity;
         this.show();
-        WhoaEvent.sub('CHANGE_CAMERA_TO_2D', () => {
+        this.subID = WhoaEvent.sub('CHANGE_CAMERA_TO_2D', () => {
             EntityControlRotate2D.get().attach(entity);
             this.detach();
         });
@@ -153,7 +153,7 @@ export class EntityControlMove2D extends EntityControl {
     public attach(entity: Entity) {
         this.entity = entity;
         this.show();
-        WhoaEvent.sub('CHANGE_CAMERA_TO_3D', () => {
+        this.subID = WhoaEvent.sub('CHANGE_CAMERA_TO_3D', () => {
             EntityControlMove3D.get().attach(entity);
             this.detach();
         });
@@ -196,11 +196,13 @@ export class EntityControlMove3D extends EntityControl {
 
     public attach(entity: Entity) {
         this.entity = entity;
-        this.show();
-        WhoaEvent.sub('CHANGE_CAMERA_TO_2D', () => {
-            EntityControlMove2D.get().attach(entity);
-            this.detach();
-        });
+        if (this.entity.isSelected) {
+            this.show();
+            this.subID = WhoaEvent.sub('CHANGE_CAMERA_TO_2D', () => {
+                EntityControlMove2D.get().attach(entity);
+                this.detach();
+            });
+        }
     }
 
     public onSelect(selected?: boolean): void {
