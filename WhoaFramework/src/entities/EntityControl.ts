@@ -95,9 +95,7 @@ export class EntityControlRotate2D extends EntityControl {
                 nowVector,
                 Vector3.Cross(startVector, nowVector).normalize()
             );
-            this.entity.rotateLocalY(radian);
-            // this.entity.translate(offset.x, 0, 0);
-            // this.translate(offset.x, 0, 0);
+            this.entity.rotateLocalZ(radian);
         }
     }
 

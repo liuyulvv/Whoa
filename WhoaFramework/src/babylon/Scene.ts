@@ -124,6 +124,10 @@ export default class Scene {
         return res;
     }
 
+    public getScreenPosition(): Whoa.WhoaGeometry.Point2D {
+        return new Whoa.WhoaGeometry.Point2D(this.scene.pointerX, this.scene.pointerY);
+    }
+
     public getGroundPosition(): Whoa.WhoaGeometry.Point3D {
         const babylonPickInfo = this.scene.pick(this.scene.pointerX, this.scene.pointerY, (mesh) => {
             return mesh == this.groundMesh;

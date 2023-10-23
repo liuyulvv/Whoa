@@ -65,11 +65,11 @@ export default class Mesh {
     }
 
     public rotateLocalY(radian: number): void {
-        this.mesh.rotate(new Vector3(0, 1, 0), radian);
+        this.mesh.rotate(new Vector3(0, 0, 1), radian);
     }
 
     public rotateLocalZ(radian: number): void {
-        this.mesh.rotate(new Vector3(0, 0, 1), radian);
+        this.mesh.rotate(new Vector3(0, 1, 0), radian);
     }
 
     public scale(x: number, y: number, z: number, relative: boolean = true): void {
