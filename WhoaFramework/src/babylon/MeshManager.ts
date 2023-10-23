@@ -1,12 +1,4 @@
-import {
-    AxesViewer,
-    Mesh as BabylonMesh,
-    BoundingInfo,
-    MeshBuilder,
-    Scene,
-    SceneLoader,
-    Vector3
-} from '@babylonjs/core';
+import { Mesh as BabylonMesh, BoundingInfo, MeshBuilder, Scene, SceneLoader, Vector3 } from '@babylonjs/core';
 import '@babylonjs/loaders/glTF';
 import { GridMaterial } from '@babylonjs/materials';
 import Mesh from './Mesh';
