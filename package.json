@@ -12,6 +12,7 @@
         "WhoaUI",
         "WhoaGeometry",
         "WhoaFramework",
+        "WhoaGeneral",
         "entry",
         "assets"
     ],
