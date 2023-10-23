@@ -1,18 +1,18 @@
-import Entity from 'src/entities/Entity';
-
 export default class Interaction {
     private static instance: Interaction;
     private canvas: HTMLCanvasElement;
+    private position: Whoa.WhoaGeometry.Point2D;
 
     private pointerTouched: boolean;
     private pointerMoved: boolean;
 
-    private lastHover: Entity | undefined;
-    private lastSelect: Entity | undefined;
-    private lastControl: Entity | undefined;
+    private lastHover: Whoa.WhoaFramework.Entity | undefined;
+    private lastSelect: Whoa.WhoaFramework.Entity | undefined;
+    private lastControl: Whoa.WhoaFramework.Entity | undefined;
 
     private constructor() {
         this.canvas = WhoaCanvas;
+        this.position = new Whoa.WhoaGeometry.Point2D();
         this.pointerTouched = false;
         this.pointerMoved = false;
         this.lastHover = undefined;
@@ -31,6 +31,16 @@ export default class Interaction {
     private registerEvent() {
         document.addEventListener('keydown', (event: KeyboardEvent) => {
             this.onKeyDown(event);
+        });
+
+        this.canvas.addEventListener('pointerdown', (event: PointerEvent) => {
+            this.onPointerDown(event);
+        });
+        this.canvas.addEventListener('pointermove', (event: PointerEvent) => {
+            this.onPointerMove(event);
+        });
+        this.canvas.addEventListener('pointerup', (event: PointerEvent) => {
+            this.onPointerUp(event);
         });
 
         WhoaEvent.sub('START_DRAW_LINE', () => {
@@ -78,6 +88,99 @@ export default class Interaction {
 
     public setPointerTouch(touch: boolean): void {
         this.pointerTouched = touch;
+    }
+
+    private onPointerDown(event: PointerEvent) {
+        this.position.x = event.offsetX;
+        this.position.y = event.offsetY;
+        const pickInfo = WhoaScene.pickEntity();
+        if (pickInfo.hit) {
+            const entity = Whoa.WhoaFramework.EntityManager.get().getEntityByID(pickInfo.meshID);
+            if (entity && entity.type == Whoa.WhoaFramework.EntityType.CONTROL) {
+                this.lastControl = entity;
+            }
+        }
+    }
+
+    private onPointerMove(event: PointerEvent) {
+        if (this.pointerTouched) {
+            return;
+        }
+        // Left
+        if (event.buttons == 1 && (this.lastControl || this.lastSelect)) {
+            if (this.pointerMoved) {
+                if (this.lastControl) {
+                    this.lastControl.onDrag();
+                } else if (this.lastSelect) {
+                    this.lastSelect.onDrag();
+                }
+            } else {
+                this.pointerMoved = true;
+                if (this.lastControl) {
+                    this.lastControl.onDragStart();
+                } else if (this.lastSelect) {
+                    this.lastSelect.onDragStart();
+                }
+            }
+            return;
+        }
+        // Right or Mid
+        if (event.buttons == 2 || event.buttons == 4) {
+            return;
+        }
+        this.position.x = event.offsetX;
+        this.position.y = event.offsetY;
+        const pickInfo = WhoaScene.pickEntity();
+        if (pickInfo.hit) {
+            const entity = Whoa.WhoaFramework.EntityManager.get().getEntityByID(pickInfo.meshID);
+            if (this.lastHover != entity) {
+                this.lastHover?.onLeave();
+                this.lastHover = entity;
+                this.lastHover?.onEnter();
+            }
+        } else {
+            this.lastHover?.onLeave();
+            this.lastHover = undefined;
+        }
+    }
+
+    private onPointerUp(event: PointerEvent) {
+        this.position.x = event.offsetX;
+        this.position.y = event.offsetY;
+        if (this.pointerMoved) {
+            this.pointerTouched = false;
+            this.pointerMoved = false;
+            if (this.lastControl) {
+                this.lastControl.onDragEnd();
+            } else if (this.lastSelect) {
+                this.lastSelect.onDragEnd();
+            }
+            return;
+        }
+        if (!this.pointerTouched) {
+            const pickInfo = WhoaScene.pickEntity();
+            if (pickInfo.hit) {
+                const entity = Whoa.WhoaFramework.EntityManager.get().getEntityByID(pickInfo.meshID);
+                if (entity && entity.type == Whoa.WhoaFramework.EntityType.CONTROL) {
+                    this.lastControl = entity;
+                } else {
+                    this.lastControl = undefined;
+                    if (entity?.type != Whoa.WhoaFramework.EntityType.CONTROL) {
+                        if (this.lastSelect != entity) {
+                            this.lastSelect?.onSelect(false);
+                            this.lastSelect = entity;
+                            this.lastSelect?.onSelect(true);
+                        }
+                    }
+                }
+            } else {
+                this.lastSelect?.onSelect(false);
+                this.lastSelect = undefined;
+                this.lastControl = undefined;
+            }
+        }
+        this.pointerTouched = false;
+        this.pointerMoved = false;
     }
 
     private onKeyDown(event: KeyboardEvent) {
