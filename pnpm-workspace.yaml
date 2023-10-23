@@ -2,7 +2,7 @@ packages:
     - 'server'
     - 'WhoaEvent'
     - 'WhoaUI'
-    - 'WhoaFramework'
     - 'WhoaGeometry'
+    - 'WhoaFramework'
     - 'entry'
     - 'assets'
