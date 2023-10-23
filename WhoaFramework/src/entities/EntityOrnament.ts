@@ -14,21 +14,39 @@ export default class EntityOrnament extends EntityModel {
         super(entityID, info);
     }
 
+    public attachControl(): void {
+        if (Scene.get().getCameraMode() == CameraMode.MODE_2D) {
+            EntityControlRotate2D.get().attach(this);
+            EntityControlMove2D.get().attach(this);
+        } else {
+            EntityControlRotate3D.get().attach(this);
+            EntityControlMove3D.get().attach(this);
+        }
+    }
+
+    public detachControl(): void {
+        EntityControlRotate2D.get().detach();
+        EntityControlMove2D.get().detach();
+        EntityControlRotate3D.get().detach();
+        EntityControlMove3D.get().detach();
+    }
+
     public onSelect(selected?: boolean): void {
         super.onSelect(selected);
         if (selected) {
-            if (Scene.get().getCameraMode() == CameraMode.MODE_2D) {
-                EntityControlRotate2D.get().attach(this);
-                EntityControlMove2D.get().attach(this);
-            } else {
-                EntityControlRotate3D.get().attach(this);
-                EntityControlMove3D.get().attach(this);
-            }
+            this.attachControl();
         } else {
-            EntityControlRotate2D.get().detach();
-            EntityControlMove2D.get().detach();
-            EntityControlRotate3D.get().detach();
-            EntityControlMove3D.get().detach();
+            this.detachControl();
         }
+    }
+
+    public onDragStart(): void {
+        this.detachControl();
+    }
+
+    public onDrag(): void {}
+
+    public onDragEnd(): void {
+        this.attachControl();
     }
 }

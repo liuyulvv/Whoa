@@ -3,7 +3,6 @@ import Mesh from 'src/babylon/Mesh';
 import Scene from 'src/babylon/Scene';
 import EntityRole from './EntityRole';
 import EntityType from './EntityType';
-import { AxesViewer } from '@babylonjs/core';
 
 export interface EntityCreateInfo {
     role: EntityRole;
@@ -99,10 +98,12 @@ export default abstract class Entity {
 
     public show(): void {
         this.mesh.show();
+        this.visible = true;
     }
 
     public hide(): void {
         this.mesh.hide();
+        this.visible = false;
     }
 
     public showOverlay(): void {
@@ -157,4 +158,10 @@ export default abstract class Entity {
             }
         }
     }
+
+    public onDragStart(): void {}
+
+    public onDrag(): void {}
+
+    public onDragEnd(): void {}
 }

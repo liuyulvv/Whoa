@@ -70,10 +70,6 @@ export class EntityControlRotate2D extends EntityControl {
             this.detach();
         });
     }
-
-    public onSelect(selected?: boolean): void {
-        console.log(selected);
-    }
 }
 
 export class EntityControlRotate3D extends EntityControl {
@@ -113,10 +109,6 @@ export class EntityControlRotate3D extends EntityControl {
             EntityControlRotate2D.get().attach(entity);
             this.detach();
         });
-    }
-
-    public onSelect(selected?: boolean): void {
-        console.log(selected);
     }
 }
 
@@ -159,8 +151,16 @@ export class EntityControlMove2D extends EntityControl {
         });
     }
 
-    public onSelect(selected?: boolean): void {
-        console.log(selected);
+    public onDragStart(): void {
+        console.log('onDragStart');
+    }
+
+    public onDrag(): void {
+        console.log('onDrag');
+    }
+
+    public onDragEnd(): void {
+        console.log('onDragEnd');
     }
 }
 
@@ -203,9 +203,5 @@ export class EntityControlMove3D extends EntityControl {
                 this.detach();
             });
         }
-    }
-
-    public onSelect(selected?: boolean): void {
-        console.log(selected);
     }
 }
