@@ -107,6 +107,9 @@ class Camera2DPointersInput extends ArcRotateCameraPointersInput {
         if (evt.button == 0) {
             const pickInfo = WhoaScene.pickEntity();
             this.picked = pickInfo.hit;
+            if (this.picked) {
+                const entity = Whoa.WhoaFramework.EntityManager.get().getEntityByID(pickInfo.meshID);
+            }
         }
     }
 
