@@ -8,9 +8,6 @@ import EntityType from './entities/EntityType';
 import Interaction from './interaction/Interaction';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-(<any>window).Whoa = {};
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 (<any>window).Whoa.WhoaFramework = {
     CameraMode: CameraMode,
     EntityRole: EntityRole,
