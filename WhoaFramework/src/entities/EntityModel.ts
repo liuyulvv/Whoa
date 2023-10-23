@@ -23,9 +23,9 @@ export default abstract class EntityModel extends Entity {
         this.mesh.scale(this.info.width, this.info.depth, this.info.height, false);
         this.info.visible ? this.mesh.show() : this.mesh.hide();
         if (this.info.rotation.length == 3) {
-            this.mesh.rotateLocalX(this.info.rotation[0]);
-            this.mesh.rotateLocalX(this.info.rotation[1]);
-            this.mesh.rotateLocalX(this.info.rotation[2]);
+            this.rotateLocalX(this.info.rotation[0]);
+            this.rotateLocalX(this.info.rotation[1]);
+            this.rotateLocalX(this.info.rotation[2]);
         }
     }
 }
