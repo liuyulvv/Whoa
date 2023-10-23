@@ -80,7 +80,7 @@ export default class Scene {
         WhoaEvent.pub('CHANGE_CAMERA_TO_3D');
     }
 
-    public getWorldPos(point: Whoa.WhoaGeometry.Point2D): Whoa.WhoaGeometry.Point3D {
+    public screenToWorld(point: Whoa.WhoaGeometry.Point2D): Whoa.WhoaGeometry.Point3D {
         const unproject = Vector3.Unproject(
             new Vector3(point.x, point.y, 0),
             this.engine.getRenderWidth(),
@@ -93,7 +93,7 @@ export default class Scene {
         return res;
     }
 
-    public getScreenPos(point: Whoa.WhoaGeometry.Point3D): Whoa.WhoaGeometry.Point2D {
+    public worldToScreen(point: Whoa.WhoaGeometry.Point3D): Whoa.WhoaGeometry.Point2D {
         const res = new Whoa.WhoaGeometry.Point2D();
         if (this.getCameraMode() == CameraMode.MODE_2D) {
             const project = Vector3.Project(
@@ -115,6 +115,10 @@ export default class Scene {
             res.y = project.y;
         }
         return res;
+    }
+
+    public getScreenPosition(): Whoa.WhoaGeometry.Point2D {
+        return new Whoa.WhoaGeometry.Point2D(this.scene.pointerX, this.scene.pointerY);
     }
 
     public getMeshManager(): MeshManager {

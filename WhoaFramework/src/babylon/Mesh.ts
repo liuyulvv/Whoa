@@ -14,6 +14,11 @@ export default class Mesh {
         return this.meshID;
     }
 
+    public get position(): Whoa.WhoaGeometry.Point3D {
+        const position = this.mesh.position;
+        return new Whoa.WhoaGeometry.Point3D(position.x, position.y, position.z);
+    }
+
     public show(): void {
         this.mesh.setEnabled(true);
     }
@@ -72,6 +77,18 @@ export default class Mesh {
             this.mesh.scaling = new Vector3(this.mesh.scaling.x * x, this.mesh.scaling.y * y, this.mesh.scaling.z * z);
         } else {
             this.mesh.scaling = new Vector3(x, y, z);
+        }
+    }
+
+    public translate(x: number, y: number, z: number, relative: boolean = true): void {
+        if (relative) {
+            this.mesh.position = new Vector3(
+                this.mesh.position.x + x,
+                this.mesh.position.y + y,
+                this.mesh.position.z + z
+            );
+        } else {
+            this.mesh.position = new Vector3(x, y, z);
         }
     }
 }

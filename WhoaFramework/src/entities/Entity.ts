@@ -96,6 +96,10 @@ export default abstract class Entity {
         return this.entityDepth;
     }
 
+    public get position(): Whoa.WhoaGeometry.Point3D {
+        return this.mesh.position;
+    }
+
     public show(): void {
         this.mesh.show();
         this.visible = true;
@@ -164,4 +168,24 @@ export default abstract class Entity {
     public onDrag(): void {}
 
     public onDragEnd(): void {}
+
+    public rotateLocalX(radian: number): void {
+        this.mesh.rotateLocalX(radian);
+    }
+
+    public rotateLocalY(radian: number): void {
+        this.mesh.rotateLocalY(radian);
+    }
+
+    public rotateLocalZ(radian: number): void {
+        this.mesh.rotateLocalZ(radian);
+    }
+
+    public scale(x: number, y: number, z: number, relative: boolean = true): void {
+        this.mesh.scale(x, y, z, relative);
+    }
+
+    public translate(x: number, y: number, z: number, relative: boolean = true): void {
+        this.mesh.translate(x, y, z, relative);
+    }
 }

@@ -4,6 +4,7 @@ declare namespace Whoa {
     export namespace WhoaFramework {
         export class Mesh {
             public get id(): string;
+            public get position(): WhoaGeometry.Point3D;
             public show(): void;
             public hide(): void;
             public showOverlay(): void;
@@ -17,6 +18,7 @@ declare namespace Whoa {
             public rotateLocalY(radian: number): void;
             public rotateLocalZ(radian: number): void;
             public scale(x: number, y: number, z: number, relative): void;
+            public translate(x: number, y: number, z: number, relative: boolean = true): void;
         }
     }
 }

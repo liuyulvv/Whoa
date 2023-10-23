@@ -15,8 +15,9 @@ declare namespace Whoa {
             public getCameraMode(): CameraMode;
             public changeTo2D(): void;
             public changeTo3D(): void;
-            public getWorldPos(pos: WhoaGeometry.Point2D): WhoaGeometry.Point3D;
-            public getScreenPos(pos: WhoaGeometry.Point3D): WhoaGeometry.Point2D;
+            public screenToWorld(pos: WhoaGeometry.Point2D): WhoaGeometry.Point3D;
+            public worldToScreen(pos: WhoaGeometry.Point3D): WhoaGeometry.Point2D;
+            public getScreenPosition(): Whoa.WhoaGeometry.Point2D;
             public getMeshManager(): MeshManager;
             public getMaterialManager(): MaterialManager;
             public setEntityHoverColor(): void;

@@ -30,6 +30,7 @@ declare namespace Whoa {
             public get width(): number;
             public get height(): number;
             public get depth(): number;
+            public get position(): WhoaGeometry.Point3D;
             public show(): void;
             public hide(): void;
             public destroy(): void;
@@ -41,6 +42,11 @@ declare namespace Whoa {
             public onDragStart(): void;
             public onDrag(): void;
             public onDragEnd(): void;
+            public rotateLocalX(radian: number): void;
+            public rotateLocalY(radian: number): void;
+            public rotateLocalZ(radian: number): void;
+            public scale(x: number, y: number, z: number, relative: boolean = true): void;
+            public translate(x: number, y: number, z: number, relative: boolean = true): void;
         }
     }
 }
