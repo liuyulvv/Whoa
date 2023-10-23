@@ -1,3 +1,4 @@
+import { Vector3 } from '@babylonjs/core';
 import Entity, { EntityCreateInfo } from './Entity';
 import EntityModel from './EntityModel';
 import EntityRole from './EntityRole';
@@ -6,10 +7,14 @@ import EntityType from './EntityType';
 export abstract class EntityControl extends EntityModel {
     protected entity: Entity | null = null;
     protected subID: string;
+    protected startPosition2D: Whoa.WhoaGeometry.Point2D;
+    protected startPosition3D: Whoa.WhoaGeometry.Point3D;
 
     public constructor(entityID: string, info: EntityCreateInfo) {
         super(entityID, info);
         this.subID = '';
+        this.startPosition2D = new Whoa.WhoaGeometry.Point2D();
+        this.startPosition3D = new Whoa.WhoaGeometry.Point3D();
     }
 
     public onEnter(): void {
@@ -70,6 +75,33 @@ export class EntityControlRotate2D extends EntityControl {
             this.detach();
         });
     }
+
+    public onDragStart(): void {
+        this.startPosition3D = WhoaScene.screenToWorld(WhoaScene.getScreenPosition());
+    }
+
+    public onDrag(): void {
+        if (this.entity) {
+            const position = WhoaScene.screenToWorld(WhoaScene.getScreenPosition());
+            const origin = this.entity.position;
+            const start = this.startPosition3D.subtract(origin);
+            const now = position.subtract(origin);
+            this.startPosition3D = position;
+            // temp
+            const startVector = new Vector3(start.x, start.y, start.z);
+            const nowVector = new Vector3(now.x, now.y, now.z);
+            const radian = Vector3.GetAngleBetweenVectors(
+                startVector,
+                nowVector,
+                Vector3.Cross(startVector, nowVector).normalize()
+            );
+            this.entity.rotateLocalY(radian);
+            // this.entity.translate(offset.x, 0, 0);
+            // this.translate(offset.x, 0, 0);
+        }
+    }
+
+    public onDragEnd(): void {}
 }
 
 export class EntityControlRotate3D extends EntityControl {
@@ -112,58 +144,6 @@ export class EntityControlRotate3D extends EntityControl {
     }
 }
 
-export class EntityControlMove2D extends EntityControl {
-    private static instance: EntityControlMove2D;
-
-    private constructor() {
-        const entityID = 'ControlMove2D';
-        const info: EntityCreateInfo = {
-            role: EntityRole.ROOT,
-            type: EntityType.CONTROL,
-            hovered: false,
-            selected: false,
-            visible: false,
-            pickable: true,
-            movable: true,
-            width: 1000,
-            height: 1000,
-            depth: 1000,
-            meshURL: 'assets/models/',
-            meshName: 'arrow_move.glb',
-            rotation: [-Math.PI / 2, 0, 0]
-        };
-        super(entityID, info);
-    }
-
-    public static get(): EntityControlMove2D {
-        if (!EntityControlMove2D.instance) {
-            EntityControlMove2D.instance = new EntityControlMove2D();
-        }
-        return EntityControlMove2D.instance;
-    }
-
-    public attach(entity: Entity) {
-        this.entity = entity;
-        this.show();
-        this.subID = WhoaEvent.sub('CHANGE_CAMERA_TO_3D', () => {
-            EntityControlMove3D.get().attach(entity);
-            this.detach();
-        });
-    }
-
-    public onDragStart(): void {
-        console.log('onDragStart');
-    }
-
-    public onDrag(): void {
-        console.log('onDrag');
-    }
-
-    public onDragEnd(): void {
-        console.log('onDragEnd');
-    }
-}
-
 export class EntityControlMove3D extends EntityControl {
     private static instance: EntityControlMove3D;
 
@@ -199,7 +179,6 @@ export class EntityControlMove3D extends EntityControl {
         if (this.entity.isSelected) {
             this.show();
             this.subID = WhoaEvent.sub('CHANGE_CAMERA_TO_2D', () => {
-                EntityControlMove2D.get().attach(entity);
                 this.detach();
             });
         }
