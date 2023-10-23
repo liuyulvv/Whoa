@@ -22,20 +22,16 @@ export default class FreeMove {
 
     public onDragStart() {
         if (this.entity) {
-            this.startPosition3D = WhoaScene.screenToWorld(WhoaScene.getScreenPosition());
+            this.startPosition3D = WhoaScene.getGroundPosition();
         }
     }
 
     public onDrag() {
         if (this.entity) {
-            const position = WhoaScene.screenToWorld(WhoaScene.getScreenPosition());
+            const position = WhoaScene.getGroundPosition();
             const offset = position.subtract(this.startPosition3D);
             this.startPosition3D = position;
-            if (Whoa.WhoaFramework.CameraMode.MODE_2D == WhoaScene.getCameraMode()) {
-                this.entity.translate(offset.x, 0, offset.z);
-            } else if (Whoa.WhoaFramework.CameraMode.MODE_3D == WhoaScene.getCameraMode()) {
-                // this.entity.translate(offset.x * 10, offset.y * 10, offset.z * 10);
-            }
+            this.entity.translate(offset.x, offset.y, offset.z, true);
         }
     }
 

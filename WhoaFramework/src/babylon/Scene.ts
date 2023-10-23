@@ -1,7 +1,14 @@
-import { Engine as BabylonEngine, Scene as BabylonScene, Color3, Color4, Matrix, Vector3 } from '@babylonjs/core';
+import {
+    Engine as BabylonEngine,
+    Mesh as BabylonMesh,
+    Scene as BabylonScene,
+    Color3,
+    Color4,
+    Matrix,
+    Vector3
+} from '@babylonjs/core';
 import { Camera2D, Camera3D, CameraMode } from './Camera';
 import MaterialManager from './MaterialManager';
-import Mesh from './Mesh';
 import MeshManager from './MeshManager';
 
 export interface PickInfo {
@@ -18,7 +25,7 @@ export default class Scene {
     private readonly camera3D: Camera3D;
     private readonly meshManager: MeshManager;
     private readonly materialManager: MaterialManager;
-    private readonly groundMesh: Mesh;
+    private readonly groundMesh: BabylonMesh;
     private cameraMode: CameraMode;
 
     private constructor() {
@@ -117,8 +124,18 @@ export default class Scene {
         return res;
     }
 
-    public getScreenPosition(): Whoa.WhoaGeometry.Point2D {
-        return new Whoa.WhoaGeometry.Point2D(this.scene.pointerX, this.scene.pointerY);
+    public getGroundPosition(): Whoa.WhoaGeometry.Point3D {
+        const babylonPickInfo = this.scene.pick(this.scene.pointerX, this.scene.pointerY, (mesh) => {
+            return mesh == this.groundMesh;
+        });
+        if (babylonPickInfo.hit && babylonPickInfo.pickedPoint) {
+            return new Whoa.WhoaGeometry.Point3D(
+                babylonPickInfo.pickedPoint.x,
+                babylonPickInfo.pickedPoint.y,
+                babylonPickInfo.pickedPoint.z
+            );
+        }
+        return new Whoa.WhoaGeometry.Point3D(0, 0, 0);
     }
 
     public getMeshManager(): MeshManager {

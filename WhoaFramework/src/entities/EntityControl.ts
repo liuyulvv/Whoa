@@ -55,7 +55,7 @@ export class EntityControlRotate2D extends EntityControl {
             depth: 1000,
             meshURL: 'assets/models/',
             meshName: 'arrow_2D.glb',
-            rotation: [0, 0, 0]
+            rotation: [Math.PI / 2, 0, 0]
         };
         super(entityID, info);
     }
@@ -122,7 +122,7 @@ export class EntityControlRotate3D extends EntityControl {
             depth: 1000,
             meshURL: 'assets/models/',
             meshName: 'arrow_3D.glb',
-            rotation: [0, 0, 0]
+            rotation: [Math.PI / 2, 0, 0]
         };
         super(entityID, info);
     }
@@ -162,7 +162,7 @@ export class EntityControlMove3D extends EntityControl {
             depth: 1000,
             meshURL: 'assets/models/',
             meshName: 'arrow_move.glb',
-            rotation: [0, 0, 0]
+            rotation: [Math.PI / 2, 0, 0]
         };
         super(entityID, info);
     }

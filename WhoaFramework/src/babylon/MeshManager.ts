@@ -33,9 +33,10 @@ export default class MeshManager {
         return this.meshes.get(meshID);
     }
 
-    public createGround(): Mesh {
+    public createGround(): BabylonMesh {
         const meshID = 'ground';
-        const babylonMesh = this.builder.CreateGround(meshID, { width: 100, height: 100 }, this.scene);
+        const babylonMesh = MeshBuilder.CreatePlane(meshID, { width: 100, height: 100 }, this.scene);
+        babylonMesh.rotate(new Vector3(1, 0, 0), Math.PI);
         babylonMesh.isPickable = false;
         const babylonMaterial = new GridMaterial(meshID, this.scene);
         babylonMaterial.majorUnitFrequency = 5;
@@ -46,11 +47,11 @@ export default class MeshManager {
         babylonMesh.material = babylonMaterial;
         const mesh = new Mesh(meshID, babylonMesh);
         this.meshes.set(mesh.id, mesh);
-        const axes = new AxesViewer(this.scene);
-        axes.xAxis.parent = babylonMesh;
-        axes.xAxis.parent = babylonMesh;
-        axes.xAxis.parent = babylonMesh;
-        return mesh;
+        // const axes = new AxesViewer(this.scene);
+        // axes.xAxis.parent = babylonMesh;
+        // axes.xAxis.parent = babylonMesh;
+        // axes.xAxis.parent = babylonMesh;
+        return babylonMesh;
     }
 
     public createBox(meshID: string): Mesh {

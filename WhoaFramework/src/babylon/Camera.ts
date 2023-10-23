@@ -25,6 +25,7 @@ export class Camera2D {
         this.engine = engine;
         this.scene = scene;
         this.camera = new ArcRotateCamera('2D', Math.PI / 2, 0, 10, Vector3.Zero(), this.scene);
+        this.camera.upVector = new Vector3(0, 0, 1);
         this.camera.lowerBetaLimit = -10;
         this.camera.upperBetaLimit = 10;
         this.camera.lowerAlphaLimit = -10;
@@ -48,7 +49,7 @@ export class Camera2D {
         });
     }
 
-    public attach() {
+    public attach(): void {
         this.camera.attachControl(this.engine.getRenderingCanvas(), true);
         this.scene.activeCamera = this.camera;
     }
@@ -72,12 +73,13 @@ export class Camera3D {
         this.engine = engine;
         this.scene = scene;
         this.camera = new ArcRotateCamera('3D', Math.PI / 2, 0, 10, Vector3.Zero(), this.scene);
+        this.camera.upVector = new Vector3(0, 0, 1);
         this.camera.inputs.clear();
         this.camera.inputs.addMouseWheel();
         this.camera.inputs.add(Camera3DPointersInput.get());
     }
 
-    public attach() {
+    public attach(): void {
         this.camera.attachControl(this.engine.getRenderingCanvas(), true, false);
         this.scene.activeCamera = this.camera;
     }

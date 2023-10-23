@@ -43,24 +43,7 @@ export default class Interaction {
             this.onPointerUp(event);
         });
 
-        WhoaEvent.sub('START_DRAW_LINE', () => {
-            const createInfo: Whoa.WhoaFramework.EntityCreateInfo = {
-                role: Whoa.WhoaFramework.EntityRole.ROOT,
-                type: Whoa.WhoaFramework.EntityType.ORNAMENT,
-                hovered: false,
-                selected: false,
-                visible: true,
-                pickable: true,
-                movable: true,
-                width: 1000,
-                height: 1000,
-                depth: 1000,
-                meshURL: 'assets/models/',
-                meshName: 'arrow_move.glb',
-                rotation: [-Math.PI / 2, 0, 0]
-            };
-            Whoa.WhoaFramework.EntityManager.get().createOrnament(createInfo);
-        });
+        WhoaEvent.sub('START_DRAW_LINE', () => {});
 
         WhoaEvent.sub('STOP_DRAW_LINE', () => {});
 
@@ -78,7 +61,7 @@ export default class Interaction {
                 depth: 30,
                 meshURL: 'assets/models/',
                 meshName: 'deer.glb',
-                rotation: [0, 0, 0]
+                rotation: [Math.PI / 2, 0, 0]
             };
             Whoa.WhoaFramework.EntityManager.get().createOrnament(createInfo);
         });

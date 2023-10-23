@@ -18,6 +18,7 @@ declare namespace Whoa {
             public screenToWorld(pos: WhoaGeometry.Point2D): WhoaGeometry.Point3D;
             public worldToScreen(pos: WhoaGeometry.Point3D): WhoaGeometry.Point2D;
             public getScreenPosition(): Whoa.WhoaGeometry.Point2D;
+            public getGroundPosition(): Whoa.WhoaGeometry.Point3D;
             public getMeshManager(): MeshManager;
             public getMaterialManager(): MaterialManager;
             public setEntityHoverColor(): void;
