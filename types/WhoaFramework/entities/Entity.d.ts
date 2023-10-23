@@ -38,6 +38,9 @@ declare namespace Whoa {
             public onEnter(): void;
             public onLeave(): void;
             public onSelect(selected: boolean);
+            public onDragStart(): void;
+            public onDrag(): void;
+            public onDragEnd(): void;
         }
     }
 }
