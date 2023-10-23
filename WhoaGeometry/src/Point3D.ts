@@ -52,19 +52,31 @@ export default class Point3D extends GeometryBase {
         );
     }
 
-    public add(point: Point3D) {
+    public add(point: Point3D): Point3D {
+        return new Point3D(this.x_ + point.x, this.y_ + point.y, this.z_ + point.z);
+    }
+
+    public addInPlace(point: Point3D) {
         this.x_ += point.x;
         this.y_ += point.y;
         this.z_ += point.z;
     }
 
-    public subtract(point: Point3D) {
+    public subtract(point: Point3D): Point3D {
+        return new Point3D(this.x_ - point.x, this.y_ - point.y, this.z_ - point.z);
+    }
+
+    public subtractInPlace(point: Point3D) {
         this.x_ -= point.x;
         this.y_ -= point.y;
         this.z_ -= point.z;
     }
 
-    public multiply(num: number) {
+    public multiply(num: number): Point3D {
+        return new Point3D(this.x_ * num, this.y_ * num, this.z_ * num);
+    }
+
+    public multiplyInPlace(num: number) {
         this.x_ *= num;
         this.y_ *= num;
         this.z_ *= num;

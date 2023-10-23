@@ -39,17 +39,29 @@ export default class Point2D extends GeometryBase {
         return Math.sqrt(Math.pow(this.x_ - point.x, 2) + Math.pow(this.y_ - point.y, 2));
     }
 
-    public add(point: Point2D): void {
+    public add(point: Point2D): Point2D {
+        return new Point2D(this.x_ + point.x, this.y_ + point.y);
+    }
+
+    public addInPlace(point: Point2D): void {
         this.x_ += point.x;
         this.y_ += point.y;
     }
 
-    public subtract(point: Point2D): void {
+    public subtract(point: Point2D): Point2D {
+        return new Point2D(this.x_ - point.x, this.y_ - point.y);
+    }
+
+    public subtractInPlace(point: Point2D): void {
         this.x_ -= point.x;
         this.y_ -= point.y;
     }
 
-    public multiply(num: number): void {
+    public multiply(num: number): Point2D {
+        return new Point2D(this.x_ * num, this.y_ * num);
+    }
+
+    public multiplyInPlace(num: number): void {
         this.x_ *= num;
         this.y_ *= num;
     }

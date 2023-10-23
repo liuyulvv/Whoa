@@ -18,9 +18,12 @@ declare namespace Whoa {
             public get z(): number;
             public set z(v: number);
             public distance(point: Point3D): number;
-            public add(point: Point3D): void;
-            public subtract(point: Point3D): void;
-            public multiply(num: number): void;
+            public add(point: Point3D): Point3D;
+            public addInPlace(point: Point3D): void;
+            public subtract(point: Point3D): Point3D;
+            public subtractInPlace(point: Point3D): void;
+            public multiply(num: number): Point3D;
+            public multiplyInPlace(num: number): void;
             public equal(point: Point3D, tolerance?: number): boolean;
             public serialize(): Point3DSerialization;
             public deserialize(serialization: Point3DSerialization): void;
