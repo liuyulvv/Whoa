@@ -1,8 +1,0 @@
-{
-    "name": "interaction",
-    "scripts": {
-        "dev": "rollup -c rollup.config.dev.js",
-        "build": "rollup -c rollup.config.prod.js"
-    },
-    "type": "module"
-}
