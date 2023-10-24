@@ -82,8 +82,20 @@ export default class Point3D extends GeometryBase {
         this.z_ *= num;
     }
 
+    public dot(point: Point3D): number {
+        return this.x * point.x + this.y * point.y + this.z * point.z;
+    }
+
+    public getRadianBetween(end: Point3D): number {
+        return Math.acos(this.dot(end) / (this.length() * end.length()));
+    }
+
     public equal(point: Point3D, tolerance: number = 1e-3): boolean {
         return this.distance(point) < tolerance;
+    }
+
+    public length(): number {
+        return Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z);
     }
 
     public serialize(): Point3DSerialization {

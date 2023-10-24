@@ -66,8 +66,20 @@ export default class Point2D extends GeometryBase {
         this.y_ *= num;
     }
 
+    public dot(point: Point2D): number {
+        return this.x * point.x + this.y * point.y;
+    }
+
+    public getRadianBetween(end: Point2D): number {
+        return Math.acos(this.dot(end) / (this.length() * end.length()));
+    }
+
     public equal(point: Point2D, tolerance: number = 1e-3): boolean {
         return this.distance(point) < tolerance;
+    }
+
+    public length(): number {
+        return Math.sqrt(this.x * this.x + this.y * this.y);
     }
 
     public serialize(): Point2DSerialization {
