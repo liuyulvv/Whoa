@@ -21,7 +21,10 @@ declare namespace Whoa {
             public subtractInPlace(point: Point2D): void;
             public multiply(num: number): Point2D;
             public multiplyInPlace(num: number): void;
+            public dot(point: Point2D): number;
+            public getRadianBetween(end: Point2D): number;
             public equal(point: Point2D, tolerance?: number): boolean;
+            public length(): number;
             public serialize(): Point2DSerialization;
             public deserialize(serialization: Point2DSerialization): void;
         }

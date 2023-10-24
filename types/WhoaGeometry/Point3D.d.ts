@@ -24,7 +24,10 @@ declare namespace Whoa {
             public subtractInPlace(point: Point3D): void;
             public multiply(num: number): Point3D;
             public multiplyInPlace(num: number): void;
+            public dot(point: Point3D): number;
+            public getRadianBetween(end: Point3D): number;
             public equal(point: Point3D, tolerance?: number): boolean;
+            public length(): number;
             public serialize(): Point3DSerialization;
             public deserialize(serialization: Point3DSerialization): void;
         }
