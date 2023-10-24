@@ -1,4 +1,3 @@
-import { Vector3 } from '@babylonjs/core';
 import Entity, { EntityCreateInfo } from './Entity';
 import EntityModel from './EntityModel';
 import EntityRole from './EntityRole';
@@ -7,13 +6,11 @@ import EntityType from './EntityType';
 export abstract class EntityControl extends EntityModel {
     protected entity: Entity | null = null;
     protected subID: string;
-    protected startPosition2D: Whoa.WhoaGeometry.Point2D;
     protected startPosition3D: Whoa.WhoaGeometry.Point3D;
 
     public constructor(entityID: string, info: EntityCreateInfo) {
         super(entityID, info);
         this.subID = '';
-        this.startPosition2D = new Whoa.WhoaGeometry.Point2D();
         this.startPosition3D = new Whoa.WhoaGeometry.Point3D();
     }
 
@@ -87,15 +84,10 @@ export class EntityControlRotate2D extends EntityControl {
             const start = this.startPosition3D.subtract(origin);
             const now = position.subtract(origin);
             this.startPosition3D = position;
-            // temp
-            const startVector = new Vector3(start.x, start.y, start.z);
-            const nowVector = new Vector3(now.x, now.y, now.z);
-            const radian = Vector3.GetAngleBetweenVectors(
-                startVector,
-                nowVector,
-                Vector3.Cross(startVector, nowVector).normalize()
-            );
+            const direction = start.x * now.y - start.y * now.x > 0 ? 1 : -1;
+            const radian = start.getRadianBetween(now) * direction;
             this.entity.rotateLocalZ(radian);
+            this.rotateLocalZ(radian);
         }
     }
 
@@ -133,8 +125,7 @@ export class EntityControlRotate3D extends EntityControl {
     }
 
     public attach(entity: Entity) {
-        this.entity = entity;
-        this.show();
+        super.attach(entity);
         this.subID = WhoaEvent.sub('CHANGE_CAMERA_TO_2D', () => {
             EntityControlRotate2D.get().attach(entity);
             this.detach();
@@ -173,12 +164,9 @@ export class EntityControlMove3D extends EntityControl {
     }
 
     public attach(entity: Entity) {
-        this.entity = entity;
-        if (this.entity.isSelected) {
-            this.show();
-            this.subID = WhoaEvent.sub('CHANGE_CAMERA_TO_2D', () => {
-                this.detach();
-            });
-        }
+        super.attach(entity);
+        this.subID = WhoaEvent.sub('CHANGE_CAMERA_TO_2D', () => {
+            this.detach();
+        });
     }
 }
