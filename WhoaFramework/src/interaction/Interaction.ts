@@ -1,3 +1,5 @@
+import CreateWallByLine from 'src/wall/CreateWallByLine';
+
 export default class Interaction {
     private static instance: Interaction;
     private canvas: HTMLCanvasElement;
@@ -12,6 +14,9 @@ export default class Interaction {
 
     private creating: boolean;
     private createType: string;
+    private bindPointerDown: (event: PointerEvent) => void;
+    private bindPointerMove: (event: PointerEvent) => void;
+    private bindPointerUp: (event: PointerEvent) => void;
 
     private constructor() {
         this.canvas = WhoaCanvas;
@@ -23,6 +28,9 @@ export default class Interaction {
         this.lastControl = undefined;
         this.creating = false;
         this.createType = '';
+        this.bindPointerDown = this.onPointerDown.bind(this);
+        this.bindPointerMove = this.onPointerMove.bind(this);
+        this.bindPointerUp = this.onPointerUp.bind(this);
         this.registerEvent();
     }
 
@@ -35,12 +43,26 @@ export default class Interaction {
 
     private startCreate(): void {
         this.creating = true;
+        this.unregisterPointerEvent();
     }
 
     private stopCreate(): void {
         this.creating = false;
         this.createType = '';
+        this.registerPointerEvent();
         WhoaEvent.pub('STOP_CREATE');
+    }
+
+    private registerPointerEvent() {
+        this.canvas.addEventListener('pointerdown', this.bindPointerDown);
+        this.canvas.addEventListener('pointermove', this.bindPointerMove);
+        this.canvas.addEventListener('pointerup', this.bindPointerUp);
+    }
+
+    private unregisterPointerEvent() {
+        this.canvas.removeEventListener('pointerdown', this.bindPointerDown);
+        this.canvas.removeEventListener('pointermove', this.bindPointerMove);
+        this.canvas.removeEventListener('pointerup', this.bindPointerUp);
     }
 
     private registerEvent() {
@@ -48,23 +70,17 @@ export default class Interaction {
             this.onKeyDown(event);
         });
 
-        this.canvas.addEventListener('pointerdown', (event: PointerEvent) => {
-            this.onPointerDown(event);
-        });
-        this.canvas.addEventListener('pointermove', (event: PointerEvent) => {
-            this.onPointerMove(event);
-        });
-        this.canvas.addEventListener('pointerup', (event: PointerEvent) => {
-            this.onPointerUp(event);
-        });
+        this.registerPointerEvent();
 
         WhoaEvent.sub('START_DRAW_LINE', () => {
             this.startCreate();
+            CreateWallByLine.get().onCreateStart();
             this.createType = 'LINE';
         });
 
         WhoaEvent.sub('STOP_DRAW_LINE', () => {
             this.stopCreate();
+            CreateWallByLine.get().onCreateEnd();
         });
 
         WhoaEvent.sub('START_DRAW_BORDER', () => {
