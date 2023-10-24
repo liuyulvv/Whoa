@@ -9,7 +9,8 @@ export default [
             copy({
                 targets: [
                     { src: 'imgs/*', dest: '../dist/assets/imgs/' },
-                    { src: 'models/*', dest: '../dist/assets/models/' }
+                    { src: 'models/*', dest: '../dist/assets/models/' },
+                    { src: 'env/*', dest: '../dist/assets/env/' }
                 ]
             })
         ],

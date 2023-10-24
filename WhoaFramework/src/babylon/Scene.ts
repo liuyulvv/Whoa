@@ -35,6 +35,7 @@ export default class Scene {
         this.scene.clearColor = new Color4(1.0, 1.0, 1.0, 1.0);
         this.scene.useRightHandedSystem = true;
         const helper = this.scene.createDefaultEnvironment({
+            environmentTexture: '/assets/env/environmentSpecular.env',
             createGround: false,
             createSkybox: false
         });
