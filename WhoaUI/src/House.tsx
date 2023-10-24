@@ -6,6 +6,7 @@ import {
     LineRegular,
     bundleIcon
 } from '@fluentui/react-icons';
+import { useEffect } from 'react';
 import createLeftMenuStore from './store';
 
 const useStyles = makeStyles({
@@ -28,6 +29,15 @@ export default () => {
 
     const check = createLeftMenuStore((state) => state.checked);
     const setCheck = createLeftMenuStore((state) => state.setChecked);
+
+    useEffect(() => {
+        const sub = WhoaEvent.sub('STOP_CREATE', () => {
+            setCheck('');
+        });
+        return () => {
+            WhoaEvent.unsub('STOP_CREATE', sub);
+        };
+    });
 
     return (
         <div className={styles.container}>

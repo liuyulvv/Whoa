@@ -10,6 +10,9 @@ export default class Interaction {
     private lastSelect: Whoa.WhoaFramework.Entity | undefined;
     private lastControl: Whoa.WhoaFramework.Entity | undefined;
 
+    private creating: boolean;
+    private createType: string;
+
     private constructor() {
         this.canvas = WhoaCanvas;
         this.position = new Whoa.WhoaGeometry.Point2D();
@@ -18,6 +21,8 @@ export default class Interaction {
         this.lastHover = undefined;
         this.lastSelect = undefined;
         this.lastControl = undefined;
+        this.creating = false;
+        this.createType = '';
         this.registerEvent();
     }
 
@@ -26,6 +31,16 @@ export default class Interaction {
             Interaction.instance = new Interaction();
         }
         return Interaction.instance;
+    }
+
+    private startCreate(): void {
+        this.creating = true;
+    }
+
+    private stopCreate(): void {
+        this.creating = false;
+        this.createType = '';
+        WhoaEvent.pub('STOP_CREATE');
     }
 
     private registerEvent() {
@@ -43,11 +58,18 @@ export default class Interaction {
             this.onPointerUp(event);
         });
 
-        WhoaEvent.sub('START_DRAW_LINE', () => {});
+        WhoaEvent.sub('START_DRAW_LINE', () => {
+            this.startCreate();
+            this.createType = 'LINE';
+        });
 
-        WhoaEvent.sub('STOP_DRAW_LINE', () => {});
+        WhoaEvent.sub('STOP_DRAW_LINE', () => {
+            this.stopCreate();
+        });
 
         WhoaEvent.sub('START_DRAW_BORDER', () => {
+            this.startCreate();
+            this.createType = 'BORDER';
             const createInfo: Whoa.WhoaFramework.EntityCreateInfo = {
                 role: Whoa.WhoaFramework.EntityRole.ROOT,
                 type: Whoa.WhoaFramework.EntityType.ORNAMENT,
@@ -66,7 +88,9 @@ export default class Interaction {
             Whoa.WhoaFramework.EntityManager.get().createOrnament(createInfo);
         });
 
-        WhoaEvent.sub('STOP_DRAW_BORDER', () => {});
+        WhoaEvent.sub('STOP_DRAW_BORDER', () => {
+            this.stopCreate();
+        });
     }
 
     public setPointerTouch(touch: boolean): void {
@@ -141,25 +165,36 @@ export default class Interaction {
             return;
         }
         if (!this.pointerTouched) {
-            const pickInfo = WhoaScene.pickEntity();
-            if (pickInfo.hit) {
-                const entity = Whoa.WhoaFramework.EntityManager.get().getEntityByID(pickInfo.meshID);
-                if (entity && entity.type == Whoa.WhoaFramework.EntityType.CONTROL) {
-                    this.lastControl = entity;
+            if (event.button == 0) {
+                if (this.creating) {
+                    if (this.createType == 'LINE') {
+                    }
                 } else {
-                    this.lastControl = undefined;
-                    if (entity?.type != Whoa.WhoaFramework.EntityType.CONTROL) {
-                        if (this.lastSelect != entity) {
-                            this.lastSelect?.onSelect(false);
-                            this.lastSelect = entity;
-                            this.lastSelect?.onSelect(true);
+                    const pickInfo = WhoaScene.pickEntity();
+                    if (pickInfo.hit) {
+                        const entity = Whoa.WhoaFramework.EntityManager.get().getEntityByID(pickInfo.meshID);
+                        if (entity && entity.type == Whoa.WhoaFramework.EntityType.CONTROL) {
+                            this.lastControl = entity;
+                        } else {
+                            this.lastControl = undefined;
+                            if (entity?.type != Whoa.WhoaFramework.EntityType.CONTROL) {
+                                if (this.lastSelect != entity) {
+                                    this.lastSelect?.onSelect(false);
+                                    this.lastSelect = entity;
+                                    this.lastSelect?.onSelect(true);
+                                }
+                            }
                         }
+                    } else {
+                        this.lastSelect?.onSelect(false);
+                        this.lastSelect = undefined;
+                        this.lastControl = undefined;
                     }
                 }
-            } else {
-                this.lastSelect?.onSelect(false);
-                this.lastSelect = undefined;
-                this.lastControl = undefined;
+            } else if (event.button == 2) {
+                if (this.creating) {
+                    this.stopCreate();
+                }
             }
         }
         this.pointerTouched = false;
