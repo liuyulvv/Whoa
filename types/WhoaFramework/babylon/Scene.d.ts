@@ -1,8 +1,6 @@
 /// <reference path="../../WhoaGeometry/Point2D.d.ts" />
 /// <reference path="../../WhoaGeometry/Point3D.d.ts" />
 /// <reference path="CameraMode.d.ts" />
-/// <reference path="MeshManager.d.ts" />
-/// <reference path="MaterialManager.d.ts" />
 
 declare namespace Whoa {
     export namespace WhoaFramework {
@@ -19,8 +17,6 @@ declare namespace Whoa {
             public worldToScreen(pos: WhoaGeometry.Point3D): WhoaGeometry.Point2D;
             public getScreenPosition(): Whoa.WhoaGeometry.Point2D;
             public getGroundPosition(): Whoa.WhoaGeometry.Point3D;
-            public getMeshManager(): MeshManager;
-            public getMaterialManager(): MaterialManager;
             public setEntityHoverColor(): void;
             public setEntitySelectColor(): void;
             public pickEntity(): PickInfo;

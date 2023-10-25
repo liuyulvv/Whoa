@@ -2,14 +2,16 @@ import {
     Engine as BabylonEngine,
     Mesh as BabylonMesh,
     Scene as BabylonScene,
+    BoundingInfo,
     Color3,
     Color4,
     Matrix,
+    MeshBuilder,
+    SceneLoader,
     Vector3
 } from '@babylonjs/core';
+import { GridMaterial } from '@babylonjs/materials';
 import { Camera2D, Camera3D, CameraMode } from './Camera';
-import MaterialManager from './MaterialManager';
-import MeshManager from './MeshManager';
 
 export interface PickInfo {
     hit: boolean;
@@ -23,8 +25,7 @@ export default class Scene {
     private readonly scene: BabylonScene;
     private readonly camera2D: Camera2D;
     private readonly camera3D: Camera3D;
-    private readonly meshManager: MeshManager;
-    private readonly materialManager: MaterialManager;
+    private readonly builder = MeshBuilder;
     private readonly groundMesh: BabylonMesh;
     private cameraMode: CameraMode;
 
@@ -42,15 +43,23 @@ export default class Scene {
         helper?.setMainColor(new Color3(1.0, 1.0, 1.0));
         this.camera2D = new Camera2D(this.engine, this.scene);
         this.camera3D = new Camera3D(this.engine, this.scene);
+        this.groundMesh = MeshBuilder.CreatePlane('ground', { width: 100, height: 100 }, this.scene);
+        this.groundMesh.rotate(new Vector3(1, 0, 0), Math.PI);
+        this.groundMesh.isPickable = false;
+        const groundMeshMaterial = new GridMaterial('ground', this.scene);
+        groundMeshMaterial.majorUnitFrequency = 5;
+        groundMeshMaterial.minorUnitVisibility = 0.5;
+        groundMeshMaterial.gridRatio = 1;
+        groundMeshMaterial.useMaxLine = true;
+        groundMeshMaterial.opacity = 0.99;
+        this.groundMesh.material = groundMeshMaterial;
+
         this.engine.runRenderLoop(() => {
             this.scene.render();
         });
         WhoaEvent.sub('WHOA_WINDOW_RESIZE', () => {
             this.resize();
         });
-        this.meshManager = new MeshManager(this.scene);
-        this.materialManager = new MaterialManager(this.scene);
-        this.groundMesh = this.meshManager.createGround();
         this.resize();
         this.cameraMode = CameraMode.MODE_2D;
         this.changeTo2D();
@@ -143,14 +152,6 @@ export default class Scene {
         return new Whoa.WhoaGeometry.Point3D(0, 0, 0);
     }
 
-    public getMeshManager(): MeshManager {
-        return this.meshManager;
-    }
-
-    public getMaterialManager(): MaterialManager {
-        return this.materialManager;
-    }
-
     public setEntityHoverColor(): void {
         this.scene.getBoundingBoxRenderer().frontColor = Color3.FromHexString('#479ef5');
         this.scene.getBoundingBoxRenderer().backColor = Color3.FromHexString('#479ef5');
@@ -168,5 +169,32 @@ export default class Scene {
             meshID: babylonPickInfo.pickedMesh ? babylonPickInfo.pickedMesh.id : ''
         };
         return pickInfo;
+    }
+
+    public get MeshBuilder(): typeof MeshBuilder {
+        return this.builder;
+    }
+
+    public importMeshAsync(baseURL: string, meshName: string, entityID: string) {
+        return SceneLoader.ImportMeshAsync('', baseURL, meshName, this.scene).then((result) => {
+            const meshes: BabylonMesh[] = [];
+            result.meshes.forEach((mesh) => {
+                mesh.id = entityID;
+                const childMeshes = mesh.getChildMeshes();
+                if (childMeshes.length > 0) {
+                    let min = childMeshes[0].getBoundingInfo().boundingBox.minimumWorld;
+                    let max = childMeshes[0].getBoundingInfo().boundingBox.maximumWorld;
+                    for (let i = 0; i < childMeshes.length; i++) {
+                        const meshMin = childMeshes[i].getBoundingInfo().boundingBox.minimumWorld;
+                        const meshMax = childMeshes[i].getBoundingInfo().boundingBox.maximumWorld;
+                        min = Vector3.Minimize(min, meshMin);
+                        max = Vector3.Maximize(max, meshMax);
+                    }
+                    mesh.setBoundingInfo(new BoundingInfo(min, max));
+                    meshes.push(mesh as BabylonMesh);
+                }
+            });
+            return meshes;
+        });
     }
 }

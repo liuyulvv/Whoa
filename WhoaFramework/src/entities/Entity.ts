@@ -1,5 +1,4 @@
-import Material from 'src/babylon/Material';
-import Mesh from 'src/babylon/Mesh';
+import { Mesh as BabylonMesh, Color3, StandardMaterial, Vector3 } from '@babylonjs/core';
 import Scene from 'src/babylon/Scene';
 import EntityRole from './EntityRole';
 import EntityType from './EntityType';
@@ -23,8 +22,8 @@ export interface EntityCreateInfo {
 export default abstract class Entity {
     protected info: EntityCreateInfo;
     protected entityID: string;
-    protected mesh: Mesh;
-    protected material: Material;
+    protected mesh: BabylonMesh;
+    protected material: StandardMaterial;
 
     protected hovered: boolean;
     protected selected: boolean;
@@ -39,9 +38,10 @@ export default abstract class Entity {
     public constructor(entityID: string, info: EntityCreateInfo) {
         this.entityID = entityID;
         this.info = info;
-        this.mesh = Scene.get().getMeshManager().createBox(this.entityID);
-        this.material = Scene.get().getMaterialManager().createMaterial(this.entityID);
-        this.mesh.setMaterial(this.material);
+        this.mesh = Scene.get().MeshBuilder.CreateBox(this.entityID);
+        this.material = new StandardMaterial(this.entityID);
+        this.material.emissiveColor = new Color3(0.10196078431372549, 0.9215686274509803, 1);
+        this.mesh.material = this.material;
         this.hovered = info.hovered;
         this.selected = info.selected;
         this.visible = info.visible;
@@ -97,39 +97,45 @@ export default abstract class Entity {
     }
 
     public get position(): Whoa.WhoaGeometry.Point3D {
-        return this.mesh.position;
+        const pos = this.mesh.position;
+        return new Whoa.WhoaGeometry.Point3D(pos.x, pos.y, pos.z);
     }
 
     public show(): void {
-        this.mesh.show();
+        this.mesh.setEnabled(true);
         this.visible = true;
     }
 
     public hide(): void {
-        this.mesh.hide();
+        this.mesh.setEnabled(false);
         this.visible = false;
     }
 
     public showOverlay(): void {
-        this.mesh.showOverlay();
+        this.mesh.getChildMeshes().forEach((mesh) => {
+            mesh.overlayColor = Color3.Red();
+            mesh.renderOverlay = true;
+        });
     }
 
     public hideOverlay(): void {
-        this.mesh.hideOverlay();
+        this.mesh.getChildMeshes().forEach((mesh) => {
+            mesh.renderOverlay = false;
+        });
     }
 
     public destroy(): void {
-        Scene.get().getMeshManager().destroyMeshByID(this.entityID);
-        Scene.get().getMaterialManager().destroyMaterial(this.entityID);
+        this.mesh.dispose();
+        this.material.dispose();
         Whoa.WhoaFramework.EntityManager.get().destroyEntityByID(this.entityID);
     }
 
     public showBoundingBox(): void {
-        this.mesh.showBoundingBox();
+        this.mesh.showBoundingBox = true;
     }
 
     public hideBoundingBox(): void {
-        this.mesh.hideBoundingBox();
+        this.mesh.showBoundingBox = false;
     }
 
     public onEnter(): void {
@@ -170,22 +176,34 @@ export default abstract class Entity {
     public onDragEnd(): void {}
 
     public rotateLocalX(radian: number): void {
-        this.mesh.rotateLocalX(radian);
+        this.mesh.rotate(new Vector3(1, 0, 0), radian);
     }
 
     public rotateLocalY(radian: number): void {
-        this.mesh.rotateLocalY(radian);
+        this.mesh.rotate(new Vector3(0, 0, 1), radian);
     }
 
     public rotateLocalZ(radian: number): void {
-        this.mesh.rotateLocalZ(radian);
+        this.mesh.rotate(new Vector3(0, 1, 0), radian);
     }
 
     public scale(x: number, y: number, z: number, relative: boolean = true): void {
-        this.mesh.scale(x, y, z, relative);
+        if (relative) {
+            this.mesh.scaling = new Vector3(this.mesh.scaling.x * x, this.mesh.scaling.y * y, this.mesh.scaling.z * z);
+        } else {
+            this.mesh.scaling = new Vector3(x, y, z);
+        }
     }
 
     public translate(x: number, y: number, z: number, relative: boolean = true): void {
-        this.mesh.translate(x, y, z, relative);
+        if (relative) {
+            this.mesh.position = new Vector3(
+                this.mesh.position.x + x,
+                this.mesh.position.y + y,
+                this.mesh.position.z + z
+            );
+        } else {
+            this.mesh.position = new Vector3(x, y, z);
+        }
     }
 }
