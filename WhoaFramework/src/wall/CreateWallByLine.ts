@@ -1,4 +1,4 @@
-import { Color3, LinesMesh, Vector3 } from '@babylonjs/core';
+import { Angle, Color3, LinesMesh, Vector3 } from '@babylonjs/core';
 import Scene from 'src/babylon/Scene';
 import { PointerButton } from 'src/utils/Pointer';
 import { v4 as uuid } from 'uuid';
@@ -12,9 +12,10 @@ export default class CreateWallByLine {
     private static instance: CreateWallByLine;
     private canvas: HTMLCanvasElement;
     private status: CreateStatus;
-    private start: Whoa.WhoaGeometry.Point2D;
-    private end: Whoa.WhoaGeometry.Point2D;
+    private start: Whoa.WhoaGeometry.Point3D;
+    private end: Whoa.WhoaGeometry.Point3D;
     private wall: LinesMesh | undefined;
+    private orthogonal: boolean;
 
     private bindPointerMove: (event: PointerEvent) => void;
     private bindPointerUp: (event: PointerEvent) => void;
@@ -22,8 +23,9 @@ export default class CreateWallByLine {
     private constructor() {
         this.canvas = WhoaCanvas;
         this.status = CreateStatus.START;
-        this.start = new Whoa.WhoaGeometry.Point2D(0, 0);
-        this.end = new Whoa.WhoaGeometry.Point2D(0, 0);
+        this.start = new Whoa.WhoaGeometry.Point3D(0, 0, 0);
+        this.end = new Whoa.WhoaGeometry.Point3D(0, 0, 0);
+        this.orthogonal = true;
         this.bindPointerMove = this.onPointerMove.bind(this);
         this.bindPointerUp = this.onPointerUp.bind(this);
     }
@@ -40,10 +42,23 @@ export default class CreateWallByLine {
     }
 
     private onCreate(): void {
-        const startWorld = WhoaScene.screenToWorld(this.start);
-        const endWorld = WhoaScene.screenToWorld(this.end);
-        const start = new Vector3(startWorld.x, startWorld.y, 2.8);
-        const end = new Vector3(endWorld.x, endWorld.y, 2.8);
+        if (this.orthogonal) {
+            const orthogonalPoint = this.end.clone();
+            if (this.end.x != this.start.x) {
+                orthogonalPoint.y = this.start.y;
+            }
+            const vecA = orthogonalPoint.subtract(this.start);
+            const vecB = this.end.subtract(this.start);
+            const radian = vecA.getRadianBetween(vecB);
+            // const degree = Angle.FromRadians(vecA.getRadianBetween(vecB)).degrees();
+            if (radian > Math.PI / 4) {
+                orthogonalPoint.x = this.start.x;
+                orthogonalPoint.y = this.end.y;
+            }
+            this.end = orthogonalPoint;
+        }
+        const start = new Vector3(this.start.x, this.start.y, 2.8);
+        const end = new Vector3(this.end.x, this.end.y, 2.8);
         if (!this.wall) {
             this.wall = Scene.get().MeshBuilder.CreateLines(uuid(), { points: [start, end], updatable: true });
             this.wall.color = Color3.Red();
@@ -72,7 +87,7 @@ export default class CreateWallByLine {
 
     private onPointerMove(event: PointerEvent): void {
         if (CreateStatus.CREATE == this.status) {
-            this.end = WhoaScene.getScreenPosition();
+            this.end = WhoaScene.screenToWorld(WhoaScene.getScreenPosition());
             this.onCreate();
         }
     }
@@ -80,10 +95,10 @@ export default class CreateWallByLine {
     private onPointerUp(event: PointerEvent): void {
         if (PointerButton.LEFT == event.button) {
             if (CreateStatus.START == this.status) {
-                this.start = WhoaScene.getScreenPosition();
+                this.start = WhoaScene.screenToWorld(WhoaScene.getScreenPosition());
                 this.status = CreateStatus.CREATE;
             } else if (CreateStatus.CREATE == this.status) {
-                this.end = WhoaScene.getScreenPosition();
+                this.end = WhoaScene.screenToWorld(WhoaScene.getScreenPosition());
                 this.onCreate();
                 this.start = this.end;
                 this.wall = undefined;
