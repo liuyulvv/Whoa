@@ -24,15 +24,15 @@ export class Camera2D {
     public constructor(engine: BabylonEngine, scene: BabylonScene) {
         this.engine = engine;
         this.scene = scene;
-        this.camera = new ArcRotateCamera('2D', Math.PI / 2, 0, 10, Vector3.Zero(), this.scene);
+        this.camera = new ArcRotateCamera('2D', Math.PI / 2, 0, 20, Vector3.Zero(), this.scene);
         this.camera.upVector = new Vector3(0, 0, 1);
-        this.camera.lowerBetaLimit = -10;
-        this.camera.upperBetaLimit = 10;
-        this.camera.lowerAlphaLimit = -10;
-        this.camera.upperAlphaLimit = 10;
+        this.camera.lowerBetaLimit = -20;
+        this.camera.upperBetaLimit = 20;
+        this.camera.lowerAlphaLimit = -20;
+        this.camera.upperAlphaLimit = 20;
         this.camera.mode = Camera.ORTHOGRAPHIC_CAMERA;
-        this.camera.orthoLeft = -10;
-        this.camera.orthoRight = 10;
+        this.camera.orthoLeft = -20;
+        this.camera.orthoRight = 20;
         this.camera.inputs.clear();
         this.camera.inputs.addMouseWheel();
         this.camera.inputs.add(Camera2DPointersInput.get());
@@ -72,7 +72,7 @@ export class Camera3D {
     public constructor(engine: BabylonEngine, scene: BabylonScene) {
         this.engine = engine;
         this.scene = scene;
-        this.camera = new ArcRotateCamera('3D', Math.PI / 2, 0, 10, Vector3.Zero(), this.scene);
+        this.camera = new ArcRotateCamera('3D', Math.PI / 2, 0, 30, Vector3.Zero(), this.scene);
         this.camera.upVector = new Vector3(0, 0, 1);
         this.camera.inputs.clear();
         this.camera.inputs.addMouseWheel();
