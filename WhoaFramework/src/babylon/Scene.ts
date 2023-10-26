@@ -47,11 +47,13 @@ export default class Scene {
         this.groundMesh.rotate(new Vector3(1, 0, 0), Math.PI);
         this.groundMesh.isPickable = false;
         const groundMeshMaterial = new GridMaterial('ground', this.scene);
-        groundMeshMaterial.majorUnitFrequency = 10;
+        groundMeshMaterial.majorUnitFrequency = 0;
         groundMeshMaterial.minorUnitVisibility = 0.5;
         groundMeshMaterial.gridRatio = 1;
         groundMeshMaterial.useMaxLine = true;
-        groundMeshMaterial.opacity = 0.99;
+        groundMeshMaterial.opacity = 0.5;
+        groundMeshMaterial.mainColor = Color3.FromHexString('#ededed');
+        groundMeshMaterial.lineColor = Color3.Black();
         this.groundMesh.material = groundMeshMaterial;
 
         this.engine.runRenderLoop(() => {
