@@ -16,6 +16,12 @@ export enum CameraMode {
     MODE_3D
 }
 
+export enum LayerMask {
+    ONLY_2D = 1,
+    ONLY_3D = 2,
+    BOTH = 3
+}
+
 export class Camera2D {
     private engine: BabylonEngine;
     private scene: BabylonScene;
@@ -25,6 +31,7 @@ export class Camera2D {
         this.engine = engine;
         this.scene = scene;
         this.camera = new ArcRotateCamera('2D', Math.PI / 2, 0, 20, Vector3.Zero(), this.scene);
+        this.camera.layerMask = LayerMask.ONLY_2D;
         this.camera.upVector = new Vector3(0, 0, 1);
         this.camera.lowerBetaLimit = -20;
         this.camera.upperBetaLimit = 20;
@@ -73,6 +80,7 @@ export class Camera3D {
         this.engine = engine;
         this.scene = scene;
         this.camera = new ArcRotateCamera('3D', Math.PI / 2, 0, 30, Vector3.Zero(), this.scene);
+        this.camera.layerMask = LayerMask.ONLY_3D;
         this.camera.upVector = new Vector3(0, 0, 1);
         this.camera.inputs.clear();
         this.camera.inputs.addMouseWheel();

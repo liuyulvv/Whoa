@@ -1,4 +1,5 @@
 import { Mesh as BabylonMesh, Color3, StandardMaterial, Vector3 } from '@babylonjs/core';
+import { LayerMask } from 'src/babylon/Camera';
 import Scene from 'src/babylon/Scene';
 import EntityRole from './EntityRole';
 import EntityType from './EntityType';
@@ -39,6 +40,7 @@ export default abstract class Entity {
         this.entityID = entityID;
         this.info = info;
         this.mesh = Scene.get().MeshBuilder.CreateBox(this.entityID);
+        this.mesh.layerMask = LayerMask.BOTH;
         this.material = new StandardMaterial(this.entityID);
         this.material.emissiveColor = new Color3(0.10196078431372549, 0.9215686274509803, 1);
         this.mesh.material = this.material;
