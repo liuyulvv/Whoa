@@ -3,7 +3,8 @@ declare namespace Whoa {
         export enum EntityType {
             NONE,
             ORNAMENT,
-            CONTROL
+            CONTROL,
+            WALL
         }
     }
 }

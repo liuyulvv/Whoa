@@ -1,7 +1,8 @@
 enum EntityType {
     NONE,
     ORNAMENT,
-    CONTROL
+    CONTROL,
+    WALL
 }
 
 export default EntityType;
