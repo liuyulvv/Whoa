@@ -31,6 +31,7 @@ export default () => {
     const setCheck = createLeftMenuStore((state) => state.setChecked);
 
     useEffect(() => {
+        WhoaEvent.pub('CHANGE_TO_2D_CAMERA');
         const sub = WhoaEvent.sub('STOP_CREATE', () => {
             setCheck('');
         });

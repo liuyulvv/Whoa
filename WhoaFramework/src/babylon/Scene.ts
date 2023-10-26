@@ -62,6 +62,12 @@ export default class Scene {
         });
         this.resize();
         this.cameraMode = CameraMode.MODE_2D;
+        WhoaEvent.sub('CHANGE_TO_2D_CAMERA', () => {
+            this.changeTo2D();
+        });
+        WhoaEvent.sub('CHANGE_TO_3D_CAMERA', () => {
+            this.changeTo3D();
+        });
         this.changeTo2D();
     }
 
