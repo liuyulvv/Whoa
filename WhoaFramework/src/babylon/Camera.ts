@@ -164,8 +164,15 @@ class Camera3DPointersInput extends ArcRotateCameraPointersInput {
         if (this._ctrlKey || this._shiftKey || this._altKey || this._metaKey || this.picked) {
             return;
         }
-        WhoaInteraction.setPointerTouch(true);
-        super.onTouch(point, offsetX, offsetY);
+        if (this._buttonsPressed == 2) {
+            this.camera.inertialPanningX += -offsetX / this.panningSensibility;
+            this.camera.inertialPanningY += offsetY / this.panningSensibility;
+            return;
+        }
+        if (!this.picked) {
+            WhoaInteraction.setPointerTouch(true);
+            super.onTouch(point, offsetX, offsetY);
+        }
     }
 
     onButtonUp(evt: IPointerEvent): void {
