@@ -1,4 +1,4 @@
-import { Mesh as BabylonMesh, Color3, StandardMaterial, Vector3 } from '@babylonjs/core';
+import { Mesh as BabylonMesh, Color3, Mesh, StandardMaterial, Vector3 } from '@babylonjs/core';
 import { LayerMask } from 'src/babylon/Camera';
 import Scene from 'src/babylon/Scene';
 import EntityRole from './EntityRole';
@@ -12,12 +12,6 @@ export interface EntityCreateInfo {
     visible: boolean;
     pickable: boolean;
     movable: boolean;
-    width: number;
-    height: number;
-    depth: number;
-    meshURL: string;
-    meshName: string;
-    rotation: number[];
 }
 
 export default abstract class Entity {
@@ -32,14 +26,10 @@ export default abstract class Entity {
     protected pickable: boolean;
     protected movable: boolean;
 
-    protected entityWidth: number;
-    protected entityHeight: number;
-    protected entityDepth: number;
-
     public constructor(entityID: string, info: EntityCreateInfo) {
         this.entityID = entityID;
         this.info = info;
-        this.mesh = Scene.get().MeshBuilder.CreateBox(this.entityID);
+        this.mesh = new Mesh(this.entityID);
         this.mesh.layerMask = LayerMask.BOTH;
         this.material = new StandardMaterial(this.entityID);
         this.material.emissiveColor = new Color3(0.10196078431372549, 0.9215686274509803, 1);
@@ -49,9 +39,6 @@ export default abstract class Entity {
         this.visible = info.visible;
         this.pickable = info.pickable;
         this.movable = info.movable;
-        this.entityWidth = info.width;
-        this.entityHeight = info.height;
-        this.entityDepth = info.depth;
     }
 
     public get id(): string {
@@ -84,18 +71,6 @@ export default abstract class Entity {
 
     public get isMovable(): boolean {
         return this.movable;
-    }
-
-    public get width(): number {
-        return this.entityWidth;
-    }
-
-    public get height(): number {
-        return this.entityHeight;
-    }
-
-    public get depth(): number {
-        return this.entityDepth;
     }
 
     public get position(): Whoa.WhoaGeometry.Point3D {
@@ -182,11 +157,11 @@ export default abstract class Entity {
     }
 
     public rotateLocalY(radian: number): void {
-        this.mesh.rotate(new Vector3(0, 0, 1), radian);
+        this.mesh.rotate(new Vector3(0, 1, 0), radian);
     }
 
     public rotateLocalZ(radian: number): void {
-        this.mesh.rotate(new Vector3(0, 1, 0), radian);
+        this.mesh.rotate(new Vector3(0, 0, 1), radian);
     }
 
     public scale(x: number, y: number, z: number, relative: boolean = true): void {

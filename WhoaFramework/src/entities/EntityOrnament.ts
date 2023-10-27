@@ -1,11 +1,10 @@
 import { CameraMode } from 'src/babylon/Camera';
 import Scene from 'src/babylon/Scene';
-import { EntityCreateInfo } from './Entity';
 import { EntityControlMove3D, EntityControlRotate2D, EntityControlRotate3D } from './EntityControl';
-import EntityModel from './EntityModel';
+import EntityModel, { EntityModelCreateInfo } from './EntityModel';
 
 export default class EntityOrnament extends EntityModel {
-    public constructor(entityID: string, info: EntityCreateInfo) {
+    public constructor(entityID: string, info: EntityModelCreateInfo) {
         super(entityID, info);
     }
 

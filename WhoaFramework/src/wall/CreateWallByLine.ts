@@ -1,7 +1,9 @@
-import { Color3, LinesMesh, Mesh, Vector3, VertexData } from '@babylonjs/core';
+import { Color3, LinesMesh, Mesh, StandardMaterial, Vector3, VertexData } from '@babylonjs/core';
 import Scene from 'src/babylon/Scene';
+import { EntityWallCreateInfo } from 'src/entities/EntityWall';
 import { PointerButton } from 'src/utils/Pointer';
 import { v4 as uuid } from 'uuid';
+import EntityWallManager from './EntityWallManager';
 
 enum CreateStatus {
     START,
@@ -16,8 +18,10 @@ export default class CreateWallByLine {
     private end: Whoa.WhoaGeometry.Point3D;
     private wallMidLine: LinesMesh | undefined;
     private wallMesh: Mesh | undefined;
-    private orthogonal: boolean;
+    private wallMeshMaterial: StandardMaterial;
 
+    private orthogonal: boolean = true;
+    private radian: number = 0;
     private wallWidth: number = 0.24;
     private wallHeight: number = 2.8;
 
@@ -30,7 +34,8 @@ export default class CreateWallByLine {
         this.status = CreateStatus.START;
         this.start = new Whoa.WhoaGeometry.Point3D(0, 0, 0);
         this.end = new Whoa.WhoaGeometry.Point3D(0, 0, 0);
-        this.orthogonal = true;
+        this.wallMeshMaterial = new StandardMaterial(uuid());
+        this.wallMeshMaterial.emissiveColor = new Color3(1, 1, 1);
         this.bindPointerMove = this.onPointerMove.bind(this);
         this.bindPointerUp = this.onPointerUp.bind(this);
         this.bindKeyUp = this.onKeyUp.bind(this);
@@ -66,24 +71,25 @@ export default class CreateWallByLine {
             this.end = orthogonalPoint;
         }
         const vecMidLine = this.end.subtract(this.start);
-        const direction = vecMidLine.y < 0 ? 1 : -1;
-        const radian = vecMidLine.getRadianBetween(new Whoa.WhoaGeometry.Point3D(1, 0, 0)) * direction;
+        const direction = vecMidLine.y > 0 ? 1 : -1;
+        this.radian = vecMidLine.getRadianBetween(new Whoa.WhoaGeometry.Point3D(1, 0, 0)) * direction;
         const start = new Vector3(this.start.x, this.start.y, this.start.z);
         const end = new Vector3(this.end.x, this.end.y, this.end.z);
         const startLeft = start.clone();
         const startRight = start.clone();
         const endLeft = end.clone();
         const endRight = end.clone();
-        startLeft.x = startLeft.x - (this.wallWidth / 2) * Math.sin(radian);
-        startLeft.y = startLeft.y - (this.wallWidth / 2) * Math.cos(radian);
-        startRight.x = startRight.x + (this.wallWidth / 2) * Math.sin(radian);
-        startRight.y = startRight.y + (this.wallWidth / 2) * Math.cos(radian);
-        endLeft.x = endLeft.x - (this.wallWidth / 2) * Math.sin(radian);
-        endLeft.y = endLeft.y - (this.wallWidth / 2) * Math.cos(radian);
-        endRight.x = endRight.x + (this.wallWidth / 2) * Math.sin(radian);
-        endRight.y = endRight.y + (this.wallWidth / 2) * Math.cos(radian);
+        startLeft.x = startLeft.x - (this.wallWidth / 2) * Math.sin(-this.radian);
+        startLeft.y = startLeft.y - (this.wallWidth / 2) * Math.cos(-this.radian);
+        startRight.x = startRight.x + (this.wallWidth / 2) * Math.sin(-this.radian);
+        startRight.y = startRight.y + (this.wallWidth / 2) * Math.cos(-this.radian);
+        endLeft.x = endLeft.x - (this.wallWidth / 2) * Math.sin(-this.radian);
+        endLeft.y = endLeft.y - (this.wallWidth / 2) * Math.cos(-this.radian);
+        endRight.x = endRight.x + (this.wallWidth / 2) * Math.sin(-this.radian);
+        endRight.y = endRight.y + (this.wallWidth / 2) * Math.cos(-this.radian);
         if (!this.wallMesh) {
             this.wallMesh = new Mesh(uuid());
+            this.wallMesh.material = this.wallMeshMaterial;
         }
         const positions: number[] = [];
         [startLeft, endLeft, endRight, startRight].forEach((point) => {
@@ -154,7 +160,24 @@ export default class CreateWallByLine {
             } else if (CreateStatus.CREATE == this.status) {
                 this.end = WhoaScene.screenToWorld(WhoaScene.getScreenPosition());
                 this.onCreate();
+                const mid = this.start.add(this.end).multiply(0.5);
+                const info: EntityWallCreateInfo = {
+                    role: Whoa.WhoaFramework.EntityRole.ROOT,
+                    type: Whoa.WhoaFramework.EntityType.WALL,
+                    hovered: false,
+                    selected: false,
+                    visible: true,
+                    pickable: true,
+                    movable: true,
+                    width: this.wallWidth,
+                    height: this.end.subtract(this.start).length(),
+                    depth: this.wallHeight,
+                    radian: this.radian + Math.PI / 2,
+                    position: new Vector3(mid.x, mid.y, mid.z / 2)
+                };
+                EntityWallManager.get().create(info);
                 this.start = this.end;
+                this.wallMesh?.dispose();
                 this.wallMesh = undefined;
             }
         } else if (PointerButton.RIGHT == event.button) {

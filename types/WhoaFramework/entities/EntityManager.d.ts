@@ -6,7 +6,7 @@ declare namespace Whoa {
         export class EntityManager {
             public static get(): EntityManager;
             public addEntity(entityID: string, entity: Entity): void;
-            public createOrnament(info: EntityCreateInfo): EntityOrnament;
+            public createOrnament(info: EntityModelCreateInfo): EntityOrnament;
             public destroyEntityByID(entityID: string): void;
             public getAllEntity(): Entity[];
             public getEntityByID(entityID: string): Entity | undefined;

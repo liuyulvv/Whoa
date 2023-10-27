@@ -1,5 +1,5 @@
-import Entity, { EntityCreateInfo } from './Entity';
-import EntityModel from './EntityModel';
+import Entity from './Entity';
+import EntityModel, { EntityModelCreateInfo } from './EntityModel';
 import EntityRole from './EntityRole';
 import EntityType from './EntityType';
 
@@ -8,7 +8,7 @@ export abstract class EntityControl extends EntityModel {
     protected subID: string;
     protected startPosition3D: Whoa.WhoaGeometry.Point3D;
 
-    public constructor(entityID: string, info: EntityCreateInfo) {
+    public constructor(entityID: string, info: EntityModelCreateInfo) {
         super(entityID, info);
         this.subID = '';
         this.startPosition3D = new Whoa.WhoaGeometry.Point3D();
@@ -39,7 +39,7 @@ export class EntityControlRotate2D extends EntityControl {
 
     private constructor() {
         const entityID = 'ControlRotate2D';
-        const info: EntityCreateInfo = {
+        const info: EntityModelCreateInfo = {
             role: EntityRole.ROOT,
             type: EntityType.CONTROL,
             hovered: false,
@@ -47,11 +47,9 @@ export class EntityControlRotate2D extends EntityControl {
             visible: false,
             pickable: true,
             movable: true,
-            width: 1000,
-            height: 1000,
-            depth: 1000,
-            meshURL: 'assets/models/',
-            meshName: 'arrow_2D.glb',
+            modelURL: 'assets/models/',
+            modelName: 'arrow_2D.glb',
+            scale: [1000, 1000, 1000],
             rotation: [Math.PI / 2, 0, 0]
         };
         super(entityID, info);
@@ -99,7 +97,7 @@ export class EntityControlRotate3D extends EntityControl {
 
     private constructor() {
         const entityID = 'ControlRotate3D';
-        const info: EntityCreateInfo = {
+        const info: EntityModelCreateInfo = {
             role: EntityRole.ROOT,
             type: EntityType.CONTROL,
             hovered: false,
@@ -107,11 +105,9 @@ export class EntityControlRotate3D extends EntityControl {
             visible: false,
             pickable: true,
             movable: true,
-            width: 1000,
-            height: 1000,
-            depth: 1000,
-            meshURL: 'assets/models/',
-            meshName: 'arrow_3D.glb',
+            modelURL: 'assets/models/',
+            modelName: 'arrow_3D.glb',
+            scale: [1000, 1000, 1000],
             rotation: [Math.PI / 2, 0, 0]
         };
         super(entityID, info);
@@ -138,7 +134,7 @@ export class EntityControlMove3D extends EntityControl {
 
     private constructor() {
         const entityID = 'ControlMove3D';
-        const info: EntityCreateInfo = {
+        const info: EntityModelCreateInfo = {
             role: EntityRole.ROOT,
             type: EntityType.CONTROL,
             hovered: false,
@@ -146,11 +142,9 @@ export class EntityControlMove3D extends EntityControl {
             visible: false,
             pickable: true,
             movable: true,
-            width: 1000,
-            height: 1000,
-            depth: 1000,
-            meshURL: 'assets/models/',
-            meshName: 'arrow_move.glb',
+            modelURL: 'assets/models/',
+            modelName: 'arrow_move.glb',
+            scale: [1000, 1000, 1000],
             rotation: [Math.PI / 2, 0, 0]
         };
         super(entityID, info);

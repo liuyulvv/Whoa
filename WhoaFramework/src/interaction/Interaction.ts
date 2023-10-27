@@ -13,7 +13,6 @@ export default class Interaction {
     private lastControl: Whoa.WhoaFramework.Entity | undefined;
 
     private creating: boolean;
-    private createType: string;
     private bindPointerDown: (event: PointerEvent) => void;
     private bindPointerMove: (event: PointerEvent) => void;
     private bindPointerUp: (event: PointerEvent) => void;
@@ -27,7 +26,6 @@ export default class Interaction {
         this.lastSelect = undefined;
         this.lastControl = undefined;
         this.creating = false;
-        this.createType = '';
         this.bindPointerDown = this.onPointerDown.bind(this);
         this.bindPointerMove = this.onPointerMove.bind(this);
         this.bindPointerUp = this.onPointerUp.bind(this);
@@ -48,7 +46,6 @@ export default class Interaction {
 
     private stopCreate(): void {
         this.creating = false;
-        this.createType = '';
         this.registerPointerEvent();
         WhoaEvent.pub('STOP_CREATE');
     }
@@ -75,7 +72,6 @@ export default class Interaction {
         WhoaEvent.sub('START_DRAW_LINE', () => {
             this.startCreate();
             CreateWallByLine.get().onCreateStart();
-            this.createType = 'LINE';
         });
 
         WhoaEvent.sub('STOP_DRAW_LINE', () => {
@@ -85,8 +81,7 @@ export default class Interaction {
 
         WhoaEvent.sub('START_DRAW_BORDER', () => {
             this.startCreate();
-            this.createType = 'BORDER';
-            const createInfo: Whoa.WhoaFramework.EntityCreateInfo = {
+            const createInfo: Whoa.WhoaFramework.EntityModelCreateInfo = {
                 role: Whoa.WhoaFramework.EntityRole.ROOT,
                 type: Whoa.WhoaFramework.EntityType.ORNAMENT,
                 hovered: false,
@@ -94,11 +89,9 @@ export default class Interaction {
                 visible: true,
                 pickable: true,
                 movable: true,
-                width: 30,
-                height: 30,
-                depth: 30,
-                meshURL: 'assets/models/',
-                meshName: 'deer.glb',
+                modelURL: 'assets/models/',
+                modelName: 'deer.glb',
+                scale: [30, 30, 30],
                 rotation: [Math.PI / 2, 0, 0]
             };
             Whoa.WhoaFramework.EntityManager.get().createOrnament(createInfo);
@@ -182,30 +175,25 @@ export default class Interaction {
         }
         if (!this.pointerTouched) {
             if (event.button == 0) {
-                if (this.creating) {
-                    if (this.createType == 'LINE') {
-                    }
-                } else {
-                    const pickInfo = WhoaScene.pickEntity();
-                    if (pickInfo.hit) {
-                        const entity = Whoa.WhoaFramework.EntityManager.get().getEntityByID(pickInfo.meshID);
-                        if (entity && entity.type == Whoa.WhoaFramework.EntityType.CONTROL) {
-                            this.lastControl = entity;
-                        } else {
-                            this.lastControl = undefined;
-                            if (entity?.type != Whoa.WhoaFramework.EntityType.CONTROL) {
-                                if (this.lastSelect != entity) {
-                                    this.lastSelect?.onSelect(false);
-                                    this.lastSelect = entity;
-                                    this.lastSelect?.onSelect(true);
-                                }
+                const pickInfo = WhoaScene.pickEntity();
+                if (pickInfo.hit) {
+                    const entity = Whoa.WhoaFramework.EntityManager.get().getEntityByID(pickInfo.meshID);
+                    if (entity && entity.type == Whoa.WhoaFramework.EntityType.CONTROL) {
+                        this.lastControl = entity;
+                    } else {
+                        this.lastControl = undefined;
+                        if (entity?.type != Whoa.WhoaFramework.EntityType.CONTROL) {
+                            if (this.lastSelect != entity) {
+                                this.lastSelect?.onSelect(false);
+                                this.lastSelect = entity;
+                                this.lastSelect?.onSelect(true);
                             }
                         }
-                    } else {
-                        this.lastSelect?.onSelect(false);
-                        this.lastSelect = undefined;
-                        this.lastControl = undefined;
                     }
+                } else {
+                    this.lastSelect?.onSelect(false);
+                    this.lastSelect = undefined;
+                    this.lastControl = undefined;
                 }
             } else if (event.button == 2) {
                 if (this.creating) {

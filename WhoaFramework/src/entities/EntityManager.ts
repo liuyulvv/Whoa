@@ -1,6 +1,7 @@
 import { v4 as uuid } from 'uuid';
-import Entity, { EntityCreateInfo } from './Entity';
+import Entity from './Entity';
 import { EntityControlMove3D, EntityControlRotate2D, EntityControlRotate3D } from './EntityControl';
+import { EntityModelCreateInfo } from './EntityModel';
 import EntityOrnament from './EntityOrnament';
 
 export default class EntityManager {
@@ -28,7 +29,7 @@ export default class EntityManager {
         this.entities.set(controlRotate3D.id, controlRotate3D);
     }
 
-    public createOrnament(info: EntityCreateInfo): EntityOrnament {
+    public createOrnament(info: EntityModelCreateInfo): EntityOrnament {
         const entityID = uuid();
         const entity = new EntityOrnament(entityID, info);
         this.entities.set(entityID, entity);

@@ -11,12 +11,6 @@ declare namespace Whoa {
             visible: boolean;
             pickable: boolean;
             movable: boolean;
-            width: number;
-            height: number;
-            depth: number;
-            meshURL: string;
-            meshName: string;
-            rotation: number[];
         }
 
         export abstract class Entity {
@@ -27,9 +21,6 @@ declare namespace Whoa {
             public get isSelected(): boolean;
             public get isVisible(): boolean;
             public get isPickable(): boolean;
-            public get width(): number;
-            public get height(): number;
-            public get depth(): number;
             public get position(): WhoaGeometry.Point3D;
             public show(): void;
             public hide(): void;
