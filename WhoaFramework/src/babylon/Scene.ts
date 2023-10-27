@@ -8,7 +8,8 @@ import {
     Matrix,
     MeshBuilder,
     SceneLoader,
-    Vector3
+    Vector3,
+    VertexData
 } from '@babylonjs/core';
 import { GridMaterial } from '@babylonjs/materials';
 import { Camera2D, Camera3D, CameraMode } from './Camera';
@@ -43,8 +44,11 @@ export default class Scene {
         helper?.setMainColor(new Color3(1.0, 1.0, 1.0));
         this.camera2D = new Camera2D(this.engine, this.scene);
         this.camera3D = new Camera3D(this.engine, this.scene);
-        this.groundMesh = MeshBuilder.CreatePlane('ground', { width: 1000, height: 1000 }, this.scene);
-        this.groundMesh.rotate(new Vector3(1, 0, 0), Math.PI);
+        this.groundMesh = MeshBuilder.CreatePlane(
+            'ground',
+            { width: 1000, height: 1000, sideOrientation: VertexData.BACKSIDE },
+            this.scene
+        );
         this.groundMesh.isPickable = false;
         const groundMeshMaterial = new GridMaterial('ground', this.scene);
         groundMeshMaterial.majorUnitFrequency = 0;
