@@ -55,9 +55,7 @@ export default class Scene {
         groundMeshMaterial.minorUnitVisibility = 0.5;
         groundMeshMaterial.gridRatio = 1;
         groundMeshMaterial.useMaxLine = true;
-        groundMeshMaterial.opacity = 0.5;
-        groundMeshMaterial.mainColor = Color3.FromHexString('#ededed');
-        groundMeshMaterial.lineColor = Color3.Black();
+        groundMeshMaterial.opacity = 0.2;
         this.groundMesh.material = groundMeshMaterial;
 
         this.engine.runRenderLoop(() => {
