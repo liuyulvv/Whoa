@@ -168,6 +168,7 @@ export default class Interaction {
             this.pointerMoved = false;
             if (this.lastControl) {
                 this.lastControl.onDragEnd();
+                this.lastControl = undefined;
             } else if (this.lastSelect) {
                 this.lastSelect.onDragEnd();
             }

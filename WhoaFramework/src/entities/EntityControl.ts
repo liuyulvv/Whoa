@@ -1,3 +1,4 @@
+import { Vector3 } from '@babylonjs/core';
 import Entity from './Entity';
 import EntityModel, { EntityModelCreateInfo } from './EntityModel';
 import EntityRole from './EntityRole';
@@ -6,12 +7,12 @@ import EntityType from './EntityType';
 export abstract class EntityControl extends EntityModel {
     protected entity: Entity | null = null;
     protected subID: string;
-    protected startPosition3D: Whoa.WhoaGeometry.Point3D;
+    protected startPosition2D: Whoa.WhoaGeometry.Point2D;
 
     public constructor(entityID: string, info: EntityModelCreateInfo) {
         super(entityID, info);
         this.subID = '';
-        this.startPosition3D = new Whoa.WhoaGeometry.Point3D();
+        this.startPosition2D = new Whoa.WhoaGeometry.Point2D();
     }
 
     public onEnter(): void {
@@ -24,6 +25,8 @@ export abstract class EntityControl extends EntityModel {
 
     public attach(entity: Entity) {
         this.entity = entity;
+        const center = this.entity.getBoundingBox().center;
+        this.translate(center.x, center.y, center.z, false);
         this.show();
     }
 
@@ -63,8 +66,7 @@ export class EntityControlRotate2D extends EntityControl {
     }
 
     public attach(entity: Entity) {
-        this.entity = entity;
-        this.show();
+        super.attach(entity);
         this.subID = WhoaEvent.sub('CHANGE_CAMERA_TO_3D', () => {
             EntityControlRotate3D.get().attach(entity);
             this.detach();
@@ -72,24 +74,31 @@ export class EntityControlRotate2D extends EntityControl {
     }
 
     public onDragStart(): void {
-        this.startPosition3D = WhoaScene.screenToWorld(WhoaScene.getScreenPosition());
+        this.startPosition2D = WhoaScene.getScreenPosition();
     }
 
     public onDrag(): void {
         if (this.entity) {
-            const position = WhoaScene.screenToWorld(WhoaScene.getScreenPosition());
-            const origin = this.entity.position;
-            const start = this.startPosition3D.subtract(origin);
+            const position = WhoaScene.getScreenPosition();
+            const origin = WhoaScene.worldToScreen(this.entity.position);
+            const start = this.startPosition2D.subtract(origin);
             const now = position.subtract(origin);
-            this.startPosition3D = position;
-            const direction = start.x * now.y - start.y * now.x > 0 ? 1 : -1;
+            this.startPosition2D = position;
+            const direction = start.x * now.y - start.y * now.x > 0 ? -1 : 1;
             const radian = start.getRadianBetween(now) * direction;
-            this.entity.rotateLocalZ(radian);
-            this.rotateLocalZ(radian);
+            this.entity.rotateLocalY(radian);
+            this.rotateLocalY(radian);
         }
     }
 
     public onDragEnd(): void {}
+
+    public rotateLocalY(radian: number): void {
+        if (this.entity) {
+            const position = this.entity.position;
+            this.mesh.rotateAround(new Vector3(position.x, position.y, position.z), new Vector3(0, 0, 1), radian);
+        }
+    }
 }
 
 export class EntityControlRotate3D extends EntityControl {

@@ -27,7 +27,7 @@ export default abstract class Entity {
     protected pickable: boolean;
     protected movable: boolean;
 
-    protected boundingBox: BoundingBox | undefined;
+    protected boundingBox: BoundingBox;
 
     public constructor(entityID: string, info: EntityCreateInfo) {
         this.entityID = entityID;
@@ -42,6 +42,8 @@ export default abstract class Entity {
         this.visible = info.visible;
         this.pickable = info.pickable;
         this.movable = info.movable;
+        this.boundingBox = new BoundingBox();
+        this.updateBoundingBox();
     }
 
     public get id(): string {
@@ -110,10 +112,7 @@ export default abstract class Entity {
         Whoa.WhoaFramework.EntityManager.get().destroyEntityByID(this.entityID);
     }
 
-    public getBoundingBox(): BoundingBox | undefined {
-        if (!this.boundingBox) {
-            this.updateBoundingBox();
-        }
+    public getBoundingBox(): BoundingBox {
         return this.boundingBox;
     }
 
@@ -176,6 +175,10 @@ export default abstract class Entity {
 
     public rotateLocalZ(radian: number): void {
         this.mesh.rotate(new Vector3(0, 0, 1), radian);
+    }
+
+    public rotateAround(point: Vector3, axis: Vector3, radian: number): void {
+        this.mesh.rotateAround(point, axis, radian);
     }
 
     public scale(x: number, y: number, z: number, relative: boolean = true): void {

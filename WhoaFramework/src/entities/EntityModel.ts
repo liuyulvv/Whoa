@@ -29,6 +29,7 @@ export default abstract class EntityModel extends Entity {
     private loadModel(mesh: Mesh) {
         this.mesh.dispose();
         this.mesh = mesh;
+        this.updateBoundingBox();
         this.info.visible ? this.show() : this.hide();
         if (this.info.scale.length == 3) {
             this.scale(this.info.scale[0], this.info.scale[1], this.info.scale[2], false);
