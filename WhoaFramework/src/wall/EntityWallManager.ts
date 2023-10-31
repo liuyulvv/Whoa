@@ -4,10 +4,10 @@ import { v4 as uuid } from 'uuid';
 
 export default class EntityWallManager {
     private static instance: EntityWallManager;
-    private entities: Set<string>;
+    private entities: Map<string, EntityWall>;
 
     private constructor() {
-        this.entities = new Set<string>();
+        this.entities = new Map<string, EntityWall>();
     }
 
     public static get(): EntityWallManager {
@@ -20,12 +20,12 @@ export default class EntityWallManager {
     public create(info: EntityWallCreateInfo): EntityWall {
         const entityID = uuid();
         const entity = new EntityWall(entityID, info);
-        this.entities.add(entityID);
+        this.entities.set(entityID, entity);
         EntityManager.get().addEntity(entityID, entity);
         return entity;
     }
 
-    public getAllWall(): string[] {
+    public getAllWall(): EntityWall[] {
         return Array.from(this.entities.values());
     }
 }

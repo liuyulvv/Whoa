@@ -118,6 +118,14 @@ export default class CreateWallByLine {
     public onCreateEnd(): void {
         this.unregisterPointerEvent();
         this.unregisterKeyEvent();
+        // temp
+        const allWall = EntityWallManager.get().getAllWall();
+        allWall.forEach((wall) => {
+            const box = wall.getBoundingBox();
+            if (box) {
+                console.log(box);
+            }
+        });
     }
 
     private registerKeyEvent() {

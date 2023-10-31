@@ -1,4 +1,5 @@
 import { Mesh as BabylonMesh, Color3, Mesh, StandardMaterial, Vector3 } from '@babylonjs/core';
+import BoundingBox from 'src/babylon/BoundingBox';
 import { LayerMask } from 'src/babylon/Camera';
 import Scene from 'src/babylon/Scene';
 import EntityRole from './EntityRole';
@@ -25,6 +26,8 @@ export default abstract class Entity {
     protected visible: boolean;
     protected pickable: boolean;
     protected movable: boolean;
+
+    protected boundingBox: BoundingBox | undefined;
 
     public constructor(entityID: string, info: EntityCreateInfo) {
         this.entityID = entityID;
@@ -105,6 +108,17 @@ export default abstract class Entity {
         this.mesh.dispose();
         this.material.dispose();
         Whoa.WhoaFramework.EntityManager.get().destroyEntityByID(this.entityID);
+    }
+
+    public getBoundingBox(): BoundingBox | undefined {
+        if (!this.boundingBox) {
+            this.updateBoundingBox();
+        }
+        return this.boundingBox;
+    }
+
+    public updateBoundingBox(): void {
+        this.boundingBox = new BoundingBox(this.mesh.getBoundingInfo());
     }
 
     public showBoundingBox(): void {
