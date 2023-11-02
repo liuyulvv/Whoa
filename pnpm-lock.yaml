@@ -91,7 +91,11 @@ importers:
 
   WhoaGeneral: {}
 
-  WhoaGeometry: {}
+  WhoaGeometry:
+    devDependencies:
+      rollup-plugin-copy:
+        specifier: ^3.5.0
+        version: 3.5.0
 
   WhoaUI:
     dependencies:

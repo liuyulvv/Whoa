@@ -1,8 +1,11 @@
 {
     "name": "geometry",
     "scripts": {
-        "dev": "rollup -c rollup.config.dev.js",
-        "build": "rollup -c rollup.config.prod.js"
+        "dev": "powershell ./wasm/build.ps1 && rollup -c rollup.config.dev.js",
+        "build": "powershell ./wasm/build.ps1 && rollup -c rollup.config.prod.js"
     },
-    "type": "module"
+    "type": "module",
+    "devDependencies": {
+        "rollup-plugin-copy": "^3.5.0"
+    }
 }

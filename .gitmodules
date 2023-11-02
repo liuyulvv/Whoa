@@ -1,0 +1,3 @@
+[submodule "WhoaGeometry/wasm/emsdk"]
+	path = WhoaGeometry/wasm/emsdk
+	url = https://github.com/emscripten-core/emsdk.git
