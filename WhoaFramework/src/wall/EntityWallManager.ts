@@ -20,6 +20,7 @@ export default class EntityWallManager {
     public create(info: EntityWallCreateInfo): EntityWall {
         const entityID = uuid();
         const entity = new EntityWall(entityID, info);
+        entity.updateBoundingBox();
         this.entities.set(entityID, entity);
         EntityManager.get().addEntity(entityID, entity);
         return entity;
