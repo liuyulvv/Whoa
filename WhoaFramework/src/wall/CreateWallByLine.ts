@@ -22,8 +22,8 @@ export default class CreateWallByLine {
 
     private orthogonal: boolean = true;
     private radian: number = 0;
-    private wallWidth: number = 0.24;
-    private wallHeight: number = 2.8;
+    private wallWidth: number = 240;
+    private wallHeight: number = 2800;
 
     private bindPointerMove: (event: PointerEvent) => void;
     private bindPointerUp: (event: PointerEvent) => void;
@@ -118,14 +118,30 @@ export default class CreateWallByLine {
     public onCreateEnd(): void {
         this.unregisterPointerEvent();
         this.unregisterKeyEvent();
-        // temp
         const allWall = EntityWallManager.get().getAllWall();
+        const vector = new Module.VectorDouble();
         allWall.forEach((wall) => {
             const box = wall.getBoundingBox();
             if (box) {
-                console.log(box);
+                vector.push_back(box.bottomFarLeft.x);
+                vector.push_back(box.bottomFarLeft.y);
+                vector.push_back(box.bottomFarRight.x);
+                vector.push_back(box.bottomFarRight.y);
+                vector.push_back(box.bottomFarRight.x);
+                vector.push_back(box.bottomFarRight.y);
+                vector.push_back(box.bottomNearRight.x);
+                vector.push_back(box.bottomNearRight.y);
+                vector.push_back(box.bottomNearRight.x);
+                vector.push_back(box.bottomNearRight.y);
+                vector.push_back(box.bottomNearLeft.x);
+                vector.push_back(box.bottomNearLeft.y);
+                vector.push_back(box.bottomNearLeft.x);
+                vector.push_back(box.bottomNearLeft.y);
+                vector.push_back(box.bottomFarLeft.x);
+                vector.push_back(box.bottomFarLeft.y);
             }
         });
+        Module.SegmentArrangement(vector);
     }
 
     private registerKeyEvent() {
