@@ -30,19 +30,22 @@ export class Camera2D {
     public constructor(engine: BabylonEngine, scene: BabylonScene) {
         this.engine = engine;
         this.scene = scene;
-        this.camera = new ArcRotateCamera('2D', Math.PI / 2, 0, 20, Vector3.Zero(), this.scene);
+        this.camera = new ArcRotateCamera('2D', Math.PI / 2, 0, 20000, Vector3.Zero(), this.scene);
+        this.camera.minZ = 1000;
+        this.camera.maxZ = 10000000;
         this.camera.layerMask = LayerMask.ONLY_2D;
         this.camera.upVector = new Vector3(0, 0, 1);
-        this.camera.lowerBetaLimit = -20;
-        this.camera.upperBetaLimit = 20;
-        this.camera.lowerAlphaLimit = -20;
-        this.camera.upperAlphaLimit = 20;
+        this.camera.lowerBetaLimit = -20000;
+        this.camera.upperBetaLimit = 20000;
+        this.camera.lowerAlphaLimit = -20000;
+        this.camera.upperAlphaLimit = 20000;
         this.camera.mode = Camera.ORTHOGRAPHIC_CAMERA;
-        this.camera.orthoLeft = -20;
-        this.camera.orthoRight = 20;
+        this.camera.orthoLeft = -20000;
+        this.camera.orthoRight = 20000;
         this.camera.inputs.clear();
         this.camera.inputs.addMouseWheel();
         this.camera.inputs.add(Camera2DPointersInput.get());
+        this.camera.wheelPrecision = 0.003;
         this.oldRadius = this.camera.radius;
         scene.onBeforeRenderObservable.add(() => {
             const canvas = this.engine.getRenderingCanvas();
@@ -79,12 +82,15 @@ export class Camera3D {
     public constructor(engine: BabylonEngine, scene: BabylonScene) {
         this.engine = engine;
         this.scene = scene;
-        this.camera = new ArcRotateCamera('3D', Math.PI / 2, 0, 30, Vector3.Zero(), this.scene);
+        this.camera = new ArcRotateCamera('3D', Math.PI / 2, 0, 30000, Vector3.Zero(), this.scene);
+        this.camera.minZ = 1000;
+        this.camera.maxZ = 10000000;
         this.camera.layerMask = LayerMask.ONLY_3D;
         this.camera.upVector = new Vector3(0, 0, 1);
         this.camera.inputs.clear();
         this.camera.inputs.addMouseWheel();
         this.camera.inputs.add(Camera3DPointersInput.get());
+        this.camera.wheelPrecision = 0.003;
     }
 
     public attach(): void {
