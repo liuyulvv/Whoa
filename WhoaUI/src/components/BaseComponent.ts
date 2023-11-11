@@ -5,7 +5,6 @@ export default class BaseComponent {
 
     public constructor() {
         this.container = document.createElement('div');
-        WhoaRootContainer.firstElementChild!.appendChild(this.container);
     }
 
     public destroy() {
@@ -13,6 +12,7 @@ export default class BaseComponent {
     }
 
     public render(component: JSX.Element) {
+        WhoaRootContainer.firstElementChild!.appendChild(this.container);
         ReactDOM.render(component, this.container);
     }
 }
