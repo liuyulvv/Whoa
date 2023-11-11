@@ -1,6 +1,9 @@
 [submodule "WhoaGeometry/wasm/emsdk"]
 	path = WhoaGeometry/wasm/emsdk
 	url = https://github.com/emscripten-core/emsdk.git
+[submodule "WhoaGeometry/wasm/include/boost"]
+	path = WhoaGeometry/wasm/include/boost
+	url = https://github.com/boostorg/boost.git
 [submodule "WhoaGeometry/wasm/include/cgal"]
 	path = WhoaGeometry/wasm/include/cgal
 	url = https://github.com/CGAL/cgal.git

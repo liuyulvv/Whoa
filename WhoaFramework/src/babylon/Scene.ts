@@ -46,16 +46,16 @@ export default class Scene {
         this.camera3D = new Camera3D(this.engine, this.scene);
         this.groundMesh = MeshBuilder.CreatePlane(
             'ground',
-            { width: 1000, height: 1000, sideOrientation: VertexData.BACKSIDE },
+            { width: 1000000, height: 1000000, sideOrientation: VertexData.BACKSIDE },
             this.scene
         );
         this.groundMesh.isPickable = false;
         const groundMeshMaterial = new GridMaterial('ground', this.scene);
         groundMeshMaterial.majorUnitFrequency = 0;
         groundMeshMaterial.minorUnitVisibility = 0.5;
-        groundMeshMaterial.gridRatio = 1;
+        groundMeshMaterial.gridRatio = 1000;
         groundMeshMaterial.useMaxLine = true;
-        groundMeshMaterial.opacity = 0.2;
+        groundMeshMaterial.opacity = 0.5;
         this.groundMesh.material = groundMeshMaterial;
 
         this.engine.runRenderLoop(() => {
