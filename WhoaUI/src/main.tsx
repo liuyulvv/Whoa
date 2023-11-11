@@ -12,10 +12,14 @@ const router = createBrowserRouter([
     }
 ]);
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+const RootElement = document.getElementById('root') as HTMLDivElement;
+
+ReactDOM.createRoot(RootElement).render(
     <React.StrictMode>
-        <FluentProvider theme={teamsLightTheme}>
+        <FluentProvider id="fluent" theme={teamsLightTheme}>
             <RouterProvider router={router} />
         </FluentProvider>
     </React.StrictMode>
 );
+
+window.WhoaRootContainer = RootElement;
