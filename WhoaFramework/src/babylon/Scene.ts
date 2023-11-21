@@ -46,6 +46,7 @@ export default class Scene {
         helper?.setMainColor(new Color3(1.0, 1.0, 1.0));
         this.camera2D = new Camera2D(this.engine, this.scene);
         this.camera3D = new Camera3D(this.engine, this.scene);
+        this.enableCameraInput();
         this.groundMesh = MeshBuilder.CreatePlane(
             'ground',
             { width: 1000000, height: 1000000, sideOrientation: VertexData.BACKSIDE },
@@ -98,16 +99,14 @@ export default class Scene {
         return this.cameraMode;
     }
 
-    public changeTo2D(): void {
+    private changeTo2D(): void {
         this.camera2D.attach();
         this.cameraMode = CameraMode.MODE_2D;
-        WhoaEvent.pub('CHANGE_CAMERA_TO_2D');
     }
 
-    public changeTo3D(): void {
+    private changeTo3D(): void {
         this.camera3D.attach();
         this.cameraMode = CameraMode.MODE_3D;
-        WhoaEvent.pub('CHANGE_CAMERA_TO_3D');
     }
 
     public screenToWorld(point: Whoa.WhoaGeometry.Point2D): Whoa.WhoaGeometry.Point3D {
@@ -182,6 +181,16 @@ export default class Scene {
             meshID: babylonPickInfo.pickedMesh ? babylonPickInfo.pickedMesh.id : ''
         };
         return pickInfo;
+    }
+
+    public enableCameraInput(): void {
+        this.camera2D.enableCameraInput();
+        this.camera3D.enableCameraInput();
+    }
+
+    public disableCameraInput(): void {
+        this.camera2D.disableCameraInput();
+        this.camera3D.disableCameraInput();
     }
 
     public get MeshBuilder(): typeof MeshBuilder {

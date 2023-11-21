@@ -11,8 +11,6 @@ declare namespace Whoa {
 
         export class WhoaScene {
             public getCameraMode(): CameraMode;
-            public changeTo2D(): void;
-            public changeTo3D(): void;
             public screenToWorld(pos: WhoaGeometry.Point2D): WhoaGeometry.Point3D;
             public worldToScreen(pos: WhoaGeometry.Point3D): WhoaGeometry.Point2D;
             public getScreenPosition(): Whoa.WhoaGeometry.Point2D;
@@ -20,6 +18,8 @@ declare namespace Whoa {
             public setEntityHoverColor(): void;
             public setEntitySelectColor(): void;
             public pickEntity(): PickInfo;
+            public enableCameraInput(): void;
+            public disableCameraInput(): void;
         }
     }
 }

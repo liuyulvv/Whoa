@@ -42,10 +42,6 @@ export class Camera2D {
         this.camera.mode = Camera.ORTHOGRAPHIC_CAMERA;
         this.camera.orthoLeft = -20000;
         this.camera.orthoRight = 20000;
-        this.camera.inputs.clear();
-        this.camera.inputs.addMouseWheel();
-        this.camera.inputs.add(Camera2DPointersInput.get());
-        this.camera.wheelPrecision = 0.003;
         this.oldRadius = this.camera.radius;
         scene.onBeforeRenderObservable.add(() => {
             const canvas = this.engine.getRenderingCanvas();
@@ -62,6 +58,17 @@ export class Camera2D {
     public attach(): void {
         this.camera.attachControl(this.engine.getRenderingCanvas(), true);
         this.scene.activeCamera = this.camera;
+    }
+
+    public enableCameraInput(): void {
+        this.camera.inputs.clear();
+        this.camera.inputs.addMouseWheel();
+        this.camera.inputs.add(Camera2DPointersInput.get());
+        this.camera.wheelPrecision = 0.003;
+    }
+
+    public disableCameraInput(): void {
+        this.camera.inputs.clear();
     }
 
     public get viewport(): BabylonViewport {
@@ -82,20 +89,27 @@ export class Camera3D {
     public constructor(engine: BabylonEngine, scene: BabylonScene) {
         this.engine = engine;
         this.scene = scene;
-        this.camera = new ArcRotateCamera('3D', Math.PI / 2, 0, 30000, Vector3.Zero(), this.scene);
+        this.camera = new ArcRotateCamera('3D', Math.PI / 2, Math.PI / 4, 30000, Vector3.Zero(), this.scene);
         this.camera.minZ = 1000;
         this.camera.maxZ = 10000000;
         this.camera.layerMask = LayerMask.ONLY_3D;
         this.camera.upVector = new Vector3(0, 0, 1);
+    }
+
+    public attach(): void {
+        this.camera.attachControl(this.engine.getRenderingCanvas(), true, false);
+        this.scene.activeCamera = this.camera;
+    }
+
+    public enableCameraInput(): void {
         this.camera.inputs.clear();
         this.camera.inputs.addMouseWheel();
         this.camera.inputs.add(Camera3DPointersInput.get());
         this.camera.wheelPrecision = 0.003;
     }
 
-    public attach(): void {
-        this.camera.attachControl(this.engine.getRenderingCanvas(), true, false);
-        this.scene.activeCamera = this.camera;
+    public disableCameraInput(): void {
+        this.camera.inputs.clear();
     }
 
     public get viewport(): BabylonViewport {
