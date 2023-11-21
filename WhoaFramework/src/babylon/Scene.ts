@@ -7,6 +7,8 @@ import {
     Color4,
     Matrix,
     MeshBuilder,
+    PointerEventTypes,
+    PointerInfo,
     SceneLoader,
     Vector3,
     VertexData
@@ -73,6 +75,7 @@ export default class Scene {
             this.changeTo3D();
         });
         this.changeTo2D();
+        this.addPointerWheel();
     }
 
     public static get(): Scene {
@@ -205,6 +208,36 @@ export default class Scene {
                 }
             });
             return meshes;
+        });
+    }
+
+    public addPointerWheel(): void {
+        let wheelEventStart: number | undefined = undefined;
+        let wheelEventTimeout: ReturnType<typeof setTimeout> | undefined = undefined;
+        const wheelEventThresh = 300;
+        const wheelEventTimeoutCallback = () => {
+            const currentTime = Date.now();
+            if (currentTime - wheelEventStart! > wheelEventThresh) {
+                WhoaEvent.pub('POINTER_WHEEL_END');
+                wheelEventStart = undefined;
+            } else {
+                clearTimeout(wheelEventTimeout);
+                wheelEventTimeout = setTimeout(wheelEventTimeoutCallback, wheelEventThresh);
+            }
+        };
+        this.scene.onPointerObservable.add((pointerInfo: PointerInfo) => {
+            switch (pointerInfo.type) {
+                case PointerEventTypes.POINTERWHEEL: {
+                    if (wheelEventStart == undefined) {
+                        WhoaEvent.pub('POINTER_WHEEL_START');
+                        wheelEventStart = Date.now();
+                        wheelEventTimeout = setTimeout(wheelEventTimeoutCallback, wheelEventThresh);
+                    } else {
+                        wheelEventStart = Date.now();
+                    }
+                    break;
+                }
+            }
         });
     }
 }
