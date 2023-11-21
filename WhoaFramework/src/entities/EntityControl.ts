@@ -31,8 +31,8 @@ export abstract class EntityControl extends EntityModel {
     }
 
     public detach() {
-        WhoaEvent.unsub('CHANGE_CAMERA_TO_2D', this.subID);
-        WhoaEvent.unsub('CHANGE_CAMERA_TO_3D', this.subID);
+        WhoaEvent.unsub('CHANGE_TO_2D_CAMERA', this.subID);
+        WhoaEvent.unsub('CHANGE_TO_3D_CAMERA', this.subID);
         this.hide();
     }
 }
@@ -52,7 +52,7 @@ export class EntityControlRotate2D extends EntityControl {
             movable: true,
             modelURL: 'assets/models/',
             modelName: 'arrow_2D.glb',
-            scale: [1000, 1000, 1000],
+            scale: [1000000, 1000000, 1000000],
             rotation: [Math.PI / 2, 0, 0]
         };
         super(entityID, info);
@@ -67,8 +67,9 @@ export class EntityControlRotate2D extends EntityControl {
 
     public attach(entity: Entity) {
         super.attach(entity);
-        this.subID = WhoaEvent.sub('CHANGE_CAMERA_TO_3D', () => {
+        this.subID = WhoaEvent.sub('CHANGE_TO_3D_CAMERA', () => {
             EntityControlRotate3D.get().attach(entity);
+            EntityControlMove3D.get().attach(entity);
             this.detach();
         });
     }
@@ -101,7 +102,11 @@ export class EntityControlRotate2D extends EntityControl {
     }
 }
 
-export class EntityControlRotate3D extends EntityControl {
+export abstract class EntityControl3D extends EntityControl {
+    public updateDirection(): void {}
+}
+
+export class EntityControlRotate3D extends EntityControl3D {
     private static instance: EntityControlRotate3D;
 
     private constructor() {
@@ -116,7 +121,7 @@ export class EntityControlRotate3D extends EntityControl {
             movable: true,
             modelURL: 'assets/models/',
             modelName: 'arrow_3D.glb',
-            scale: [1000, 1000, 1000],
+            scale: [1000000, 1000000, 1000000],
             rotation: [Math.PI / 2, 0, 0]
         };
         super(entityID, info);
@@ -131,14 +136,14 @@ export class EntityControlRotate3D extends EntityControl {
 
     public attach(entity: Entity) {
         super.attach(entity);
-        this.subID = WhoaEvent.sub('CHANGE_CAMERA_TO_2D', () => {
+        this.subID = WhoaEvent.sub('CHANGE_TO_2D_CAMERA', () => {
             EntityControlRotate2D.get().attach(entity);
             this.detach();
         });
     }
 }
 
-export class EntityControlMove3D extends EntityControl {
+export class EntityControlMove3D extends EntityControl3D {
     private static instance: EntityControlMove3D;
 
     private constructor() {
@@ -153,7 +158,7 @@ export class EntityControlMove3D extends EntityControl {
             movable: true,
             modelURL: 'assets/models/',
             modelName: 'arrow_move.glb',
-            scale: [1000, 1000, 1000],
+            scale: [1000000, 1000000, 1000000],
             rotation: [Math.PI / 2, 0, 0]
         };
         super(entityID, info);
@@ -168,7 +173,7 @@ export class EntityControlMove3D extends EntityControl {
 
     public attach(entity: Entity) {
         super.attach(entity);
-        this.subID = WhoaEvent.sub('CHANGE_CAMERA_TO_2D', () => {
+        this.subID = WhoaEvent.sub('CHANGE_TO_2D_CAMERA', () => {
             this.detach();
         });
     }

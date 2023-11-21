@@ -70,11 +70,13 @@ export default class Interaction {
         this.registerPointerEvent();
 
         WhoaEvent.sub('START_DRAW_LINE', () => {
+            WhoaScene.disableCameraInput();
             this.startCreate();
             CreateWallByLine.get().onCreateStart();
         });
 
         WhoaEvent.sub('STOP_DRAW_LINE', () => {
+            WhoaScene.enableCameraInput();
             this.stopCreate();
             CreateWallByLine.get().onCreateEnd();
         });
@@ -91,7 +93,7 @@ export default class Interaction {
                 movable: true,
                 modelURL: 'assets/models/',
                 modelName: 'deer.glb',
-                scale: [30, 30, 30],
+                scale: [30000, 30000, 30000],
                 rotation: [Math.PI / 2, 0, 0]
             };
             Whoa.WhoaFramework.EntityManager.get().createOrnament(createInfo);
@@ -209,9 +211,9 @@ export default class Interaction {
     private onKeyDown(event: KeyboardEvent) {
         if (this.onlyKey(event)) {
             if (event.key == '2') {
-                WhoaScene.changeTo2D();
+                WhoaEvent.pub('CHANGE_TO_2D_CAMERA');
             } else if (event.key == '3') {
-                WhoaScene.changeTo3D();
+                WhoaEvent.pub('CHANGE_TO_3D_CAMERA');
             }
         }
     }
