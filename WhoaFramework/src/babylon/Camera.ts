@@ -106,10 +106,12 @@ export class Camera3D {
 class Camera2DPointersInput extends ArcRotateCameraPointersInput {
     private static instance: Camera2DPointersInput;
     private picked: boolean;
+    private touched: boolean;
 
     private constructor() {
         super();
         this.picked = false;
+        this.touched = false;
     }
 
     public static get(): Camera2DPointersInput {
@@ -132,14 +134,22 @@ class Camera2DPointersInput extends ArcRotateCameraPointersInput {
         }
         if (this.picked) {
             if (this._buttonsPressed == 2) {
-                this.camera.inertialPanningX += -offsetX / this.panningSensibility;
-                this.camera.inertialPanningY += offsetY / this.panningSensibility;
+                this.camera.inertialPanningX += -offsetX * 2;
+                this.camera.inertialPanningY += offsetY * 2;
+                if (!this.touched) {
+                    WhoaEvent.pub('CAMERA_PERSPECTIVE_CHANGE_START');
+                }
+                this.touched = true;
             }
         } else {
             WhoaInteraction.setPointerTouch(true);
             if (this._buttonsPressed == 1 || this._buttonsPressed == 2) {
-                this.camera.inertialPanningX += -offsetX / this.panningSensibility;
-                this.camera.inertialPanningY += offsetY / this.panningSensibility;
+                this.camera.inertialPanningX += -offsetX * 2;
+                this.camera.inertialPanningY += offsetY * 2;
+                if (!this.touched) {
+                    WhoaEvent.pub('CAMERA_PERSPECTIVE_CHANGE_START');
+                }
+                this.touched = true;
             }
         }
     }
@@ -148,16 +158,22 @@ class Camera2DPointersInput extends ArcRotateCameraPointersInput {
         if (evt.button == 0) {
             this.picked = false;
         }
+        if (this.touched) {
+            WhoaEvent.pub('CAMERA_PERSPECTIVE_CHANGE_END');
+            this.touched = false;
+        }
     }
 }
 
 class Camera3DPointersInput extends ArcRotateCameraPointersInput {
     private static instance: Camera3DPointersInput;
     private picked: boolean;
+    private touched: boolean;
 
     private constructor() {
         super();
         this.picked = false;
+        this.touched = false;
     }
 
     public static get(): Camera3DPointersInput {
@@ -179,19 +195,31 @@ class Camera3DPointersInput extends ArcRotateCameraPointersInput {
             return;
         }
         if (this._buttonsPressed == 2) {
-            this.camera.inertialPanningX += -offsetX / this.panningSensibility;
-            this.camera.inertialPanningY += offsetY / this.panningSensibility;
+            this.camera.inertialPanningX += -offsetX * 2;
+            this.camera.inertialPanningY += offsetY * 2;
+            if (!this.touched) {
+                WhoaEvent.pub('CAMERA_PERSPECTIVE_CHANGE_START');
+            }
+            this.touched = true;
             return;
         }
         if (!this.picked) {
             WhoaInteraction.setPointerTouch(true);
             super.onTouch(point, offsetX, offsetY);
+            if (!this.touched) {
+                WhoaEvent.pub('CAMERA_PERSPECTIVE_CHANGE_START');
+            }
+            this.touched = true;
         }
     }
 
     onButtonUp(evt: IPointerEvent): void {
         if (evt.button == 0) {
             this.picked = false;
+        }
+        if (this.touched) {
+            WhoaEvent.pub('CAMERA_PERSPECTIVE_CHANGE_END');
+            this.touched = false;
         }
     }
 }
