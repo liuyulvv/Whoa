@@ -4,12 +4,3 @@
 [submodule "WhoaGeometry/wasm/vcpkg"]
 	path = WhoaGeometry/wasm/vcpkg
 	url = https://github.com/Microsoft/vcpkg.git
-[submodule "WhoaGeometry/wasm/cgal"]
-	path = WhoaGeometry/wasm/cgal
-	url = https://github.com/CGAL/cgal.git
-[submodule "WhoaGeometry/wasm/gmp"]
-	path = WhoaGeometry/wasm/gmp
-	url = https://github.com/liuyulvv/gmp.git
-[submodule "WhoaGeometry/wasm/mpfr"]
-	path = WhoaGeometry/wasm/mpfr
-	url = https://gitlab.inria.fr/mpfr/mpfr.git
