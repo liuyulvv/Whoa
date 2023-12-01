@@ -1,12 +1,16 @@
 {
     "cSpell.words": [
         "cgal",
+        "emscripten",
+        "emsdk",
         "onwarn",
         "Parens",
         "pickable",
+        "POINTERWHEEL",
         "Skybox",
         "Unproject",
         "unsub",
+        "vcpkg",
         "zustand"
     ],
     "files.associations": {
@@ -93,5 +97,6 @@
         "__tree": "cpp",
         "__verbose_abort": "cpp",
         "string_view": "cpp"
-    }
+    },
+    "cmake.sourceDirectory": "E:/code/whoa/WhoaGeometry/wasm/cgal/AABB_tree/benchmark/AABB_tree"
 }
