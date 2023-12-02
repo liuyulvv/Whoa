@@ -1,9 +1,11 @@
 packages:
     - 'server'
+    - 'WhoaMath'
     - 'WhoaEvent'
     - 'WhoaUI'
     - 'WhoaGeometry'
     - 'WhoaFramework'
+    - 'WhoaHouse'
     - 'WhoaGeneral'
     - 'entry'
     - 'assets'

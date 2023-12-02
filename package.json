@@ -8,10 +8,12 @@
     },
     "workspaces": [
         "server",
+        "WhoaMath",
         "WhoaEvent",
         "WhoaUI",
         "WhoaGeometry",
         "WhoaFramework",
+        "WhoaHouse",
         "WhoaGeneral",
         "entry",
         "assets"
@@ -27,11 +29,12 @@
         "@rollup/plugin-node-resolve": "^15.2.3",
         "@rollup/plugin-terser": "^0.4.4",
         "@rollup/plugin-typescript": "^11.1.5",
-        "@types/node": "^20.10.1",
+        "@types/node": "^20.10.2",
+        "@types/uuid": "^9.0.7",
         "@typescript-eslint/eslint-plugin": "^6.13.1",
         "@typescript-eslint/parser": "^6.13.1",
-        "eslint": "^8.54.0",
-        "eslint-config-prettier": "^9.0.0",
+        "eslint": "^8.55.0",
+        "eslint-config-prettier": "^9.1.0",
         "eslint-define-config": "^1.24.1",
         "eslint-plugin-prettier": "^5.0.1",
         "husky": "^8.0.3",
@@ -39,6 +42,9 @@
         "prettier": "^3.1.0",
         "rollup": "^3.29.4",
         "typescript": "^5.3.2"
+    },
+    "dependencies": {
+        "uuid": "^9.0.1"
     },
     "license": "MIT",
     "version": "1.0.0",
