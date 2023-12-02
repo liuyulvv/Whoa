@@ -7,7 +7,9 @@ export default class Http {
 
     private constructor() {
         this.http = axios.create({
-            baseURL: 'https://liuyulvv.com/whoa/api/'
+            // baseURL: 'https://liuyulvv.com/whoa/api/'
+            baseURL: 'http://localhost:8080'
+            // withCredentials: true
         });
         if (this.Authorization) {
             this.http.defaults.headers.Authorization = this.Authorization;
@@ -21,7 +23,23 @@ export default class Http {
         return Http.instance;
     }
 
-    public GetToken() {}
+    public GetToken() {
+        const token = localStorage.getItem('token');
+        if (token) {
+            this.http.defaults.headers.Authorization = `Bearer ${token}`;
+        } else {
+            this.Post('/user/login', {
+                username: 'liuyulvv',
+                password: 'admin'
+            })
+                .then((res) => {
+                    console.log(res);
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        }
+    }
 
     public Get(url: string, params: object) {
         return this.http.get(url, params);
