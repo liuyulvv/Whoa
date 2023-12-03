@@ -5,7 +5,7 @@ export default [
     {
         input: 'src/index.ts',
         output: {
-            file: '../dist/script/WhoaHouse.js',
+            file: '../dist/script/WhoaMath.js',
             format: 'es',
             sourcemap: true
         },
