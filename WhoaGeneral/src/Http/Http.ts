@@ -3,17 +3,12 @@ import axios, { AxiosInstance } from 'axios';
 export default class Http {
     private static instance: Http;
     private http: AxiosInstance;
-    private Authorization: string | undefined;
 
     private constructor() {
         this.http = axios.create({
             // baseURL: 'https://liuyulvv.com/whoa/api/'
             baseURL: 'http://localhost:8080'
-            // withCredentials: true
         });
-        if (this.Authorization) {
-            this.http.defaults.headers.Authorization = this.Authorization;
-        }
     }
 
     public static get(): Http {
@@ -26,17 +21,18 @@ export default class Http {
     public GetToken() {
         const token = localStorage.getItem('token');
         if (token) {
-            this.http.defaults.headers.Authorization = `Bearer ${token}`;
+            return token;
         } else {
             this.Post('/user/login', {
                 username: 'liuyulvv',
                 password: 'admin'
             })
                 .then((res) => {
-                    console.log(res);
+                    this.http.defaults.headers.Authorization = `Bearer ${res.data.token}`;
+                    localStorage.setItem('token', res.data.token);
                 })
                 .catch((err) => {
-                    console.log(err);
+                    console.error(err);
                 });
         }
     }
