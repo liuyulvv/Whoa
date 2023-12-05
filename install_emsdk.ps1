@@ -1,1 +1,0 @@
-./WhoaGeometry/wasm/emsdk/emsdk.ps1 install latest
