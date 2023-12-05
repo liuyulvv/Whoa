@@ -1,22 +1,31 @@
-import { createElement } from 'react';
 import BaseComponent from './BaseComponent';
-// import { Tab, TabList } from '@fluentui/react-components';
+import Button from './Button';
 
 export default class ToolBar extends BaseComponent {
-    private toolbar: JSX.Element | undefined;
-    private items: JSX.Element[] = [];
+    protected children: Button[];
 
     public constructor() {
         super();
-        // this.toolbar = <TabList></TabList>;
+        this.children = [];
     }
 
-    public addItem(item: JSX.Element) {
-        this.items.push(item);
+    public addButton(button: Button) {
+        this.children.push(button);
+    }
+
+    public removeButton(button: Button) {
+        const index = this.children.indexOf(button);
+        if (index > -1) {
+            this.children.splice(index, 1);
+        }
     }
 
     public render() {
-        this.toolbar = createElement('div', undefined, this.items);
-        super.render(this.toolbar);
+        const toolbarItems: JSX.Element[] = [];
+        this.children.forEach((child) => {
+            toolbarItems.push(child.component);
+        });
+        this.component.props.children = toolbarItems;
+        super.render();
     }
 }
