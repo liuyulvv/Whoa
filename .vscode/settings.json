@@ -4,6 +4,7 @@
         "cgal",
         "emscripten",
         "emsdk",
+        "fluentui",
         "onwarn",
         "Parens",
         "pickable",
