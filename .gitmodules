@@ -1,6 +1,0 @@
-[submodule "WhoaGeometry/wasm/emsdk"]
-	path = WhoaGeometry/wasm/emsdk
-	url = https://github.com/emscripten-core/emsdk.git
-[submodule "WhoaGeometry/wasm/vcpkg"]
-	path = WhoaGeometry/wasm/vcpkg
-	url = https://github.com/Microsoft/vcpkg.git
