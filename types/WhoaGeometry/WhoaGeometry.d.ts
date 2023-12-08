@@ -1,5 +1,7 @@
+/* eslint-disable camelcase */
+
 declare namespace Module {
-    export interface VectorDouble {
+    export class VectorDouble {
         size(): number;
         push_back(_0: number): void;
         resize(_0: number, _1: number): void;
