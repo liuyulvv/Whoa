@@ -1,4 +1,5 @@
 import Point3 from './Point3';
+import { clamp } from './Util';
 
 export default class Vector3 {
     public x: number;
@@ -46,8 +47,8 @@ export default class Vector3 {
         return this.x * vector.x + this.y * vector.y + this.z * vector.z;
     }
 
-    public getRadiansBetween(vector: Vector3): number {
-        return Math.acos(this.dot(vector) / (this.length * vector.length));
+    public getRadianBetween(vector: Vector3): number {
+        return Math.acos(clamp(this.dot(vector) / (this.length * vector.length), -1, 1));
     }
 
     public normalize(): Vector3 {

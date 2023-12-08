@@ -6,6 +6,14 @@ declare namespace Whoa {
 
             public constructor(x?: number, y?: number);
 
+            public distance(point: Point2): number;
+
+            public add(point: Point2): Point2;
+
+            public subtract(point: Point2): Point2;
+
+            public multiply(num: number): Point2;
+
             public clone(): Point2;
         }
     }

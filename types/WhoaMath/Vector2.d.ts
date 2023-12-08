@@ -22,7 +22,7 @@ declare namespace Whoa {
 
             public dot(vector: Vector2): number;
 
-            public getRadiansBetween(vector: Vector2): number;
+            public getRadianBetween(vector: Vector2): number;
 
             public normalize(): Vector2;
 

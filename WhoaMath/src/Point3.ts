@@ -13,6 +13,18 @@ export default class Point3 {
         return Math.sqrt(Math.pow(point.x - this.x, 2) + Math.pow(point.y - this.y, 2) + Math.pow(point.z - this.z, 2));
     }
 
+    public add(point: Point3): Point3 {
+        return new Point3(this.x + point.x, this.y + point.y, this.z + point.z);
+    }
+
+    public subtract(point: Point3): Point3 {
+        return new Point3(this.x - point.x, this.y - point.y, this.z - point.z);
+    }
+
+    public multiply(num: number): Point3 {
+        return new Point3(this.x * num, this.y * num, this.z * num);
+    }
+
     public clone(): Point3 {
         return new Point3(this.x, this.y, this.z);
     }
