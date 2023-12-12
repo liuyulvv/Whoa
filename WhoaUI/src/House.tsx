@@ -1,32 +1,11 @@
-import { CompoundButton, makeStyles } from '@fluentui/react-components';
-import {
-    BorderOutsideThickRegular,
-    BuildingTownhouseFilled,
-    BuildingTownhouseRegular,
-    LineRegular,
-    bundleIcon
-} from '@fluentui/react-icons';
+import CropSquareOutlinedIcon from '@mui/icons-material/CropSquareOutlined';
+import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule';
+import { Button } from '@mui/material';
+import Box from '@mui/material/Box';
 import { useEffect } from 'react';
 import createLeftMenuStore from './store';
 
-const useStyles = makeStyles({
-    container: {
-        display: 'flex',
-        flexWrap: 'wrap',
-        minWidth: '356px',
-        maxWidth: '534px'
-    },
-    element: {
-        flexBasis: '178px'
-    }
-});
-
-const HouseIcon = bundleIcon(BuildingTownhouseFilled, BuildingTownhouseRegular);
-export { HouseIcon };
-
 export default () => {
-    const styles = useStyles();
-
     const check = createLeftMenuStore((state) => state.checked);
     const setCheck = createLeftMenuStore((state) => state.setChecked);
 
@@ -41,12 +20,13 @@ export default () => {
     });
 
     return (
-        <div className={styles.container}>
-            <CompoundButton
-                icon={<LineRegular />}
-                secondaryContent="人之生也直,罔之生也幸而免"
-                className={styles.element}
-                appearance={check == 'line' ? 'primary' : 'subtle'}
+        <Box
+            sx={{
+                display: 'flex',
+                flexWrap: 'wrap'
+            }}
+        >
+            <Button
                 onClick={() => {
                     if (check == 'line') {
                         setCheck('');
@@ -56,14 +36,12 @@ export default () => {
                         WhoaEvent.pub('START_DRAW_LINE');
                     }
                 }}
+                variant={check == 'line' ? 'contained' : 'outlined'}
+                startIcon={<HorizontalRuleIcon />}
             >
                 直墙
-            </CompoundButton>
-            <CompoundButton
-                icon={<BorderOutsideThickRegular />}
-                secondaryContent="不以规矩,不能成方圆"
-                className={styles.element}
-                appearance={check == 'border' ? 'primary' : 'subtle'}
+            </Button>
+            <Button
                 onClick={() => {
                     if (check == 'border') {
                         setCheck('');
@@ -73,9 +51,11 @@ export default () => {
                         WhoaEvent.pub('START_DRAW_BORDER');
                     }
                 }}
+                variant={check == 'border' ? 'contained' : 'outlined'}
+                startIcon={<CropSquareOutlinedIcon />}
             >
                 矩形
-            </CompoundButton>
-        </div>
+            </Button>
+        </Box>
     );
 };

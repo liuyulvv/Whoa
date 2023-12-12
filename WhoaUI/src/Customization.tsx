@@ -1,35 +1,16 @@
-import { CompoundButton, makeStyles } from '@fluentui/react-components';
-import { CalendarMonthRegular, CouchFilled, CouchRegular, bundleIcon } from '@fluentui/react-icons';
-
-const useStyles = makeStyles({
-    container: {
-        display: 'flex',
-        flexWrap: 'wrap',
-        minWidth: '356px',
-        maxWidth: '534px'
-    }
-});
-
-const CustomizationIcon = bundleIcon(CouchFilled, CouchRegular);
-export { CustomizationIcon };
+import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule';
+import { Button } from '@mui/material';
+import Box from '@mui/material/Box';
 
 export default () => {
-    const styles = useStyles();
-
     return (
-        <div className={styles.container}>
-            <CompoundButton icon={<CalendarMonthRegular />} secondaryContent="Secondary content">
-                Customization
-            </CompoundButton>
-            <CompoundButton icon={<CalendarMonthRegular />} secondaryContent="Secondary content">
-                Customization
-            </CompoundButton>
-            <CompoundButton icon={<CalendarMonthRegular />} secondaryContent="Secondary content">
-                Customization
-            </CompoundButton>
-            <CompoundButton icon={<CalendarMonthRegular />} secondaryContent="Secondary content">
-                Customization
-            </CompoundButton>
-        </div>
+        <Box
+            sx={{
+                display: 'flex',
+                flexWrap: 'wrap'
+            }}
+        >
+            <Button startIcon={<HorizontalRuleIcon />}>定制</Button>
+        </Box>
     );
 };

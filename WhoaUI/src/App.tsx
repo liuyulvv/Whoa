@@ -1,43 +1,59 @@
-import { makeStyles } from '@fluentui/react-components';
+import Box from '@mui/material/Box';
+import CssBaseline from '@mui/material/CssBaseline';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useMemo } from 'react';
 import Aside from './Aside';
 import Navigation from './Navigation';
 import Scene from './Scene';
 
-const useStyles = makeStyles({
-    container: {
-        display: 'flex',
-        flexDirection: 'column',
-        height: '100vh'
-    },
-    navigationContainer: {
-        height: '64px',
-        display: 'flex',
-        alignItems: 'center',
-        backgroundColor: 'rgb(246,248,250)',
-        zIndex: '1000'
-    },
-    mainContainer: {
-        display: 'flex',
-        flexGrow: '1',
-        flexShrink: '1',
-        overflowX: 'hidden',
-        overflowY: 'hidden',
-        position: 'relative'
-    }
-});
-
 export default () => {
-    const styles = useStyles();
+    const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+
+    const theme = useMemo(
+        () =>
+            createTheme({
+                palette: {
+                    mode: prefersDarkMode ? 'dark' : 'light'
+                }
+            }),
+        [prefersDarkMode]
+    );
 
     return (
-        <div className={styles.container}>
-            <div className={styles.navigationContainer}>
-                <Navigation />
-            </div>
-            <div className={styles.mainContainer}>
-                <Aside />
-                <Scene />
-            </div>
-        </div>
+        <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <Box
+                sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    height: '100vh'
+                }}
+            >
+                <Box
+                    sx={{
+                        display: 'flex',
+                        height: '64px',
+                        alignItems: 'center',
+                        zIndex: '1000'
+                    }}
+                >
+                    <Navigation />
+                </Box>
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flexGrow: '1',
+                        flexShrink: '1',
+                        overflowX: 'hidden',
+                        overflowY: 'hidden',
+                        position: 'relative'
+                    }}
+                >
+                    <Aside />
+                    <Scene />
+                </Box>
+            </Box>
+        </ThemeProvider>
     );
 };

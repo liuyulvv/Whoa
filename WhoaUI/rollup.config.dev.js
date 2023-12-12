@@ -31,6 +31,7 @@ export default {
     ],
     onwarn(warning, warn) {
         if (warning.code === 'CIRCULAR_DEPENDENCY') return;
-        warn(warning);
+        if (warning.code === 'MODULE_LEVEL_DIRECTIVE') return;
+        warn(warning.message);
     }
 };

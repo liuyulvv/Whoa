@@ -1,10 +1,10 @@
-import { Button as FluentButton } from '@fluentui/react-components';
+import { Button as MaterialButton } from '@mui/material';
 import BaseComponent from './BaseComponent';
 
 export default class Button extends BaseComponent {
     public constructor(name: string) {
         super();
-        this.component = <FluentButton shape="circular">{name}</FluentButton>;
+        this.component = <MaterialButton>{name}</MaterialButton>;
     }
 
     public render() {

@@ -1,4 +1,8 @@
-import { FluentProvider, teamsLightTheme } from '@fluentui/react-components';
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
+
 import 'normalize.css';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
@@ -17,9 +21,7 @@ const RootElement = document.getElementById('root') as HTMLDivElement;
 
 ReactDOM.createRoot(RootElement).render(
     <React.StrictMode>
-        <FluentProvider id="fluent" theme={teamsLightTheme}>
-            <RouterProvider router={router} />
-        </FluentProvider>
+        <RouterProvider router={router} />
     </React.StrictMode>
 );
 
