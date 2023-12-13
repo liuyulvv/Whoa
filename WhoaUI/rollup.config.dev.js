@@ -31,6 +31,9 @@ export default {
     ],
     onwarn(warning, warn) {
         if (warning.code === 'CIRCULAR_DEPENDENCY') return;
+        if (warning.code === 'THIS_IS_UNDEFINED') {
+            return;
+        }
         warn(warning.message);
     }
 };
