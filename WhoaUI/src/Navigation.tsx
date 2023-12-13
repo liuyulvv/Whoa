@@ -1,16 +1,14 @@
-import { AppBar, Avatar, Box, Toolbar, Typography } from '@mui/material';
+import { Menu } from '@arco-design/web-react';
+
+const MenuItem = Menu.Item;
 
 export default () => {
     return (
-        <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static">
-                <Toolbar>
-                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                        LOAF
-                    </Typography>
-                    <Avatar alt="liuyulvv" />
-                </Toolbar>
-            </AppBar>
-        </Box>
+        <Menu mode="horizontal" defaultSelectedKeys={['1']}>
+            <MenuItem key="1">Home</MenuItem>
+            <MenuItem key="2">Solution</MenuItem>
+            <MenuItem key="3">Cloud Service</MenuItem>
+            <MenuItem key="4">Cooperation</MenuItem>
+        </Menu>
     );
 };

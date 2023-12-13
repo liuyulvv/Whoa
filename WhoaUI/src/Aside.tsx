@@ -1,83 +1,53 @@
-import ChairOutlinedIcon from '@mui/icons-material/ChairOutlined';
-import DashboardCustomizeOutlinedIcon from '@mui/icons-material/DashboardCustomizeOutlined';
-import HouseOutlinedIcon from '@mui/icons-material/HouseOutlined';
-import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
-import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
-import { IconButton, Tab, Tabs } from '@mui/material';
-import Box from '@mui/material/Box';
-import Customization from './Customization';
+import { Layout, Tabs, Typography } from '@arco-design/web-react';
+import { IconCalendar } from '@arco-design/web-react/icon';
 import House from './House';
-import Ornamentation from './Ornamentation';
 import createLeftMenuStore from './store';
 
+const TabPane = Tabs.TabPane;
+const Sider = Layout.Sider;
+
 export default () => {
-    const open = createLeftMenuStore((state) => state.opened);
-    const setOpen = createLeftMenuStore((state) => state.setOpened);
+    const collapsed = createLeftMenuStore((state) => state.collapsed);
+    const setCollapsed = createLeftMenuStore((state) => state.setCollapsed);
     const tabValue = createLeftMenuStore((state) => state.value);
     const setTabValue = createLeftMenuStore((state) => state.setValue);
 
     return (
-        <Box
-            sx={{
-                position: 'relative',
-                zIndex: '1000',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-                bgcolor: 'background.paper'
+        <Sider
+            onCollapse={(collapsed) => {
+                setCollapsed(collapsed);
+            }}
+            collapsed={collapsed}
+            collapsible
+            width={360}
+            style={{
+                zIndex: 1000
             }}
         >
             <Tabs
-                value={tabValue}
-                orientation="vertical"
-                variant="fullWidth"
-                centered
-                onChange={(_, value) => {
-                    if (value == tabValue) {
+                tabPosition="left"
+                defaultActiveTab=""
+                activeTab={tabValue}
+                onClickTab={(key) => {
+                    if (key == tabValue) {
+                        setCollapsed(true);
                         setTabValue('');
-                        setOpen(false);
                     } else {
-                        setTabValue(value);
-                        setOpen(true);
+                        setTabValue(key);
+                        setCollapsed(false);
                     }
                 }}
             >
-                <Tab icon={<HouseOutlinedIcon />} value="house" />
-                <Tab icon={<ChairOutlinedIcon />} value="ornamentation" />
-                <Tab icon={<DashboardCustomizeOutlinedIcon />} value="customization" />
+                <TabPane key="house" title={<IconCalendar />}>
+                    <House />
+                </TabPane>
+                <TabPane key="decoration" title={<IconCalendar />}>
+                    <Typography.Paragraph>Content of Tab Panel 2</Typography.Paragraph>
+                </TabPane>
+                <TabPane key="customization" title={<IconCalendar />}>
+                    <Typography.Paragraph>Content of Tab Panel 3</Typography.Paragraph>
+                </TabPane>
             </Tabs>
-
-            <IconButton
-                onClick={() => {
-                    if (open) {
-                        // setTabValue('');
-                    } else {
-                        setTabValue('house');
-                    }
-                    setOpen(!open);
-                }}
-            >
-                {open ? <KeyboardArrowRightIcon /> : <KeyboardArrowLeftIcon />}
-            </IconButton>
-
-            <Box
-                sx={
-                    open
-                        ? {
-                              position: 'absolute',
-                              left: '90px',
-                              zIndex: '2',
-                              bgcolor: 'background.paper'
-                          }
-                        : {
-                              display: 'none'
-                          }
-                }
-            >
-                {tabValue == 'house' && <House />}
-                {tabValue == 'ornamentation' && <Ornamentation />}
-                {tabValue == 'customization' && <Customization />}
-            </Box>
-        </Box>
+        </Sider>
     );
 };

@@ -1,56 +1,32 @@
-import { Alert, Snackbar } from '@mui/material';
-import { Component } from 'react';
-import BaseComponent from './BaseComponent';
+import { Message } from '@arco-design/web-react';
 
-interface ToastProps {
-    message: string;
-    type: 'info' | 'success' | 'warning' | 'error';
-    handleClose: () => void;
-}
-
-interface ToastState {
-    open: boolean;
-}
-class ToastComponent extends Component<ToastProps, ToastState> {
-    public constructor(props: ToastProps) {
-        super(props);
-        this.state = {
-            open: true
-        };
-    }
-
-    handleClose = () => {
-        this.setState({ open: false });
-        this.props.handleClose();
-    };
-
-    public render() {
-        return (
-            <Snackbar
-                open={this.state.open}
-                autoHideDuration={5000}
-                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-                onClose={this.handleClose}
-            >
-                <Alert severity={this.props.type} variant="filled">
-                    {this.props.message}
-                </Alert>
-            </Snackbar>
-        );
-    }
-}
-
-export default class Toast extends BaseComponent {
-    public constructor(message: string, type: 'info' | 'success' | 'warning' | 'error') {
-        super();
-        this.component = (
-            <ToastComponent
-                message={message}
-                type={type}
-                handleClose={() => {
-                    this.destroy();
-                }}
-            />
-        );
+export default class Toast {
+    public constructor(message: string, type: 'info' | 'success' | 'warning' | 'error' | 'normal') {
+        if (type === 'info') {
+            Message.info({
+                closable: false,
+                content: message
+            });
+        } else if (type === 'success') {
+            Message.success({
+                closable: false,
+                content: message
+            });
+        } else if (type === 'warning') {
+            Message.warning({
+                closable: false,
+                content: message
+            });
+        } else if (type === 'error') {
+            Message.error({
+                closable: false,
+                content: message
+            });
+        } else if (type === 'normal') {
+            Message.normal({
+                closable: false,
+                content: message
+            });
+        }
     }
 }

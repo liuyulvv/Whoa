@@ -1,4 +1,3 @@
-import Box from '@mui/material/Box';
 import { useEffect, useRef } from 'react';
 
 export default () => {
@@ -25,9 +24,9 @@ export default () => {
     });
 
     return (
-        <Box
+        <div
             ref={mainContainer}
-            sx={{
+            style={{
                 flexGrow: '1',
                 flexShrink: '1',
                 flexBasis: '0%',
@@ -47,6 +46,6 @@ export default () => {
                     outline: 'none'
                 }}
             />
-        </Box>
+        </div>
     );
 };

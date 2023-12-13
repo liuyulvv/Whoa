@@ -1,10 +1,10 @@
-import { Button as MaterialButton } from '@mui/material';
+import { Button as ArcoButton } from '@arco-design/web-react';
 import BaseComponent from './BaseComponent';
 
 export default class Button extends BaseComponent {
-    public constructor(name: string) {
+    public constructor(title: string) {
         super();
-        this.component = <MaterialButton>{name}</MaterialButton>;
+        this.component = <ArcoButton>{title}</ArcoButton>;
     }
 
     public render() {

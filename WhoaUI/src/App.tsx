@@ -1,59 +1,36 @@
-import Box from '@mui/material/Box';
-import CssBaseline from '@mui/material/CssBaseline';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import { useMemo } from 'react';
+import { Layout } from '@arco-design/web-react';
 import Aside from './Aside';
 import Navigation from './Navigation';
 import Scene from './Scene';
 
+const Header = Layout.Header;
+const Content = Layout.Content;
+
 export default () => {
-    const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
-
-    const theme = useMemo(
-        () =>
-            createTheme({
-                palette: {
-                    mode: prefersDarkMode ? 'dark' : 'light'
-                }
-            }),
-        [prefersDarkMode]
-    );
-
     return (
-        <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <Box
-                sx={{
+        <Layout
+            style={{
+                display: 'flex',
+                flexDirection: 'column',
+                height: '100vh'
+            }}
+        >
+            <Header>
+                <Navigation />
+            </Header>
+            <Content
+                style={{
                     display: 'flex',
-                    flexDirection: 'column',
-                    height: '100vh'
+                    flexGrow: '1',
+                    flexShrink: '1',
+                    overflowX: 'hidden',
+                    overflowY: 'hidden',
+                    position: 'relative'
                 }}
             >
-                <Box
-                    sx={{
-                        display: 'flex',
-                        height: '64px',
-                        alignItems: 'center',
-                        zIndex: '1000'
-                    }}
-                >
-                    <Navigation />
-                </Box>
-                <Box
-                    sx={{
-                        display: 'flex',
-                        flexGrow: '1',
-                        flexShrink: '1',
-                        overflowX: 'hidden',
-                        overflowY: 'hidden',
-                        position: 'relative'
-                    }}
-                >
-                    <Aside />
-                    <Scene />
-                </Box>
-            </Box>
-        </ThemeProvider>
+                <Aside />
+                <Scene />
+            </Content>
+        </Layout>
     );
 };
