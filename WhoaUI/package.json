@@ -5,13 +5,7 @@
         "build": "rollup -c rollup.config.prod.js"
     },
     "dependencies": {
-        "@blueprintjs/core": "^5.7.2",
-        "@emotion/react": "^11.11.1",
-        "@emotion/styled": "^11.11.0",
-        "@fontsource/roboto": "^5.0.8",
-        "@mui/icons-material": "^5.14.19",
-        "@mui/material": "^5.14.20",
-        "@mui/system": "^5.14.20",
+        "@arco-design/web-react": "^2.57.0",
         "normalize.css": "^8.0.1",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
