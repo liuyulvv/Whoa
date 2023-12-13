@@ -2,21 +2,21 @@ import { create } from 'zustand';
 
 interface LeftMenuStore {
     value: string;
-    opened: boolean;
+    collapsed: boolean;
     checked: string;
     setValue: (value: string) => void;
-    setOpened: (opened: boolean) => void;
+    setCollapsed: (collapsed: boolean) => void;
     setChecked: (checked: string) => void;
 }
 
 const createLeftMenuStore = create<LeftMenuStore>()((set) => ({
     value: '',
-    opened: false,
+    collapsed: true,
     checked: '',
     setValue: (value) => set({ value: value }),
-    setOpened: (opened) =>
+    setCollapsed: (collapsed) =>
         set({
-            opened: opened
+            collapsed: collapsed
         }),
     setChecked: (checked) => set({ checked: checked })
 }));
