@@ -16,6 +16,9 @@ export default () => {
         <Sider
             onCollapse={(collapsed) => {
                 setCollapsed(collapsed);
+                if (tabValue == '') {
+                    setTabValue('house');
+                }
             }}
             collapsed={collapsed}
             collapsible
