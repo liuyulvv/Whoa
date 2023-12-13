@@ -1,13 +1,10 @@
 import Button from './Button';
+import Message from './Message';
 import ToolBar from './ToolBar';
-import Toast from './Toast';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 (<any>window).WhoaUI = {
     Button: Button,
     ToolBar: ToolBar,
-    Toast: Toast
+    Message: Message
 };
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-(<any>window).Toast = Toast;
