@@ -11,6 +11,12 @@ import Interaction from './interaction/Interaction';
 (<any>window).Whoa = {};
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
+(<any>window).WhoaGeometryModule().then((module: any) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (<any>window).WhoaGeometry = module;
+});
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 (<any>window).Whoa.WhoaFramework = {
     CameraMode: CameraMode,
     EntityRole: EntityRole,
