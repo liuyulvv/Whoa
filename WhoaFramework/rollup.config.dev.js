@@ -9,6 +9,10 @@ export default [
             format: 'es',
             sourcemap: true
         },
-        plugins: [resolve(), typescript({ module: 'ESNext' })]
+        plugins: [resolve(), typescript({ module: 'ESNext' })],
+        onwarn(warning, warn) {
+            if (warning.code === 'CIRCULAR_DEPENDENCY' && warning.message.includes('babylonjs')) return;
+            warn(warning.message);
+        }
     }
 ];
