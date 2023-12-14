@@ -1,5 +1,5 @@
-/// <reference path="../../WhoaGeometry/Point2D.d.ts" />
-/// <reference path="../../WhoaGeometry/Point3D.d.ts" />
+/// <reference path="../../WhoaMath/Point2.d.ts" />
+/// <reference path="../../WhoaMath/Point3.d.ts" />
 /// <reference path="CameraMode.d.ts" />
 
 declare namespace Whoa {
@@ -11,15 +11,13 @@ declare namespace Whoa {
 
         export class WhoaScene {
             public getCameraMode(): CameraMode;
-            public screenToWorld(pos: WhoaGeometry.Point2D): WhoaGeometry.Point3D;
-            public worldToScreen(pos: WhoaGeometry.Point3D): WhoaGeometry.Point2D;
-            public getScreenPosition(): Whoa.WhoaGeometry.Point2D;
-            public getGroundPosition(): Whoa.WhoaGeometry.Point3D;
+            public screenToWorld(pos: WhoaMath.Point2): WhoaMath.Point3;
+            public worldToScreen(pos: WhoaMath.Point3): WhoaMath.Point2;
+            public getScreenPosition(): WhoaMath.Point2;
+            public getGroundPosition(): WhoaMath.Point3;
             public setEntityHoverColor(): void;
             public setEntitySelectColor(): void;
             public pickEntity(): PickInfo;
-            public enableCameraInput(): void;
-            public disableCameraInput(): void;
         }
     }
 }

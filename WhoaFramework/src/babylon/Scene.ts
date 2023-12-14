@@ -109,7 +109,7 @@ export default class Scene {
         this.cameraMode = CameraMode.MODE_3D;
     }
 
-    public screenToWorld(point: Whoa.WhoaGeometry.Point2D): Whoa.WhoaGeometry.Point3D {
+    public screenToWorld(point: WhoaMath.Point2): WhoaMath.Point3 {
         const unproject = Vector3.Unproject(
             new Vector3(point.x, point.y, 0),
             this.engine.getRenderWidth(),
@@ -118,12 +118,12 @@ export default class Scene {
             this.scene.getViewMatrix(),
             this.scene.getProjectionMatrix()
         );
-        const res = new Whoa.WhoaGeometry.Point3D(unproject.x, unproject.y, unproject.z);
+        const res = new WhoaMath.Point3(unproject.x, unproject.y, unproject.z);
         return res;
     }
 
-    public worldToScreen(point: Whoa.WhoaGeometry.Point3D): Whoa.WhoaGeometry.Point2D {
-        const res = new Whoa.WhoaGeometry.Point2D();
+    public worldToScreen(point: WhoaMath.Point3): WhoaMath.Point2 {
+        const res = new WhoaMath.Point2();
         if (this.getCameraMode() == CameraMode.MODE_2D) {
             const project = Vector3.Project(
                 new Vector3(point.x, point.y, point.z),
@@ -146,22 +146,22 @@ export default class Scene {
         return res;
     }
 
-    public getScreenPosition(): Whoa.WhoaGeometry.Point2D {
-        return new Whoa.WhoaGeometry.Point2D(this.scene.pointerX, this.scene.pointerY);
+    public getScreenPosition(): WhoaMath.Point2 {
+        return new WhoaMath.Point2(this.scene.pointerX, this.scene.pointerY);
     }
 
-    public getGroundPosition(): Whoa.WhoaGeometry.Point3D {
+    public getGroundPosition(): WhoaMath.Point3 {
         const babylonPickInfo = this.scene.pick(this.scene.pointerX, this.scene.pointerY, (mesh) => {
             return mesh == this.groundMesh;
         });
         if (babylonPickInfo.hit && babylonPickInfo.pickedPoint) {
-            return new Whoa.WhoaGeometry.Point3D(
+            return new WhoaMath.Point3(
                 babylonPickInfo.pickedPoint.x,
                 babylonPickInfo.pickedPoint.y,
                 babylonPickInfo.pickedPoint.z
             );
         }
-        return new Whoa.WhoaGeometry.Point3D(0, 0, 0);
+        return new WhoaMath.Point3(0, 0, 0);
     }
 
     public setEntityHoverColor(): void {

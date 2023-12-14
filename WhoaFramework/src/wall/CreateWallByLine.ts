@@ -14,8 +14,8 @@ export default class CreateWallByLine {
     private static instance: CreateWallByLine;
     private canvas: HTMLCanvasElement;
     private status: CreateStatus;
-    private start: Whoa.WhoaGeometry.Point3D;
-    private end: Whoa.WhoaGeometry.Point3D;
+    private start: WhoaMath.Point3;
+    private end: WhoaMath.Point3;
     private wallMidLine: LinesMesh | undefined;
     private wallMesh: Mesh | undefined;
     private wallMeshMaterial: StandardMaterial;
@@ -32,8 +32,8 @@ export default class CreateWallByLine {
     private constructor() {
         this.canvas = WhoaCanvas;
         this.status = CreateStatus.START;
-        this.start = new Whoa.WhoaGeometry.Point3D(0, 0, 0);
-        this.end = new Whoa.WhoaGeometry.Point3D(0, 0, 0);
+        this.start = new WhoaMath.Point3(0, 0, 0);
+        this.end = new WhoaMath.Point3(0, 0, 0);
         this.wallMeshMaterial = new StandardMaterial(uuid());
         this.wallMeshMaterial.emissiveColor = new Color3(1, 1, 1);
         this.bindPointerMove = this.onPointerMove.bind(this);
@@ -61,8 +61,8 @@ export default class CreateWallByLine {
             if (this.end.x != this.start.x) {
                 orthogonalPoint.y = this.start.y;
             }
-            const vecA = orthogonalPoint.subtract(this.start);
-            const vecB = this.end.subtract(this.start);
+            const vecA = WhoaMath.Vector3.fromPoint3(orthogonalPoint.subtract(this.start));
+            const vecB = WhoaMath.Vector3.fromPoint3(this.end.subtract(this.start));
             const radian = vecA.getRadianBetween(vecB);
             if (radian > Math.PI / 4) {
                 orthogonalPoint.x = this.start.x;
@@ -70,9 +70,9 @@ export default class CreateWallByLine {
             }
             this.end = orthogonalPoint;
         }
-        const vecMidLine = this.end.subtract(this.start);
+        const vecMidLine = WhoaMath.Vector3.fromPoint3(this.end.subtract(this.start));
         const direction = vecMidLine.y > 0 ? 1 : -1;
-        this.radian = vecMidLine.getRadianBetween(new Whoa.WhoaGeometry.Point3D(1, 0, 0)) * direction;
+        this.radian = vecMidLine.getRadianBetween(new WhoaMath.Vector3(1, 0, 0)) * direction;
         const start = new Vector3(this.start.x, this.start.y, this.start.z);
         const end = new Vector3(this.end.x, this.end.y, this.end.z);
         const startLeft = start.clone();
@@ -194,7 +194,7 @@ export default class CreateWallByLine {
                     pickable: true,
                     movable: true,
                     width: this.wallWidth,
-                    height: this.end.subtract(this.start).length(),
+                    height: WhoaMath.Vector3.fromPoint3(this.end.subtract(this.start)).length,
                     depth: this.wallHeight,
                     radian: this.radian + Math.PI / 2,
                     position: new Vector3(mid.x, mid.y, mid.z / 2)

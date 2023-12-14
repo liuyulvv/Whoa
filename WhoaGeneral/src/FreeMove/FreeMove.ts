@@ -1,12 +1,12 @@
 export default class FreeMove {
     private static instance: FreeMove;
     private entity: Whoa.WhoaFramework.Entity | null = null;
-    protected startPosition2D: Whoa.WhoaGeometry.Point2D;
-    protected startPosition3D: Whoa.WhoaGeometry.Point3D;
+    protected startPosition2D: WhoaMath.Point2;
+    protected startPosition3D: WhoaMath.Point3;
 
     private constructor() {
-        this.startPosition2D = new Whoa.WhoaGeometry.Point2D();
-        this.startPosition3D = new Whoa.WhoaGeometry.Point3D();
+        this.startPosition2D = new WhoaMath.Point2();
+        this.startPosition3D = new WhoaMath.Point3();
     }
 
     public static get(): FreeMove {

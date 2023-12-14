@@ -78,9 +78,9 @@ export default abstract class Entity {
         return this.movable;
     }
 
-    public get position(): Whoa.WhoaGeometry.Point3D {
+    public get position(): WhoaMath.Point3 {
         const pos = this.mesh.position;
-        return new Whoa.WhoaGeometry.Point3D(pos.x, pos.y, pos.z);
+        return new WhoaMath.Point3(pos.x, pos.y, pos.z);
     }
 
     public show(): void {

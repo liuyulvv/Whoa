@@ -7,12 +7,12 @@ import EntityType from './EntityType';
 export abstract class EntityControl extends EntityModel {
     protected entity: Entity | null = null;
     protected subID: string;
-    protected startPosition2D: Whoa.WhoaGeometry.Point2D;
+    protected startPosition2D: WhoaMath.Point2;
 
     public constructor(entityID: string, info: EntityModelCreateInfo) {
         super(entityID, info);
         this.subID = '';
-        this.startPosition2D = new Whoa.WhoaGeometry.Point2D();
+        this.startPosition2D = new WhoaMath.Point2();
     }
 
     public onEnter(): void {
@@ -82,8 +82,8 @@ export class EntityControlRotate2D extends EntityControl {
         if (this.entity) {
             const position = WhoaScene.getScreenPosition();
             const origin = WhoaScene.worldToScreen(this.entity.position);
-            const start = this.startPosition2D.subtract(origin);
-            const now = position.subtract(origin);
+            const start = WhoaMath.Vector2.fromPoint2(this.startPosition2D.subtract(origin));
+            const now = WhoaMath.Vector2.fromPoint2(position.subtract(origin));
             this.startPosition2D = position;
             const direction = start.x * now.y - start.y * now.x > 0 ? -1 : 1;
             const radian = start.getRadianBetween(now) * direction;

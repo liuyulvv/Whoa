@@ -1,5 +1,6 @@
 /// <reference path="EntityRole.d.ts" />
 /// <reference path="EntityType.d.ts" />
+/// <reference path="../../WhoaMath/Point3.d.ts" />
 
 declare namespace Whoa {
     export namespace WhoaFramework {
@@ -14,6 +15,7 @@ declare namespace Whoa {
         }
 
         export abstract class Entity {
+            public constructor(entityID: string, info: EntityCreateInfo);
             public get id(): string;
             public get role(): EntityRole;
             public get type(): EntityType;
@@ -21,7 +23,7 @@ declare namespace Whoa {
             public get isSelected(): boolean;
             public get isVisible(): boolean;
             public get isPickable(): boolean;
-            public get position(): WhoaGeometry.Point3D;
+            public get position(): WhoaMath.Point3;
             public show(): void;
             public hide(): void;
             public destroy(): void;
@@ -36,8 +38,8 @@ declare namespace Whoa {
             public rotateLocalX(radian: number): void;
             public rotateLocalY(radian: number): void;
             public rotateLocalZ(radian: number): void;
-            public scale(x: number, y: number, z: number, relative: boolean = true): void;
-            public translate(x: number, y: number, z: number, relative: boolean = true): void;
+            public scale(x: number, y: number, z: number, relative?: boolean): void;
+            public translate(x: number, y: number, z: number, relative?: boolean): void;
         }
     }
 }

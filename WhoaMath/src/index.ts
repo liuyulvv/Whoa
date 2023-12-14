@@ -9,10 +9,7 @@ import Vector3 from './Vector3';
 import Vector4 from './Vector4';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-(<any>window).Whoa = {};
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-(<any>window).Whoa.WhoaMath = {
+(<any>window).WhoaMath = {
     Color3: Color3,
     Color4: Color4,
     Point2: Point2,

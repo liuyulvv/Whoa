@@ -3,7 +3,7 @@ import CreateWallByLine from 'src/wall/CreateWallByLine';
 export default class Interaction {
     private static instance: Interaction;
     private canvas: HTMLCanvasElement;
-    private position: Whoa.WhoaGeometry.Point2D;
+    private position: WhoaMath.Point2;
 
     private pointerTouched: boolean;
     private pointerMoved: boolean;
@@ -19,7 +19,7 @@ export default class Interaction {
 
     private constructor() {
         this.canvas = WhoaCanvas;
-        this.position = new Whoa.WhoaGeometry.Point2D();
+        this.position = new WhoaMath.Point2();
         this.pointerTouched = false;
         this.pointerMoved = false;
         this.lastHover = undefined;
@@ -70,13 +70,11 @@ export default class Interaction {
         this.registerPointerEvent();
 
         WhoaEvent.sub('START_DRAW_LINE', () => {
-            WhoaScene.disableCameraInput();
             this.startCreate();
             CreateWallByLine.get().onCreateStart();
         });
 
         WhoaEvent.sub('STOP_DRAW_LINE', () => {
-            WhoaScene.enableCameraInput();
             this.stopCreate();
             CreateWallByLine.get().onCreateEnd();
         });
