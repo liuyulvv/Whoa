@@ -6,5 +6,6 @@ packages:
     - 'WhoaFramework'
     - 'WhoaHouse'
     - 'WhoaGeneral'
+    - 'WhoaGeometry'
     - 'entry'
     - 'assets'
