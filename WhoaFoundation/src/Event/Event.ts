@@ -25,14 +25,16 @@ export default class Event {
     }
 
     public unsub(eventName: string, eventID: string): void {
-        if (this.subscribers.get(eventName)) {
-            this.subscribers.get(eventName)?.delete(eventID);
+        const subscribers = this.subscribers.get(eventName);
+        if (subscribers) {
+            subscribers.delete(eventID);
         }
     }
 
     public pub(eventName: string) {
-        if (this.subscribers.get(eventName)) {
-            this.subscribers.get(eventName)?.forEach((callback) => {
+        const subscribers = this.subscribers.get(eventName);
+        if (subscribers) {
+            subscribers.forEach((callback) => {
                 callback();
             });
         }

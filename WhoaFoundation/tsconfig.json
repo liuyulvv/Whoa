@@ -13,8 +13,10 @@
         "forceConsistentCasingInFileNames": true,
         "moduleResolution": "Node",
         "resolveJsonModule": true,
-        "isolatedModules": true
+        "isolatedModules": true,
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true
     },
-    "include": ["./src", "../types"],
+    "include": ["./src", "../types", "Serialization/Serialization.ts", "Serialization.d.ts"],
     "exclude": ["node_modules"]
 }
