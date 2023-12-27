@@ -1,16 +1,22 @@
+import Entity from 'src/entities/Entity';
+import EntityManager from 'src/entities/EntityManager';
+import { EntityModelCreateInfo } from 'src/entities/EntityModel';
+import EntityRole from 'src/entities/EntityRole';
+import EntityType from 'src/entities/EntityType';
+import { Point2 } from 'src/math/Point';
 import CreateWallByLine from 'src/wall/CreateWallByLine';
 
 export default class Interaction {
     private static instance: Interaction;
     private canvas: HTMLCanvasElement;
-    private position: WhoaMath.Point2;
+    private position: Point2;
 
     private pointerTouched: boolean;
     private pointerMoved: boolean;
 
-    private lastHover: Whoa.WhoaFramework.Entity | undefined;
-    private lastSelect: Whoa.WhoaFramework.Entity | undefined;
-    private lastControl: Whoa.WhoaFramework.Entity | undefined;
+    private lastHover: Entity | undefined;
+    private lastSelect: Entity | undefined;
+    private lastControl: Entity | undefined;
 
     private creating: boolean;
     private bindPointerDown: (event: PointerEvent) => void;
@@ -19,7 +25,7 @@ export default class Interaction {
 
     private constructor() {
         this.canvas = WhoaCanvas;
-        this.position = new WhoaMath.Point2();
+        this.position = new Point2();
         this.pointerTouched = false;
         this.pointerMoved = false;
         this.lastHover = undefined;
@@ -81,9 +87,9 @@ export default class Interaction {
 
         WhoaEvent.sub('START_DRAW_BORDER', () => {
             this.startCreate();
-            const createInfo: Whoa.WhoaFramework.EntityModelCreateInfo = {
-                role: Whoa.WhoaFramework.EntityRole.ROOT,
-                type: Whoa.WhoaFramework.EntityType.ORNAMENT,
+            const createInfo: EntityModelCreateInfo = {
+                role: EntityRole.ROOT,
+                type: EntityType.ORNAMENT,
                 hovered: false,
                 selected: false,
                 visible: true,
@@ -94,7 +100,7 @@ export default class Interaction {
                 scale: [30000, 30000, 30000],
                 rotation: [Math.PI / 2, 0, 0]
             };
-            Whoa.WhoaFramework.EntityManager.get().createOrnament(createInfo);
+            EntityManager.get().createOrnament(createInfo);
         });
 
         WhoaEvent.sub('STOP_DRAW_BORDER', () => {
@@ -111,8 +117,8 @@ export default class Interaction {
         this.position.y = event.offsetY;
         const pickInfo = WhoaScene.pickEntity();
         if (pickInfo.hit) {
-            const entity = Whoa.WhoaFramework.EntityManager.get().getEntityByID(pickInfo.meshID);
-            if (entity && entity.type == Whoa.WhoaFramework.EntityType.CONTROL) {
+            const entity = EntityManager.get().getEntityByID(pickInfo.meshID);
+            if (entity && entity.type == EntityType.CONTROL) {
                 this.lastControl = entity;
             }
         }
@@ -148,7 +154,7 @@ export default class Interaction {
         this.position.y = event.offsetY;
         const pickInfo = WhoaScene.pickEntity();
         if (pickInfo.hit) {
-            const entity = Whoa.WhoaFramework.EntityManager.get().getEntityByID(pickInfo.meshID);
+            const entity = EntityManager.get().getEntityByID(pickInfo.meshID);
             if (this.lastHover != entity) {
                 this.lastHover?.onLeave();
                 this.lastHover = entity;
@@ -178,12 +184,12 @@ export default class Interaction {
             if (event.button == 0) {
                 const pickInfo = WhoaScene.pickEntity();
                 if (pickInfo.hit) {
-                    const entity = Whoa.WhoaFramework.EntityManager.get().getEntityByID(pickInfo.meshID);
-                    if (entity && entity.type == Whoa.WhoaFramework.EntityType.CONTROL) {
+                    const entity = EntityManager.get().getEntityByID(pickInfo.meshID);
+                    if (entity && entity.type == EntityType.CONTROL) {
                         this.lastControl = entity;
                     } else {
                         this.lastControl = undefined;
-                        if (entity?.type != Whoa.WhoaFramework.EntityType.CONTROL) {
+                        if (entity?.type != EntityType.CONTROL) {
                             if (this.lastSelect != entity) {
                                 this.lastSelect?.onSelect(false);
                                 this.lastSelect = entity;
