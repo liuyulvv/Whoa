@@ -1,4 +1,5 @@
-import { BoundingInfo, Vector3 } from '@babylonjs/core';
+import { BoundingInfo } from '@babylonjs/core';
+import { Vector3 } from 'src/math/Vector';
 
 export default class BoundingBox {
     public bottomFarLeft: Vector3 = new Vector3(0, 0, 0);
@@ -14,15 +15,15 @@ export default class BoundingBox {
     public constructor(boundingInfo?: BoundingInfo) {
         if (boundingInfo) {
             const box = boundingInfo.boundingBox.vectorsWorld;
-            this.bottomFarLeft = box[0];
-            this.topNearRight = box[1];
-            this.bottomFarRight = box[2];
-            this.bottomNearLeft = box[3];
-            this.topFarLeft = box[4];
-            this.bottomNearRight = box[5];
-            this.topNearLeft = box[6];
-            this.topFarRight = box[7];
-            this.center = boundingInfo.boundingBox.centerWorld;
+            this.bottomFarLeft = Vector3.FromBabylonVector3(box[0]);
+            this.topNearRight = Vector3.FromBabylonVector3(box[1]);
+            this.bottomFarRight = Vector3.FromBabylonVector3(box[2]);
+            this.bottomNearLeft = Vector3.FromBabylonVector3(box[3]);
+            this.topFarLeft = Vector3.FromBabylonVector3(box[4]);
+            this.bottomNearRight = Vector3.FromBabylonVector3(box[5]);
+            this.topNearLeft = Vector3.FromBabylonVector3(box[6]);
+            this.topFarRight = Vector3.FromBabylonVector3(box[7]);
+            this.center = Vector3.FromBabylonVector3(boundingInfo.boundingBox.centerWorld);
         }
     }
 

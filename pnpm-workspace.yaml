@@ -1,6 +1,5 @@
 packages:
     - 'server'
-    - 'WhoaMath'
     - 'WhoaFoundation'
     - 'WhoaUI'
     - 'WhoaFramework'

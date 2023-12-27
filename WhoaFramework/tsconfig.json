@@ -15,6 +15,6 @@
         "resolveJsonModule": true,
         "isolatedModules": true
     },
-    "include": ["src", "../types"],
+    "include": ["src", "../types", "../WhoaFoundation/src/Util/NumberPrecision.ts"],
     "exclude": ["node_modules"]
 }

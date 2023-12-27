@@ -6,6 +6,10 @@ import EntityModel from './entities/EntityModel';
 import EntityRole from './entities/EntityRole';
 import EntityType from './entities/EntityType';
 import Interaction from './interaction/Interaction';
+import { Color3, Color4 } from './math/Color';
+import { Matrix } from './math/Matrix';
+import { Point2, Point3 } from './math/Point';
+import { Vector2, Vector3, Vector4 } from './math/Vector';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 (<any>window).Whoa = {};
@@ -24,6 +28,18 @@ import Interaction from './interaction/Interaction';
     Entity: Entity,
     EntityModel: EntityModel,
     EntityManager: EntityManager
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+(<any>window).WhoaMath = {
+    Color3: Color3,
+    Color4: Color4,
+    Point2: Point2,
+    Point3: Point3,
+    Vector2: Vector2,
+    Vector3: Vector3,
+    Vector4: Vector4,
+    Matrix: Matrix
 };
 
 window.WhoaScene = Scene.get();

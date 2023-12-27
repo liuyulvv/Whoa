@@ -29,7 +29,7 @@ export default class FreeMove {
     public onDrag() {
         if (this.entity) {
             const position = WhoaScene.getGroundPosition();
-            const offset = position.subtract(this.startPosition3D);
+            const offset = position.Subtract(this.startPosition3D);
             this.startPosition3D = position;
             this.entity.translate(offset.x, offset.y, offset.z, true);
         }

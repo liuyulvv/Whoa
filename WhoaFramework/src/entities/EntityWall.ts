@@ -1,6 +1,7 @@
-import { Color3, Vector3 } from '@babylonjs/core';
 import '@babylonjs/loaders/glTF';
 import Scene from 'src/babylon/Scene';
+import { Color3 } from 'src/math/Color';
+import { Vector3 } from 'src/math/Vector';
 import Entity, { EntityCreateInfo } from './Entity';
 
 export interface EntityWallCreateInfo extends EntityCreateInfo {

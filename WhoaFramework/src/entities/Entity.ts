@@ -1,7 +1,9 @@
-import { Mesh as BabylonMesh, Color3, Mesh, StandardMaterial, Vector3 } from '@babylonjs/core';
+import { Mesh as BabylonMesh, Mesh, StandardMaterial } from '@babylonjs/core';
 import BoundingBox from 'src/babylon/BoundingBox';
 import { LayerMask } from 'src/babylon/Camera';
 import Scene from 'src/babylon/Scene';
+import { Color3 } from 'src/math/Color';
+import { Vector3 } from 'src/math/Vector';
 import EntityRole from './EntityRole';
 import EntityType from './EntityType';
 
@@ -113,6 +115,7 @@ export default abstract class Entity {
     }
 
     public getBoundingBox(): BoundingBox {
+        this.updateBoundingBox();
         return this.boundingBox;
     }
 

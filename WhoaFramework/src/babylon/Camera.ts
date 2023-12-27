@@ -7,9 +7,9 @@ import {
     Camera,
     IPointerEvent,
     Nullable,
-    PointerTouch,
-    Vector3
+    PointerTouch
 } from '@babylonjs/core';
+import { Vector3 } from 'src/math/Vector';
 
 export enum CameraMode {
     MODE_2D,

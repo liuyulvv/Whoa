@@ -1,4 +1,5 @@
-import { Vector3 } from '@babylonjs/core';
+import { Point2 } from 'src/math/Point';
+import { Vector2, Vector3 } from 'src/math/Vector';
 import Entity from './Entity';
 import EntityModel, { EntityModelCreateInfo } from './EntityModel';
 import EntityRole from './EntityRole';
@@ -82,11 +83,11 @@ export class EntityControlRotate2D extends EntityControl {
         if (this.entity) {
             const position = WhoaScene.getScreenPosition();
             const origin = WhoaScene.worldToScreen(this.entity.position);
-            const start = WhoaMath.Vector2.fromPoint2(this.startPosition2D.subtract(origin));
-            const now = WhoaMath.Vector2.fromPoint2(position.subtract(origin));
+            const start = Vector2.FromPoint2(<Point2>this.startPosition2D.Subtract(origin));
+            const now = Vector2.FromPoint2(<Point2>position.Subtract(origin));
             this.startPosition2D = position;
             const direction = start.x * now.y - start.y * now.x > 0 ? -1 : 1;
-            const radian = start.getRadianBetween(now) * direction;
+            const radian = start.GetRadianBetween(now) * direction;
             this.entity.rotateLocalY(radian);
             this.rotateLocalY(radian);
         }

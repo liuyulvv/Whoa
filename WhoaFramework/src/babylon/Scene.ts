@@ -3,17 +3,16 @@ import {
     Mesh as BabylonMesh,
     Scene as BabylonScene,
     BoundingInfo,
-    Color3,
-    Color4,
-    Matrix,
     MeshBuilder,
     PointerEventTypes,
     PointerInfo,
     SceneLoader,
-    Vector3,
     VertexData
 } from '@babylonjs/core';
 import { GridMaterial } from '@babylonjs/materials';
+import { Color3, Color4 } from 'src/math/Color';
+import { Matrix } from 'src/math/Matrix';
+import { Vector3 } from 'src/math/Vector';
 import { Camera2D, Camera3D, CameraMode } from './Camera';
 
 export interface PickInfo {

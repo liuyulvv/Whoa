@@ -1,4 +1,4 @@
-const modules = ['./WhoaMath.js', './WhoaFoundation.js', './WhoaUI.js', './WhoaFramework.js', './WhoaGeneral.js'];
+const modules = ['./WhoaFoundation.js', './WhoaUI.js', './WhoaFramework.js', './WhoaGeneral.js'];
 
 async function load() {
     for (const module of modules) {

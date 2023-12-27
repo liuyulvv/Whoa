@@ -13,6 +13,8 @@ declare namespace WhoaGeometry {
 
     export class Polygon2 {}
 
+    export class Arrangement2 {}
+
     export class vector_double {
         size(): number;
         push_back(value: number): void;
@@ -45,13 +47,29 @@ declare namespace WhoaGeometry {
         delete(): void;
     }
 
+    export class vector_arrangement_2 {
+        size(): number;
+        push_back(value: Arrangement2): void;
+        set(index: number, value: Arrangement2): boolean;
+        get(index: number): Arrangement2;
+        delete(): void;
+    }
+
     export function create_point_2(x: number, y: number): Point2;
 
     export function create_segment_2(start: Point2, end: Point2): Segment2;
 
     export function create_polygon_2(vector: vector_point_2): Polygon2;
 
-    export function make_arrangement_2(vector: vector_segment_2): void;
+    export function create_arrangement_2(vector: vector_segment_2): Arrangement2;
 
-    export function get_space_vector_from_walls(vector: vector_polygon_2): vector_polygon_2;
+    export function create_arrangement_2_from_walls(vector: vector_arrangement_2): Arrangement2;
+
+    // export function get_bound_polygon_2_from_arrangement_2(arrangement: Arrangement2): vector_polygon_2;
+
+    // export function get_space_vector_from_walls(arrangements: vector_arrangement_2): vector_polygon_2;
+
+    // export function is_segment_intersect(segment1: Segment2, segment2: Segment2): boolean;
+
+    // export function is_polygon_intersect(polygon1: Polygon2, polygon2: Polygon2): boolean;
 }
