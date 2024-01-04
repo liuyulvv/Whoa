@@ -6,10 +6,10 @@
     },
     "type": "module",
     "devDependencies": {
-        "@types/delaunator": "^5.0.2",
+        "@types/earcut": "^2.1.4",
         "rollup-plugin-copy": "^3.5.0"
     },
     "dependencies": {
-        "delaunator": "^5.0.0"
+        "earcut": "^2.2.4"
     }
 }

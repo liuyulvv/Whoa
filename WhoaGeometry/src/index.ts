@@ -1,7 +1,7 @@
-import Delaunator, { DelaunatorResult } from './Delaunator';
+import Earcut, { EarcutResult } from './Earcut/Earcut';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 (<any>window).WhoaGeometry = {
-    Delaunator: Delaunator,
-    DelaunatorResult: DelaunatorResult
+    Earcut: Earcut,
+    EarcutResult: EarcutResult
 };
