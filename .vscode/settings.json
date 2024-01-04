@@ -1,7 +1,11 @@
 {
     "cSpell.words": [
         "babylonjs",
+        "camelcase",
         "cgal",
+        "Delaunator",
+        "droplist",
+        "earcut",
         "emscripten",
         "emsdk",
         "fluentui",
