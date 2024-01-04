@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+        "target": "ESNext",
+        "module": "ESNext",
+        "outDir": ".",
+        "rootDir": "../",
+        "baseUrl": ".",
+        "allowJs": false,
+        "skipLibCheck": true,
+        "esModuleInterop": true,
+        "strict": true,
+        "allowSyntheticDefaultImports": true,
+        "forceConsistentCasingInFileNames": true,
+        "moduleResolution": "Node",
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true
+    },
+    "include": ["./src", "../types", "Serialization/Serialization.ts", "Serialization.d.ts"],
+    "exclude": ["node_modules"]
+}

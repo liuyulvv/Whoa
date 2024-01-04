@@ -6,6 +6,10 @@
     },
     "type": "module",
     "devDependencies": {
+        "@types/delaunator": "^5.0.2",
         "rollup-plugin-copy": "^3.5.0"
+    },
+    "dependencies": {
+        "delaunator": "^5.0.0"
     }
 }
