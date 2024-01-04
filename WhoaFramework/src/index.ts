@@ -15,9 +15,9 @@ import { Vector2, Vector3, Vector4 } from './math/Vector';
 (<any>window).Whoa = {};
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-(<any>window).WhoaGeometryModule().then((module: any) => {
+(<any>window).WhoaGeometrySpaceModule().then((module: any) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (<any>window).WhoaGeometry = module;
+    (<any>window).WhoaGeometrySpace = module;
 });
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

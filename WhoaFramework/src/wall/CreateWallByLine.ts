@@ -93,17 +93,10 @@ export default class CreateWallByLine {
             this.wallMesh = new Mesh(uuid());
             this.wallMesh.material = this.wallMeshMaterial;
         }
-        const positions: number[] = [];
-        [startLeft, endLeft, endRight, startRight].forEach((point) => {
-            positions.push(point.x);
-            positions.push(point.y);
-            positions.push(point.z);
-        });
-        // temp: both side render
-        const indices = [0, 1, 2, 0, 2, 1, 0, 2, 3, 0, 3, 2];
         const vertexData = new VertexData();
-        vertexData.positions = positions;
-        vertexData.indices = indices;
+        const earcutResult = WhoaGeometry.Earcut.triangulate2D([startLeft, endLeft, endRight, startRight]);
+        vertexData.positions = earcutResult.vertices;
+        vertexData.indices = earcutResult.indices;
         vertexData.applyToMesh(this.wallMesh, true);
         if (!this.wallMidLine) {
             this.wallMidLine = Scene.get().MeshBuilder.CreateLines(uuid(), { points: [start, end], updatable: true });
@@ -120,61 +113,39 @@ export default class CreateWallByLine {
     public onCreateEnd(): void {
         this.unregisterPointerEvent();
         this.unregisterKeyEvent();
+        // @info: Maybe we can create space after create a wall.
+        // create space
         const allWall = EntityWallManager.get().getAllWall();
-        const wallArrangements = new WhoaGeometry.vector_arrangement_2();
-        const spaceSegment = new WhoaGeometry.vector_segment_2();
+        const vectorPoints = new WhoaGeometrySpace.vector_string();
         allWall.forEach((wall) => {
             const box = wall.getBoundingBox();
             if (box) {
-                // const bottomFarLeft = WhoaGeometry.create_point_2(
-                //     WhoaUtil.NumberPrecision(box.bottomFarLeft.x),
-                //     WhoaUtil.NumberPrecision(box.bottomFarLeft.y)
-                // );
-                // const bottomFarRight = WhoaGeometry.create_point_2(
-                //     WhoaUtil.NumberPrecision(box.bottomFarRight.x),
-                //     WhoaUtil.NumberPrecision(box.bottomFarRight.y)
-                // );
-                // const bottomNearRight = WhoaGeometry.create_point_2(
-                //     WhoaUtil.NumberPrecision(box.bottomNearRight.x),
-                //     WhoaUtil.NumberPrecision(box.bottomNearRight.y)
-                // );
-                // const bottomNearLeft = WhoaGeometry.create_point_2(
-                //     WhoaUtil.NumberPrecision(box.bottomNearLeft.x),
-                //     WhoaUtil.NumberPrecision(box.bottomNearLeft.y)
-                // );
-                const bottomFarLeft = WhoaGeometry.create_point_2(box.bottomFarLeft.x, box.bottomFarLeft.y);
-                const bottomFarRight = WhoaGeometry.create_point_2(box.bottomFarRight.x, box.bottomFarRight.y);
-                const bottomNearRight = WhoaGeometry.create_point_2(box.bottomNearRight.x, box.bottomNearRight.y);
-                const bottomNearLeft = WhoaGeometry.create_point_2(box.bottomNearLeft.x, box.bottomNearLeft.y);
-                // console.log(
-                //     box.bottomFarLeft.x,
-                //     box.bottomFarLeft.y,
-                //     box.bottomFarRight.x,
-                //     box.bottomFarRight.y,
-                //     box.bottomNearRight.x,
-                //     box.bottomNearRight.y,
-                //     box.bottomNearLeft.x,
-                //     box.bottomNearLeft.y
-                // );
-                const vectorSegment2 = new WhoaGeometry.vector_segment_2();
-                vectorSegment2.push_back(WhoaGeometry.create_segment_2(bottomFarLeft, bottomFarRight));
-                vectorSegment2.push_back(WhoaGeometry.create_segment_2(bottomFarRight, bottomNearRight));
-                vectorSegment2.push_back(WhoaGeometry.create_segment_2(bottomNearRight, bottomNearLeft));
-                vectorSegment2.push_back(WhoaGeometry.create_segment_2(bottomNearLeft, bottomFarLeft));
-
-                spaceSegment.push_back(WhoaGeometry.create_segment_2(bottomFarLeft, bottomFarRight));
-                spaceSegment.push_back(WhoaGeometry.create_segment_2(bottomFarRight, bottomNearRight));
-                spaceSegment.push_back(WhoaGeometry.create_segment_2(bottomNearRight, bottomNearLeft));
-                spaceSegment.push_back(WhoaGeometry.create_segment_2(bottomNearLeft, bottomFarLeft));
-
-                const arrangement = WhoaGeometry.create_arrangement_2(vectorSegment2);
-                wallArrangements.push_back(arrangement);
+                let points = '';
+                points += box.bottomFarLeft.x.toString() + ' ' + box.bottomFarLeft.y + ' ';
+                points += box.bottomFarRight.x.toString() + ' ' + box.bottomFarRight.y + ' ';
+                points += box.bottomNearRight.x.toString() + ' ' + box.bottomNearRight.y + ' ';
+                points += box.bottomNearLeft.x.toString() + ' ' + box.bottomNearLeft.y;
+                vectorPoints.push_back(points);
             }
         });
-        // const arrangement = WhoaGeometry.create_arrangement_2(spaceSegment);
-        // console.log(arrangement);
-        const arrangement1 = WhoaGeometry.create_arrangement_2_from_walls(wallArrangements);
-        console.log(arrangement1);
+        const vectorSpace = WhoaGeometrySpace.get_spaces(vectorPoints);
+        for (let i = 0; i < vectorSpace.size(); i++) {
+            const space = vectorSpace.get(i);
+            const points = space.vertices();
+            const positions: Vector3[] = [];
+            const vertexData = new VertexData();
+            for (let j = 0; j < points.size(); j++) {
+                positions.push(new Vector3(points.get(j).x(), points.get(j).y(), 0));
+            }
+            const earcutResult = WhoaGeometry.Earcut.triangulate2D(positions);
+            vertexData.positions = earcutResult.vertices;
+            vertexData.indices = earcutResult.indices;
+            const spaceMesh = new Mesh(uuid());
+            const spaceMeshMaterial = new StandardMaterial(uuid());
+            spaceMeshMaterial.emissiveColor = new Color3(1, 0, 0);
+            spaceMesh.material = spaceMeshMaterial;
+            vertexData.applyToMesh(spaceMesh, true);
+        }
     }
 
     private registerKeyEvent() {
