@@ -1,4 +1,4 @@
-import { Image, Space } from '@arco-design/web-react';
+import { Button, Image, Space } from '@arco-design/web-react';
 import { useEffect } from 'react';
 import createLeftMenuStore from './store';
 
@@ -16,9 +16,6 @@ export default () => {
         };
     });
 
-    const src =
-        'https://p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/a8c8cdb109cb051163646151a4a5083b.png~tplv-uwbnlip3yd-webp.webp';
-
     return (
         <Space
             align="center"
@@ -28,13 +25,8 @@ export default () => {
                 paddingTop: '16px'
             }}
         >
-            <Image
-                width={129}
-                src={src}
-                title="直墙"
-                description="人之生也直，罔之生也幸而免"
-                footerPosition="outer"
-                preview={false}
+            <Button
+                type="text"
                 onClick={() => {
                     if (check == 'line') {
                         setCheck('');
@@ -44,15 +36,12 @@ export default () => {
                         WhoaEvent.pub('START_DRAW_LINE');
                     }
                 }}
-            />
+            >
+                {'直墙'}
+            </Button>
 
-            <Image
-                width={129}
-                src={src}
-                title="矩形"
-                description="不以规矩，不能成方圆"
-                footerPosition="outer"
-                preview={false}
+            <Button
+                type="text"
                 onClick={() => {
                     if (check == 'border') {
                         setCheck('');
@@ -62,7 +51,9 @@ export default () => {
                         WhoaEvent.pub('START_DRAW_BORDER');
                     }
                 }}
-            />
+            >
+                {'矩形'}
+            </Button>
         </Space>
     );
 };
