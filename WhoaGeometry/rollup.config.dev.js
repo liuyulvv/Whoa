@@ -12,7 +12,7 @@ export default {
     },
     plugins: [
         copy({
-            targets: [{ src: 'dist/*', dest: '../dist/script/' }]
+            targets: [{ src: 'wasm/*', dest: '../dist/script/' }]
         }),
         commonjs(),
         resolve(),
