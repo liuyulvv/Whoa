@@ -53,7 +53,7 @@ export default class Scene {
         );
         this.groundMesh.isPickable = false;
         const groundMeshMaterial = new GridMaterial('ground', this.scene);
-        groundMeshMaterial.majorUnitFrequency = 0;
+        groundMeshMaterial.majorUnitFrequency = 1;
         groundMeshMaterial.minorUnitVisibility = 0.5;
         groundMeshMaterial.gridRatio = 1000;
         groundMeshMaterial.useMaxLine = true;
