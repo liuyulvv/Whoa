@@ -1,7 +1,8 @@
-import { Mesh as BabylonMesh, Mesh, StandardMaterial } from '@babylonjs/core';
+import { Mesh as BabylonMesh, Mesh } from '@babylonjs/core';
 import BoundingBox from 'src/babylon/BoundingBox';
 import { LayerMask } from 'src/babylon/Camera';
 import Scene from 'src/babylon/Scene';
+import StandardMaterial from 'src/babylon/StandardMaterial';
 import { Color3 } from 'src/math/Color';
 import { Vector3 } from 'src/math/Vector';
 import EntityRole from './EntityRole';
@@ -50,6 +51,11 @@ export default abstract class Entity {
 
     public get id(): string {
         return this.entityID;
+    }
+
+    public set id(entityID: string) {
+        Whoa.WhoaFramework.EntityManager.get().updateEntityID(this.entityID, entityID);
+        this.entityID = entityID;
     }
 
     public get role(): EntityRole {

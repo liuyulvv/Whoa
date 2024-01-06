@@ -48,6 +48,14 @@ export default class EntityManager {
         }
     }
 
+    public updateEntityID(entityID: string, newEntityID: string): void {
+        const entity = this.entities.get(entityID);
+        if (entity) {
+            this.entities.delete(entityID);
+            this.entities.set(newEntityID, entity);
+        }
+    }
+
     public getAllEntity(): Entity[] {
         return Array.from(this.entities.values());
     }
