@@ -1,2 +1,4 @@
 dist/
 node_modules/
+WhoaGeometry/wasm/
+WhoaUI

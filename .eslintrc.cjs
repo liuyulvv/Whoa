@@ -29,10 +29,24 @@ module.exports = {
     rules: {
         'prettier/prettier': 'error',
         '@typescript-eslint/triple-slash-reference': 'off',
-        camelcase: [
+        '@typescript-eslint/naming-convention': [
             'error',
             {
-                properties: 'always'
+                selector: 'memberLike',
+                modifiers: ['private', 'protected'],
+                format: ['snake_case'],
+                leadingUnderscore: 'forbid',
+                trailingUnderscore: 'require'
+            },
+            {
+                selector: 'variable',
+                format: ['snake_case'],
+                leadingUnderscore: 'forbid',
+                trailingUnderscore: 'forbid'
+            },
+            {
+                selector: 'function',
+                format: ['PascalCase']
             }
         ]
     }

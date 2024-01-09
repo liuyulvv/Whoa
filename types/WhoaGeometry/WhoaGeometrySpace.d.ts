@@ -1,4 +1,4 @@
-/* eslint-disable camelcase */
+/* eslint-disable @typescript-eslint/naming-convention */
 
 declare namespace WhoaGeometrySpace {
     export class Point_2 {

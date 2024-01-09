@@ -1,147 +1,144 @@
 import Entity from 'src/entities/Entity';
 import EntityManager from 'src/entities/EntityManager';
 import { EntityModelCreateInfo } from 'src/entities/EntityModel';
-import EntityRole from 'src/entities/EntityRole';
-import EntityType from 'src/entities/EntityType';
 import { Point2 } from 'src/math/Point';
 import CreateWallByLine from 'src/wall/CreateWallByLine';
 
 export default class Interaction {
-    private static instance: Interaction;
-    private canvas: HTMLCanvasElement;
-    private position: Point2;
+    private static instance_: Interaction;
+    private canvas_: HTMLCanvasElement;
+    private position_: Point2;
 
-    private pointerTouched: boolean;
-    private pointerMoved: boolean;
+    private pointer_touched_: boolean;
+    private pointer_moved_: boolean;
 
-    private lastHover: Entity | undefined;
-    private lastSelect: Entity | undefined;
-    private lastControl: Entity | undefined;
+    private last_hover_: Entity | undefined;
+    private last_select_: Entity | undefined;
+    private last_control_: Entity | undefined;
 
-    private creating: boolean;
-    private bindPointerDown: (event: PointerEvent) => void;
-    private bindPointerMove: (event: PointerEvent) => void;
-    private bindPointerUp: (event: PointerEvent) => void;
+    private creating_: boolean;
+    private bind_pointer_down_: (event: PointerEvent) => void;
+    private bind_pointer_move_: (event: PointerEvent) => void;
+    private bind_pointer_up_: (event: PointerEvent) => void;
 
     private constructor() {
-        this.canvas = WhoaCanvas;
-        this.position = new Point2();
-        this.pointerTouched = false;
-        this.pointerMoved = false;
-        this.lastHover = undefined;
-        this.lastSelect = undefined;
-        this.lastControl = undefined;
-        this.creating = false;
-        this.bindPointerDown = this.onPointerDown.bind(this);
-        this.bindPointerMove = this.onPointerMove.bind(this);
-        this.bindPointerUp = this.onPointerUp.bind(this);
+        this.canvas_ = WhoaCanvas;
+        this.position_ = new Point2();
+        this.pointer_touched_ = false;
+        this.pointer_moved_ = false;
+        this.last_hover_ = undefined;
+        this.last_select_ = undefined;
+        this.last_control_ = undefined;
+        this.creating_ = false;
+        this.bind_pointer_down_ = this.OnPointerDown.bind(this);
+        this.bind_pointer_move_ = this.OnPointerMove.bind(this);
+        this.bind_pointer_up_ = this.OnPointerUp.bind(this);
         this.registerEvent();
     }
 
-    public static get(): Interaction {
-        if (!Interaction.instance) {
-            Interaction.instance = new Interaction();
+    public static Get(): Interaction {
+        if (!Interaction.instance_) {
+            Interaction.instance_ = new Interaction();
         }
-        return Interaction.instance;
+        return Interaction.instance_;
     }
 
-    private startCreate(): void {
-        this.creating = true;
-        this.unregisterPointerEvent();
+    private StartCreate(): void {
+        this.creating_ = true;
+        this.UnregisterPointerEvent();
     }
 
-    private stopCreate(): void {
-        this.creating = false;
-        this.registerPointerEvent();
-        WhoaEvent.pub('STOP_CREATE');
+    private StopCreate(): void {
+        this.creating_ = false;
+        this.RegisterPointerEvent();
+        WhoaEvent.Pub('STOP_CREATE');
     }
 
-    private registerPointerEvent() {
-        this.canvas.addEventListener('pointerdown', this.bindPointerDown);
-        this.canvas.addEventListener('pointermove', this.bindPointerMove);
-        this.canvas.addEventListener('pointerup', this.bindPointerUp);
+    private RegisterPointerEvent() {
+        this.canvas_.addEventListener('pointerdown', this.bind_pointer_down_);
+        this.canvas_.addEventListener('pointermove', this.bind_pointer_move_);
+        this.canvas_.addEventListener('pointerup', this.bind_pointer_up_);
     }
 
-    private unregisterPointerEvent() {
-        this.canvas.removeEventListener('pointerdown', this.bindPointerDown);
-        this.canvas.removeEventListener('pointermove', this.bindPointerMove);
-        this.canvas.removeEventListener('pointerup', this.bindPointerUp);
+    private UnregisterPointerEvent() {
+        this.canvas_.removeEventListener('pointerdown', this.bind_pointer_down_);
+        this.canvas_.removeEventListener('pointermove', this.bind_pointer_move_);
+        this.canvas_.removeEventListener('pointerup', this.bind_pointer_up_);
     }
 
     private registerEvent() {
         document.addEventListener('keydown', (event: KeyboardEvent) => {
-            this.onKeyDown(event);
+            this.OnKeyDown(event);
         });
 
-        this.registerPointerEvent();
+        this.RegisterPointerEvent();
 
-        WhoaEvent.sub('START_DRAW_LINE', () => {
-            this.startCreate();
-            CreateWallByLine.get().onCreateStart();
+        WhoaEvent.Sub('START_DRAW_LINE', () => {
+            this.StartCreate();
+            CreateWallByLine.Get().OnCreateStart();
         });
 
-        WhoaEvent.sub('STOP_DRAW_LINE', () => {
-            this.stopCreate();
-            CreateWallByLine.get().onCreateEnd();
+        WhoaEvent.Sub('STOP_DRAW_LINE', () => {
+            this.StopCreate();
+            CreateWallByLine.Get().OnCreateEnd();
         });
 
-        WhoaEvent.sub('START_DRAW_BORDER', () => {
-            this.startCreate();
-            const createInfo: EntityModelCreateInfo = {
-                role: EntityRole.ROOT,
-                type: EntityType.ORNAMENT,
-                hovered: false,
-                selected: false,
-                visible: true,
-                pickable: true,
-                movable: true,
-                modelURL: 'assets/models/',
-                modelName: 'deer.glb',
-                scale: [30000, 30000, 30000],
-                rotation: [Math.PI / 2, 0, 0]
-            };
-            EntityManager.get().createOrnament(createInfo);
+        WhoaEvent.Sub('START_DRAW_BORDER', () => {
+            this.StartCreate();
+            const create_info = new EntityModelCreateInfo();
+            create_info.role_ = Whoa.WhoaFramework.EntityRole.ROOT;
+            create_info.type_ = Whoa.WhoaFramework.EntityType.ORNAMENT;
+            create_info.hovered_ = false;
+            create_info.selected_ = false;
+            create_info.visible_ = true;
+            create_info.pickable_ = true;
+            create_info.movable_ = true;
+            create_info.model_url_ = 'assets/models/';
+            create_info.model_name_ = 'deer.glb';
+            create_info.scale_ = [30000, 30000, 30000];
+            create_info.rotation_ = [Math.PI / 2, 0, 0];
+            EntityManager.Get().CreateOrnament(create_info);
         });
 
-        WhoaEvent.sub('STOP_DRAW_BORDER', () => {
-            this.stopCreate();
+        WhoaEvent.Sub('STOP_DRAW_BORDER', () => {
+            this.StopCreate();
         });
     }
 
-    public setPointerTouch(touch: boolean): void {
-        this.pointerTouched = touch;
+    public SetPointerTouch(touch: boolean): void {
+        this.pointer_touched_ = touch;
     }
 
-    private onPointerDown(event: PointerEvent) {
-        this.position.x = event.offsetX;
-        this.position.y = event.offsetY;
-        const pickInfo = WhoaScene.pickEntity();
-        if (pickInfo.hit) {
-            const entity = EntityManager.get().getEntityByID(pickInfo.meshID);
-            if (entity && entity.type == EntityType.CONTROL) {
-                this.lastControl = entity;
+    private OnPointerDown(event: PointerEvent) {
+        this.position_.x = event.offsetX;
+        this.position_.y = event.offsetY;
+        const pick_info = WhoaScene.PickEntity();
+        if (pick_info.hit_) {
+            const entity = EntityManager.Get().GetEntityByID(pick_info.mesh_id_);
+            if (entity && entity.GetType() == Whoa.WhoaFramework.EntityType.CONTROL) {
+                this.last_control_ = entity;
             }
         }
     }
 
-    private onPointerMove(event: PointerEvent) {
-        if (this.pointerTouched) {
+    private OnPointerMove(event: PointerEvent) {
+        if (this.pointer_touched_) {
             return;
         }
         // Left
-        if (event.buttons == 1 && (this.lastControl || this.lastSelect)) {
-            if (this.pointerMoved) {
-                if (this.lastControl) {
-                    this.lastControl.onDrag();
-                } else if (this.lastSelect) {
-                    this.lastSelect.onDrag();
+        if (event.buttons == 1 && (this.last_control_ || this.last_select_)) {
+            if (this.pointer_moved_) {
+                if (this.last_control_) {
+                    this.last_control_.OnDrag();
+                } else if (this.last_select_) {
+                    this.last_select_.OnDrag();
                 }
             } else {
-                this.pointerMoved = true;
-                if (this.lastControl) {
-                    this.lastControl.onDragStart();
-                } else if (this.lastSelect) {
-                    this.lastSelect.onDragStart();
+                this.pointer_moved_ = true;
+                if (this.last_control_) {
+                    this.last_control_.OnDragStart();
+                } else if (this.last_select_) {
+                    this.last_select_.OnDragStart();
                 }
             }
             return;
@@ -150,87 +147,87 @@ export default class Interaction {
         if (event.buttons == 2 || event.buttons == 4) {
             return;
         }
-        this.position.x = event.offsetX;
-        this.position.y = event.offsetY;
-        const pickInfo = WhoaScene.pickEntity();
-        if (pickInfo.hit) {
-            const entity = EntityManager.get().getEntityByID(pickInfo.meshID);
-            if (this.lastHover != entity) {
-                this.lastHover?.onLeave();
-                this.lastHover = entity;
-                this.lastHover?.onEnter();
+        this.position_.x = event.offsetX;
+        this.position_.y = event.offsetY;
+        const pick_info = WhoaScene.PickEntity();
+        if (pick_info.hit_) {
+            const entity = EntityManager.Get().GetEntityByID(pick_info.mesh_id_);
+            if (this.last_hover_ != entity) {
+                this.last_hover_?.OnLeave();
+                this.last_hover_ = entity;
+                this.last_hover_?.OnEnter();
             }
         } else {
-            this.lastHover?.onLeave();
-            this.lastHover = undefined;
+            this.last_hover_?.OnLeave();
+            this.last_hover_ = undefined;
         }
     }
 
-    private onPointerUp(event: PointerEvent) {
-        this.position.x = event.offsetX;
-        this.position.y = event.offsetY;
-        if (this.pointerMoved) {
-            this.pointerTouched = false;
-            this.pointerMoved = false;
-            if (this.lastControl) {
-                this.lastControl.onDragEnd();
-                this.lastControl = undefined;
-            } else if (this.lastSelect) {
-                this.lastSelect.onDragEnd();
+    private OnPointerUp(event: PointerEvent) {
+        this.position_.x = event.offsetX;
+        this.position_.y = event.offsetY;
+        if (this.pointer_moved_) {
+            this.pointer_touched_ = false;
+            this.pointer_moved_ = false;
+            if (this.last_control_) {
+                this.last_control_.OnDragEnd();
+                this.last_control_ = undefined;
+            } else if (this.last_select_) {
+                this.last_select_.OnDragEnd();
             }
             return;
         }
-        if (!this.pointerTouched) {
+        if (!this.pointer_touched_) {
             if (event.button == 0) {
-                const pickInfo = WhoaScene.pickEntity();
-                if (pickInfo.hit) {
-                    const entity = EntityManager.get().getEntityByID(pickInfo.meshID);
-                    if (entity && entity.type == EntityType.CONTROL) {
-                        this.lastControl = entity;
+                const pick_info = WhoaScene.PickEntity();
+                if (pick_info.hit_) {
+                    const entity = EntityManager.Get().GetEntityByID(pick_info.mesh_id_);
+                    if (entity && entity.GetType() == Whoa.WhoaFramework.EntityType.CONTROL) {
+                        this.last_control_ = entity;
                     } else {
-                        this.lastControl = undefined;
-                        if (entity?.type != EntityType.CONTROL) {
-                            if (this.lastSelect != entity) {
-                                this.lastSelect?.onSelect(false);
-                                this.lastSelect = entity;
-                                this.lastSelect?.onSelect(true);
+                        this.last_control_ = undefined;
+                        if (entity && entity.GetType() != Whoa.WhoaFramework.EntityType.CONTROL) {
+                            if (this.last_select_ != entity) {
+                                this.last_select_?.OnSelect(false);
+                                this.last_select_ = entity;
+                                this.last_select_?.OnSelect(true);
                             }
                         }
                     }
                 } else {
-                    this.lastSelect?.onSelect(false);
-                    this.lastSelect = undefined;
-                    this.lastControl = undefined;
+                    this.last_select_?.OnSelect(false);
+                    this.last_select_ = undefined;
+                    this.last_control_ = undefined;
                 }
             } else if (event.button == 2) {
-                if (this.creating) {
-                    this.stopCreate();
+                if (this.creating_) {
+                    this.StopCreate();
                 }
             }
         }
-        this.pointerTouched = false;
-        this.pointerMoved = false;
+        this.pointer_touched_ = false;
+        this.pointer_moved_ = false;
     }
 
-    private onKeyDown(event: KeyboardEvent) {
-        if (this.onlyKey(event)) {
+    private OnKeyDown(event: KeyboardEvent) {
+        if (this.OnlyKey(event)) {
             if (event.key == '2') {
-                WhoaEvent.pub('CHANGE_TO_2D_CAMERA');
+                WhoaEvent.Pub('CHANGE_TO_2D_CAMERA');
             } else if (event.key == '3') {
-                WhoaEvent.pub('CHANGE_TO_3D_CAMERA');
+                WhoaEvent.Pub('CHANGE_TO_3D_CAMERA');
             }
         }
     }
 
-    private onlyCtrl(event: KeyboardEvent): boolean {
+    private OnlyCtrl(event: KeyboardEvent): boolean {
         return (event.ctrlKey || event.metaKey) && !event.altKey && !event.shiftKey;
     }
 
-    private onlyShift(event: KeyboardEvent): boolean {
+    private OnlyShift(event: KeyboardEvent): boolean {
         return !event.ctrlKey && !event.metaKey && !event.altKey && event.shiftKey;
     }
 
-    private onlyKey(event: KeyboardEvent): boolean {
+    private OnlyKey(event: KeyboardEvent): boolean {
         return !event.ctrlKey && !event.metaKey && !event.altKey && !event.shiftKey;
     }
 }

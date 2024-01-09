@@ -2,180 +2,175 @@ import { Point2 } from 'src/math/Point';
 import { Vector2, Vector3 } from 'src/math/Vector';
 import Entity from './Entity';
 import EntityModel, { EntityModelCreateInfo } from './EntityModel';
-import EntityRole from './EntityRole';
-import EntityType from './EntityType';
 
 export abstract class EntityControl extends EntityModel {
-    protected entity: Entity | null = null;
-    protected subID: string;
-    protected startPosition2D: WhoaMath.Point2;
+    protected entity_: Entity | null = null;
+    protected sub_id_: string;
+    protected start_position_2D_: WhoaMath.Point2;
 
-    public constructor(entityID: string, info: EntityModelCreateInfo) {
-        super(entityID, info);
-        this.subID = '';
-        this.startPosition2D = new WhoaMath.Point2();
+    public constructor(entity_id: string, info: EntityModelCreateInfo) {
+        super(entity_id, info);
+        this.sub_id_ = '';
+        this.start_position_2D_ = new WhoaMath.Point2();
     }
 
-    public onEnter(): void {
-        this.showOverlay();
+    public OnEnter(): void {
+        this.ShowOverlay();
     }
 
-    public onLeave(): void {
-        this.hideOverlay();
+    public OnLeave(): void {
+        this.HideOverlay();
     }
 
-    public attach(entity: Entity) {
-        this.entity = entity;
-        const center = this.entity.getBoundingBox().center;
-        this.translate(center.x, center.y, center.z, false);
-        this.show();
+    public Attach(entity: Entity) {
+        this.entity_ = entity;
+        const center = this.entity_.GetBoundingBox().center_;
+        this.Translate(center.x, center.y, center.z, false);
+        this.Show();
     }
 
-    public detach() {
-        WhoaEvent.unsub('CHANGE_TO_2D_CAMERA', this.subID);
-        WhoaEvent.unsub('CHANGE_TO_3D_CAMERA', this.subID);
-        this.hide();
+    public Detach() {
+        WhoaEvent.UnSub('CHANGE_TO_2D_CAMERA', this.sub_id_);
+        WhoaEvent.UnSub('CHANGE_TO_3D_CAMERA', this.sub_id_);
+        this.Hide();
     }
 }
 
 export class EntityControlRotate2D extends EntityControl {
-    private static instance: EntityControlRotate2D;
+    private static instance_: EntityControlRotate2D;
 
     private constructor() {
-        const entityID = 'ControlRotate2D';
-        const info: EntityModelCreateInfo = {
-            role: EntityRole.ROOT,
-            type: EntityType.CONTROL,
-            hovered: false,
-            selected: false,
-            visible: false,
-            pickable: true,
-            movable: true,
-            modelURL: 'assets/models/',
-            modelName: 'arrow_2D.glb',
-            scale: [1000000, 1000000, 1000000],
-            rotation: [Math.PI / 2, 0, 0]
-        };
-        super(entityID, info);
+        const entity_id = 'ControlRotate2D';
+        const info = new EntityModelCreateInfo();
+        info.role_ = Whoa.WhoaFramework.EntityRole.ROOT;
+        info.type_ = Whoa.WhoaFramework.EntityType.CONTROL;
+        info.hovered_ = false;
+        info.selected_ = false;
+        info.visible_ = false;
+        info.pickable_ = true;
+        info.movable_ = true;
+        info.model_url_ = 'assets/models/';
+        info.model_name_ = 'arrow_2D.glb';
+        info.scale_ = [1000000, 1000000, 1000000];
+        info.rotation_ = [Math.PI / 2, 0, 0];
+        super(entity_id, info);
     }
 
-    public static get(): EntityControlRotate2D {
-        if (!EntityControlRotate2D.instance) {
-            EntityControlRotate2D.instance = new EntityControlRotate2D();
+    public static Get(): EntityControlRotate2D {
+        if (!EntityControlRotate2D.instance_) {
+            EntityControlRotate2D.instance_ = new EntityControlRotate2D();
         }
-        return EntityControlRotate2D.instance;
+        return EntityControlRotate2D.instance_;
     }
 
-    public attach(entity: Entity) {
-        super.attach(entity);
-        this.subID = WhoaEvent.sub('CHANGE_TO_3D_CAMERA', () => {
-            EntityControlRotate3D.get().attach(entity);
-            EntityControlMove3D.get().attach(entity);
-            this.detach();
+    public Attach(entity: Entity) {
+        super.Attach(entity);
+        this.sub_id_ = WhoaEvent.Sub('CHANGE_TO_3D_CAMERA', () => {
+            EntityControlRotate3D.Get().Attach(entity);
+            EntityControlMove3D.Get().Attach(entity);
+            this.Detach();
         });
     }
 
-    public onDragStart(): void {
-        this.startPosition2D = WhoaScene.getScreenPosition();
+    public OnDragStart(): void {
+        this.start_position_2D_ = WhoaScene.GetScreenPosition();
     }
 
-    public onDrag(): void {
-        if (this.entity) {
-            const position = WhoaScene.getScreenPosition();
-            const origin = WhoaScene.worldToScreen(this.entity.position);
-            const start = Vector2.FromPoint2(<Point2>this.startPosition2D.Subtract(origin));
+    public OnDrag(): void {
+        if (this.entity_) {
+            const position = WhoaScene.GetScreenPosition();
+            const origin = WhoaScene.WorldToScreen(this.entity_.GetPosition());
+            const start = Vector2.FromPoint2(<Point2>this.start_position_2D_.Subtract(origin));
             const now = Vector2.FromPoint2(<Point2>position.Subtract(origin));
-            this.startPosition2D = position;
+            this.start_position_2D_ = position;
             const direction = start.x * now.y - start.y * now.x > 0 ? -1 : 1;
             const radian = start.GetRadianBetween(now) * direction;
-            this.entity.rotateLocalY(radian);
-            this.rotateLocalY(radian);
+            this.entity_.RotateLocalY(radian);
+            this.RotateLocalY(radian);
         }
     }
 
-    public onDragEnd(): void {}
+    public OnDragEnd(): void {}
 
-    public rotateLocalY(radian: number): void {
-        if (this.entity) {
-            const position = this.entity.position;
-            this.mesh.rotateAround(new Vector3(position.x, position.y, position.z), new Vector3(0, 0, 1), radian);
+    public RotateLocalY(radian: number): void {
+        if (this.entity_) {
+            const position = this.entity_.GetPosition();
+            this.mesh_.rotateAround(new Vector3(position.x, position.y, position.z), new Vector3(0, 0, 1), radian);
         }
     }
 }
 
 export abstract class EntityControl3D extends EntityControl {
-    public updateDirection(): void {}
+    public UpdateDirection(): void {}
 }
 
 export class EntityControlRotate3D extends EntityControl3D {
-    private static instance: EntityControlRotate3D;
+    private static instance_: EntityControlRotate3D;
 
     private constructor() {
-        const entityID = 'ControlRotate3D';
-        const info: EntityModelCreateInfo = {
-            role: EntityRole.ROOT,
-            type: EntityType.CONTROL,
-            hovered: false,
-            selected: false,
-            visible: false,
-            pickable: true,
-            movable: true,
-            modelURL: 'assets/models/',
-            modelName: 'arrow_3D.glb',
-            scale: [1000000, 1000000, 1000000],
-            rotation: [Math.PI / 2, 0, 0]
-        };
-        super(entityID, info);
+        const entity_id = 'ControlRotate3D';
+        const info = new EntityModelCreateInfo();
+        info.role_ = Whoa.WhoaFramework.EntityRole.ROOT;
+        info.type_ = Whoa.WhoaFramework.EntityType.CONTROL;
+        info.hovered_ = false;
+        info.selected_ = false;
+        info.visible_ = false;
+        info.pickable_ = true;
+        info.movable_ = true;
+        info.model_url_ = 'assets/models/';
+        info.model_name_ = 'arrow_3D.glb';
+        info.scale_ = [1000000, 1000000, 1000000];
+        info.rotation_ = [Math.PI / 2, 0, 0];
+        super(entity_id, info);
     }
 
-    public static get(): EntityControlRotate3D {
-        if (!EntityControlRotate3D.instance) {
-            EntityControlRotate3D.instance = new EntityControlRotate3D();
+    public static Get(): EntityControlRotate3D {
+        if (!EntityControlRotate3D.instance_) {
+            EntityControlRotate3D.instance_ = new EntityControlRotate3D();
         }
-        return EntityControlRotate3D.instance;
+        return EntityControlRotate3D.instance_;
     }
 
-    public attach(entity: Entity) {
-        super.attach(entity);
-        this.subID = WhoaEvent.sub('CHANGE_TO_2D_CAMERA', () => {
-            EntityControlRotate2D.get().attach(entity);
-            this.detach();
+    public Attach(entity: Entity) {
+        super.Attach(entity);
+        this.sub_id_ = WhoaEvent.Sub('CHANGE_TO_2D_CAMERA', () => {
+            EntityControlRotate2D.Get().Attach(entity);
+            this.Detach();
         });
     }
 }
 
 export class EntityControlMove3D extends EntityControl3D {
-    private static instance: EntityControlMove3D;
+    private static instance_: EntityControlMove3D;
 
     private constructor() {
-        const entityID = 'ControlMove3D';
-        const info: EntityModelCreateInfo = {
-            role: EntityRole.ROOT,
-            type: EntityType.CONTROL,
-            hovered: false,
-            selected: false,
-            visible: false,
-            pickable: true,
-            movable: true,
-            modelURL: 'assets/models/',
-            modelName: 'arrow_move.glb',
-            scale: [1000000, 1000000, 1000000],
-            rotation: [Math.PI / 2, 0, 0]
-        };
-        super(entityID, info);
+        const entity_id = 'ControlMove3D';
+        const info = new EntityModelCreateInfo();
+        info.role_ = Whoa.WhoaFramework.EntityRole.ROOT;
+        info.type_ = Whoa.WhoaFramework.EntityType.CONTROL;
+        info.hovered_ = false;
+        info.selected_ = false;
+        info.visible_ = false;
+        info.pickable_ = true;
+        info.movable_ = true;
+        info.model_url_ = 'assets/models/';
+        info.model_name_ = 'arrow_move.glb';
+        info.scale_ = [1000000, 1000000, 1000000];
+        info.rotation_ = [Math.PI / 2, 0, 0];
+        super(entity_id, info);
     }
 
-    public static get(): EntityControlMove3D {
-        if (!EntityControlMove3D.instance) {
-            EntityControlMove3D.instance = new EntityControlMove3D();
+    public static Get(): EntityControlMove3D {
+        if (!EntityControlMove3D.instance_) {
+            EntityControlMove3D.instance_ = new EntityControlMove3D();
         }
-        return EntityControlMove3D.instance;
+        return EntityControlMove3D.instance_;
     }
 
-    public attach(entity: Entity) {
-        super.attach(entity);
-        this.subID = WhoaEvent.sub('CHANGE_TO_2D_CAMERA', () => {
-            this.detach();
+    public Attach(entity: Entity) {
+        super.Attach(entity);
+        this.sub_id_ = WhoaEvent.Sub('CHANGE_TO_2D_CAMERA', () => {
+            this.Detach();
         });
     }
 }

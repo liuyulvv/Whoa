@@ -1,27 +1,27 @@
 export default class Websocket {
-    private ws: WebSocket;
+    private ws_: WebSocket;
 
     public constructor() {
-        this.ws = new WebSocket('ws://localhost:8080/ws');
+        this.ws_ = new WebSocket('ws_://localhost:8080/ws_');
 
-        this.ws.onopen = () => {
-            this.ws.send("Hello, I'm client.");
+        this.ws_.onopen = () => {
+            this.ws_.send("Hello, I'm client.");
         };
 
-        this.ws.onmessage = (e) => {
+        this.ws_.onmessage = (e) => {
             console.log(e.data);
         };
 
-        this.ws.onclose = () => {};
+        this.ws_.onclose = () => {};
 
-        this.ws.onerror = () => {};
+        this.ws_.onerror = () => {};
     }
 
-    private heartbeat() {
-        this.ws.send('Ping');
+    private HeartBeat() {
+        this.ws_.send('Ping');
     }
 
-    public send(data: string | ArrayBufferLike | Blob | ArrayBufferView) {
-        this.ws.send(data);
+    public Send(data: string | ArrayBufferLike | Blob | ArrayBufferView) {
+        this.ws_.send(data);
     }
 }

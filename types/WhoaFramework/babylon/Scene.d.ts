@@ -1,26 +1,25 @@
-/// <reference path="../../WhoaMath/Point2.d.ts" />
-/// <reference path="../../WhoaMath/Point3.d.ts" />
+/// <reference path="../math/Point.d.ts" />
 /// <reference path="CameraMode.d.ts" />
 
 declare namespace Whoa {
     export namespace WhoaFramework {
         export interface PickInfo {
-            hit: boolean;
-            meshID: string;
+            hit_: boolean;
+            mesh_id_: string;
         }
 
         export class WhoaScene {
-            public getCameraMode(): CameraMode;
-            public screenToWorld(pos: WhoaMath.Point2): WhoaMath.Point3;
-            public worldToScreen(pos: WhoaMath.Point3): WhoaMath.Point2;
-            public getScreenPosition(): WhoaMath.Point2;
-            public getGroundPosition(): WhoaMath.Point3;
-            public setEntityHoverColor(): void;
-            public setEntitySelectColor(): void;
-            public pickEntity(): PickInfo;
+            public GetCameraMode(): CameraMode;
+            public ScreenToWorld(pos: WhoaMath.Point2): WhoaMath.Point3;
+            public WorldToScreen(pos: WhoaMath.Point3): WhoaMath.Point2;
+            public GetScreenPosition(): WhoaMath.Point2;
+            public GetGroundPosition(): WhoaMath.Point3;
+            public SetEntityHoverColor(): void;
+            public SetEntitySelectColor(): void;
+            public PickEntity(): PickInfo;
         }
     }
 }
 
-// eslint-disable-next-line no-var
+// eslint-disable-next-line no-var, @typescript-eslint/naming-convention
 declare var WhoaScene: Whoa.WhoaFramework.WhoaScene;

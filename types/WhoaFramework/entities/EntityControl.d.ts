@@ -3,9 +3,9 @@
 declare namespace Whoa {
     export namespace WhoaFramework {
         export abstract class EntityControl extends EntityModel {
-            protected entity: Entity | null;
-            public attach(entity: Entity): void;
-            public detach(): void;
+            protected entity_: Entity | null;
+            public Attach(entity: Entity): void;
+            public Detach(): void;
         }
 
         export class EntityControlRotate2D extends EntityControl {}

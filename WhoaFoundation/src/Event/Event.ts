@@ -1,38 +1,38 @@
 import { v4 as uuid } from 'uuid';
 
 export default class Event {
-    private static instance: Event;
-    private subscribers: Map<string, Map<string, () => void>>;
+    private static instance_: Event;
+    private subscribers_: Map<string, Map<string, () => void>>;
 
     private constructor() {
-        this.subscribers = new Map();
+        this.subscribers_ = new Map();
     }
 
-    public static get() {
-        if (!Event.instance) {
-            Event.instance = new Event();
+    public static Get() {
+        if (!Event.instance_) {
+            Event.instance_ = new Event();
         }
-        return Event.instance;
+        return Event.instance_;
     }
 
-    public sub(eventName: string, callback: () => void): string {
-        const eventID = uuid();
-        if (!this.subscribers.get(eventName)) {
-            this.subscribers.set(eventName, new Map());
+    public Sub(eventName: string, callback: () => void): string {
+        const event_id = uuid();
+        if (!this.subscribers_.get(eventName)) {
+            this.subscribers_.set(eventName, new Map());
         }
-        this.subscribers.get(eventName)?.set(eventID, callback);
-        return eventID;
+        this.subscribers_.get(eventName)?.set(event_id, callback);
+        return event_id;
     }
 
-    public unsub(eventName: string, eventID: string): void {
-        const subscribers = this.subscribers.get(eventName);
+    public UnSub(eventName: string, event_id: string): void {
+        const subscribers = this.subscribers_.get(eventName);
         if (subscribers) {
-            subscribers.delete(eventID);
+            subscribers.delete(event_id);
         }
     }
 
-    public pub(eventName: string) {
-        const subscribers = this.subscribers.get(eventName);
+    public Pub(eventName: string) {
+        const subscribers = this.subscribers_.get(eventName);
         if (subscribers) {
             subscribers.forEach((callback) => {
                 callback();

@@ -7,12 +7,12 @@ export default () => {
     const setCheck = createLeftMenuStore((state) => state.setChecked);
 
     useEffect(() => {
-        WhoaEvent.pub('CHANGE_TO_2D_CAMERA');
-        const sub = WhoaEvent.sub('STOP_CREATE', () => {
+        WhoaEvent.Pub('CHANGE_TO_2D_CAMERA');
+        const sub = WhoaEvent.Sub('STOP_CREATE', () => {
             setCheck('');
         });
         return () => {
-            WhoaEvent.unsub('STOP_CREATE', sub);
+            WhoaEvent.UnSub('STOP_CREATE', sub);
         };
     });
 
@@ -30,10 +30,10 @@ export default () => {
                 onClick={() => {
                     if (check == 'line') {
                         setCheck('');
-                        WhoaEvent.pub('STOP_DRAW_LINE');
+                        WhoaEvent.Pub('STOP_DRAW_LINE');
                     } else {
                         setCheck('line');
-                        WhoaEvent.pub('START_DRAW_LINE');
+                        WhoaEvent.Pub('START_DRAW_LINE');
                     }
                 }}
             >
@@ -45,10 +45,10 @@ export default () => {
                 onClick={() => {
                     if (check == 'border') {
                         setCheck('');
-                        WhoaEvent.pub('STOP_DRAW_BORDER');
+                        WhoaEvent.Pub('STOP_DRAW_BORDER');
                     } else {
                         setCheck('border');
-                        WhoaEvent.pub('START_DRAW_BORDER');
+                        WhoaEvent.Pub('START_DRAW_BORDER');
                     }
                 }}
             >

@@ -13,208 +13,227 @@ enum CreateStatus {
 }
 
 export default class CreateWallByLine {
-    private static instance: CreateWallByLine;
-    private canvas: HTMLCanvasElement;
-    private status: CreateStatus;
-    private start: WhoaMath.Point3;
-    private end: WhoaMath.Point3;
-    private wallMidLine: LinesMesh | undefined;
-    private wallMesh: Mesh | undefined;
-    private wallMeshMaterial: StandardMaterial;
+    private static instance_: CreateWallByLine;
+    private canvas_: HTMLCanvasElement;
+    private status_: CreateStatus;
+    private start_: WhoaMath.Point3;
+    private end_: WhoaMath.Point3;
+    private wall_mid_line_: LinesMesh | undefined;
+    private wall_mesh_: Mesh | undefined;
+    private wall_mesh_material_: StandardMaterial;
 
-    private orthogonal: boolean = true;
-    private radian: number = 0;
-    private wallWidth: number = 240;
-    private wallHeight: number = 2800;
+    private orthogonal_: boolean = true;
+    private radian_: number = 0;
+    private wall_width_: number = 240;
+    private wall_height_: number = 2800;
 
-    private bindPointerMove: (event: PointerEvent) => void;
-    private bindPointerUp: (event: PointerEvent) => void;
-    private bindKeyUp: (event: KeyboardEvent) => void;
+    private bind_pointer_move_: (event: PointerEvent) => void;
+    private bind_pointer_up_: (event: PointerEvent) => void;
+    private bind_key_up: (event: KeyboardEvent) => void;
 
     private constructor() {
-        this.canvas = WhoaCanvas;
-        this.status = CreateStatus.START;
-        this.start = new WhoaMath.Point3(0, 0, 0);
-        this.end = new WhoaMath.Point3(0, 0, 0);
-        this.wallMeshMaterial = new StandardMaterial(uuid());
-        this.wallMeshMaterial.emissiveColor = new Color3(1, 1, 1);
-        this.bindPointerMove = this.onPointerMove.bind(this);
-        this.bindPointerUp = this.onPointerUp.bind(this);
-        this.bindKeyUp = this.onKeyUp.bind(this);
+        this.canvas_ = WhoaCanvas;
+        this.status_ = CreateStatus.START;
+        this.start_ = new WhoaMath.Point3(0, 0, 0);
+        this.end_ = new WhoaMath.Point3(0, 0, 0);
+        this.wall_mesh_material_ = new StandardMaterial(uuid());
+        this.wall_mesh_material_.emissiveColor = new Color3(1, 1, 1);
+        this.bind_pointer_move_ = this.OnPointerMove.bind(this);
+        this.bind_pointer_up_ = this.OnPointerUp.bind(this);
+        this.bind_key_up = this.OnKeyUp.bind(this);
     }
 
-    public static get(): CreateWallByLine {
-        if (!CreateWallByLine.instance) {
-            CreateWallByLine.instance = new CreateWallByLine();
+    public static Get(): CreateWallByLine {
+        if (!CreateWallByLine.instance_) {
+            CreateWallByLine.instance_ = new CreateWallByLine();
         }
-        return CreateWallByLine.instance;
+        return CreateWallByLine.instance_;
     }
 
-    public onCreateStart(): void {
-        this.registerPointerEvent();
-        this.registerKeyEvent();
+    public OnCreateStart(): void {
+        this.RegisterPointerEvent();
+        this.RegisterKeyEvent();
     }
 
-    private onCreate(): void {
-        this.start.z = this.wallHeight;
-        this.end.z = this.wallHeight;
-        if (this.orthogonal) {
-            const orthogonalPoint = this.end.Clone();
-            if (this.end.x != this.start.x) {
-                orthogonalPoint.y = this.start.y;
+    private OnCreate(): void {
+        this.start_.z = this.wall_height_;
+        this.end_.z = this.wall_height_;
+        if (this.orthogonal_) {
+            const orthogonal_point = this.end_.Clone();
+            if (this.end_.x != this.start_.x) {
+                orthogonal_point.y = this.start_.y;
             }
-            const vecA = WhoaMath.Vector3.FromPoint3(orthogonalPoint.Subtract(this.start));
-            const vecB = WhoaMath.Vector3.FromPoint3(this.end.Subtract(this.start));
-            const radian = vecA.GetRadianBetween(vecB);
+            const vec_a = WhoaMath.Vector3.FromPoint3(orthogonal_point.Subtract(this.start_));
+            const vec_b = WhoaMath.Vector3.FromPoint3(this.end_.Subtract(this.start_));
+            const radian = vec_a.GetRadianBetween(vec_b);
             if (radian > Math.PI / 4) {
-                orthogonalPoint.x = this.start.x;
-                orthogonalPoint.y = this.end.y;
+                orthogonal_point.x = this.start_.x;
+                orthogonal_point.y = this.end_.y;
             }
-            this.end = orthogonalPoint;
+            this.end_ = orthogonal_point;
         }
-        const vecMidLine = WhoaMath.Vector3.FromPoint3(this.end.Subtract(this.start));
-        const direction = vecMidLine.y > 0 ? 1 : -1;
-        this.radian = vecMidLine.GetRadianBetween(new WhoaMath.Vector3(1, 0, 0)) * direction;
-        const start = new Vector3(this.start.x, this.start.y, this.start.z);
-        const end = new Vector3(this.end.x, this.end.y, this.end.z);
-        const startLeft = start.Clone();
-        const startRight = start.Clone();
-        const endLeft = end.Clone();
-        const endRight = end.Clone();
-        startLeft.x = startLeft.x - (this.wallWidth / 2) * Math.sin(-this.radian);
-        startLeft.y = startLeft.y - (this.wallWidth / 2) * Math.cos(-this.radian);
-        startRight.x = startRight.x + (this.wallWidth / 2) * Math.sin(-this.radian);
-        startRight.y = startRight.y + (this.wallWidth / 2) * Math.cos(-this.radian);
-        endLeft.x = endLeft.x - (this.wallWidth / 2) * Math.sin(-this.radian);
-        endLeft.y = endLeft.y - (this.wallWidth / 2) * Math.cos(-this.radian);
-        endRight.x = endRight.x + (this.wallWidth / 2) * Math.sin(-this.radian);
-        endRight.y = endRight.y + (this.wallWidth / 2) * Math.cos(-this.radian);
-        if (!this.wallMesh) {
-            this.wallMesh = new Mesh(uuid());
-            this.wallMesh.material = this.wallMeshMaterial;
+        const vec_mid_line = WhoaMath.Vector3.FromPoint3(this.end_.Subtract(this.start_));
+        const direction = vec_mid_line.y > 0 ? 1 : -1;
+        this.radian_ = vec_mid_line.GetRadianBetween(new WhoaMath.Vector3(1, 0, 0)) * direction;
+        const start = new Vector3(this.start_.x, this.start_.y, this.start_.z);
+        const end = new Vector3(this.end_.x, this.end_.y, this.end_.z);
+        const start_left = start.Clone();
+        const start_right = start.Clone();
+        const end_left = end.Clone();
+        const end_right = end.Clone();
+        start_left.x = start_left.x - (this.wall_width_ / 2) * Math.sin(-this.radian_);
+        start_left.y = start_left.y - (this.wall_width_ / 2) * Math.cos(-this.radian_);
+        start_right.x = start_right.x + (this.wall_width_ / 2) * Math.sin(-this.radian_);
+        start_right.y = start_right.y + (this.wall_width_ / 2) * Math.cos(-this.radian_);
+        end_left.x = end_left.x - (this.wall_width_ / 2) * Math.sin(-this.radian_);
+        end_left.y = end_left.y - (this.wall_width_ / 2) * Math.cos(-this.radian_);
+        end_right.x = end_right.x + (this.wall_width_ / 2) * Math.sin(-this.radian_);
+        end_right.y = end_right.y + (this.wall_width_ / 2) * Math.cos(-this.radian_);
+        if (!this.wall_mesh_) {
+            this.wall_mesh_ = new Mesh(uuid());
+            this.wall_mesh_.material = this.wall_mesh_material_;
         }
-        const vertexData = new VertexData();
-        const earcutResult = WhoaGeometry.Earcut.triangulate2D([startLeft, endLeft, endRight, startRight]);
-        vertexData.positions = earcutResult.vertices;
-        vertexData.indices = earcutResult.indices;
-        vertexData.applyToMesh(this.wallMesh, true);
-        if (!this.wallMidLine) {
-            this.wallMidLine = Scene.get().MeshBuilder.CreateLines(uuid(), { points: [start, end], updatable: true });
-            this.wallMidLine.color = Color3.Red();
-        } else {
-            this.wallMidLine = Scene.get().MeshBuilder.CreateLines(this.wallMidLine.id, {
+        const vertex_data = new VertexData();
+        const earcut_result = WhoaGeometry.Earcut.Triangulate2D([start_left, end_left, end_right, start_right]);
+        vertex_data.positions = earcut_result.vertices_;
+        vertex_data.indices = earcut_result.indices_;
+        vertex_data.applyToMesh(this.wall_mesh_, true);
+        if (!this.wall_mid_line_) {
+            this.wall_mid_line_ = Scene.Get().MeshBuilder.CreateLines(uuid(), {
                 points: [start, end],
-                instance: this.wallMidLine as LinesMesh
+                updatable: true
             });
-            this.wallMidLine.color = Color3.Red();
+            this.wall_mid_line_.color = Color3.Red();
+        } else {
+            this.wall_mid_line_ = Scene.Get().MeshBuilder.CreateLines(this.wall_mid_line_.id, {
+                points: [start, end],
+                instance: this.wall_mid_line_ as LinesMesh
+            });
+            this.wall_mid_line_.color = Color3.Red();
         }
     }
 
-    public onCreateEnd(): void {
-        this.unregisterPointerEvent();
-        this.unregisterKeyEvent();
+    public OnCreateEnd(): void {
+        this.UnregisterPointerEvent();
+        this.UnregisterKeyEvent();
         // @info: Maybe we can create space after create a wall.
         // create space
-        const allWall = EntityWallManager.get().getAllWall();
-        const vectorPoints = new WhoaGeometrySpace.vector_string();
-        allWall.forEach((wall) => {
-            const box = wall.getBoundingBox();
+        const all_wall = EntityWallManager.get().getAllWall();
+        const vector_points = new WhoaGeometrySpace.vector_string();
+        all_wall.forEach((wall) => {
+            const box = wall.GetBoundingBox();
             if (box) {
                 let points = '';
-                points += box.bottomFarLeft.x.toString() + ' ' + box.bottomFarLeft.y + ' ';
-                points += box.bottomFarRight.x.toString() + ' ' + box.bottomFarRight.y + ' ';
-                points += box.bottomNearRight.x.toString() + ' ' + box.bottomNearRight.y + ' ';
-                points += box.bottomNearLeft.x.toString() + ' ' + box.bottomNearLeft.y;
-                vectorPoints.push_back(points);
+                points += box.bottom_far_left_.x.toString() + ' ' + box.bottom_far_left_.y + ' ';
+                points += box.bottom_far_right_.x.toString() + ' ' + box.bottom_far_right_.y + ' ';
+                points += box.bottom_near_right_.x.toString() + ' ' + box.bottom_near_right_.y + ' ';
+                points += box.bottom_near_left_.x.toString() + ' ' + box.bottom_near_left_.y;
+                vector_points.push_back(points);
             }
         });
-        const vectorSpace = WhoaGeometrySpace.get_spaces(vectorPoints);
-        for (let i = 0; i < vectorSpace.size(); i++) {
-            const space = vectorSpace.get(i);
+        const vector_space = WhoaGeometrySpace.get_spaces(vector_points);
+        for (let i = 0; i < vector_space.size(); i++) {
+            const space = vector_space.get(i);
             const points = space.vertices();
             const positions: Vector3[] = [];
-            const vertexData = new VertexData();
+            const vertex_data = new VertexData();
             for (let j = 0; j < points.size(); j++) {
                 positions.push(new Vector3(points.get(j).x(), points.get(j).y(), 0));
             }
-            const earcutResult = WhoaGeometry.Earcut.triangulate2D(positions);
-            vertexData.positions = earcutResult.vertices;
-            vertexData.indices = earcutResult.indices;
-            const spaceMesh = new Mesh(uuid());
-            const spaceMeshMaterial = new StandardMaterial(uuid());
-            spaceMeshMaterial.emissiveColor = new Color3(1, 0, 0);
-            spaceMesh.material = spaceMeshMaterial;
-            vertexData.applyToMesh(spaceMesh, true);
+            const earcut_result = WhoaGeometry.Earcut.Triangulate2D(positions);
+            vertex_data.positions = earcut_result.vertices_;
+            vertex_data.indices = earcut_result.indices_;
+            const space_mesh = new Mesh(uuid());
+            const space_mesh_material = new StandardMaterial(uuid());
+            space_mesh_material.emissiveColor = new Color3(1, 0, 0);
+            space_mesh_material.zOffset = -1;
+            space_mesh_material.zOffsetUnits = -10;
+            space_mesh.material = space_mesh_material;
+            vertex_data.applyToMesh(space_mesh, true);
         }
     }
 
-    private registerKeyEvent() {
-        this.canvas.addEventListener('keyup', this.bindKeyUp);
+    private RegisterKeyEvent() {
+        this.canvas_.addEventListener('keyup', this.bind_key_up);
     }
 
-    private unregisterKeyEvent() {
-        this.canvas.removeEventListener('keyup', this.bindKeyUp);
+    private UnregisterKeyEvent() {
+        this.canvas_.removeEventListener('keyup', this.bind_key_up);
     }
 
-    private registerPointerEvent() {
-        this.canvas.addEventListener('pointermove', this.bindPointerMove);
-        this.canvas.addEventListener('pointerup', this.bindPointerUp);
+    private RegisterPointerEvent() {
+        this.canvas_.addEventListener('pointermove', this.bind_pointer_move_);
+        this.canvas_.addEventListener('pointerup', this.bind_pointer_up_);
     }
 
-    private unregisterPointerEvent() {
-        this.canvas.removeEventListener('pointermove', this.bindPointerMove);
-        this.canvas.removeEventListener('pointerup', this.bindPointerUp);
+    private UnregisterPointerEvent() {
+        this.canvas_.removeEventListener('pointermove', this.bind_pointer_move_);
+        this.canvas_.removeEventListener('pointerup', this.bind_pointer_up_);
     }
 
-    private onKeyUp(event: KeyboardEvent): void {
+    private OnKeyUp(event: KeyboardEvent): void {
         if (event.key == 'Shift') {
-            this.orthogonal = !this.orthogonal;
+            this.orthogonal_ = !this.orthogonal_;
         }
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    private onPointerMove(event: PointerEvent): void {
-        if (CreateStatus.CREATE == this.status) {
-            this.end = WhoaScene.screenToWorld(WhoaScene.getScreenPosition());
-            this.onCreate();
+    private OnPointerMove(event: PointerEvent): void {
+        if (CreateStatus.CREATE == this.status_) {
+            this.end_ = WhoaScene.ScreenToWorld(WhoaScene.GetScreenPosition());
+            this.OnCreate();
         }
     }
 
-    private onPointerUp(event: PointerEvent): void {
+    private OnPointerUp(event: PointerEvent): void {
         if (PointerButton.LEFT == event.button) {
-            if (CreateStatus.START == this.status) {
-                this.start = WhoaScene.screenToWorld(WhoaScene.getScreenPosition());
-                this.status = CreateStatus.CREATE;
-            } else if (CreateStatus.CREATE == this.status) {
-                this.end = WhoaScene.screenToWorld(WhoaScene.getScreenPosition());
-                this.onCreate();
-                const mid = this.start.Add(this.end).Multiply(0.5);
-                const info: EntityWallCreateInfo = {
-                    role: Whoa.WhoaFramework.EntityRole.ROOT,
-                    type: Whoa.WhoaFramework.EntityType.WALL,
-                    hovered: false,
-                    selected: false,
-                    visible: true,
-                    pickable: true,
-                    movable: true,
-                    width: this.wallWidth,
-                    height: WhoaMath.Vector3.FromPoint3(this.end.Subtract(this.start)).Length(),
-                    depth: this.wallHeight,
-                    radian: this.radian + Math.PI / 2,
-                    position: new Vector3(mid.x, mid.y, mid.z / 2)
-                };
+            if (CreateStatus.START == this.status_) {
+                const screen_position = WhoaScene.GetScreenPosition();
+                // const radius = 5;
+                // const radiusScreenPosition = new WhoaMath.Point2(screenPosition.x + radius, screenPosition.y);
+                // const radiusWorldPosition = WhoaScene.screenToWorld(radiusScreenPosition);
+                this.start_ = WhoaScene.ScreenToWorld(screen_position);
+                this.status_ = CreateStatus.CREATE;
+                // const mesh = Scene.Get().MeshBuilder.CreateDisc(uuid(), {
+                //     radius: radiusWorldPosition.Distance(this.start_),
+                //     sideOrientation: Mesh.BACKSIDE
+                // });
+                // const texture = new Texture('/assets/images/circle.svg');
+                // const material = new StandardMaterial(uuid());
+                // material.emissiveTexture = texture;
+                // material.zOffset = -1;
+                // material.zOffsetUnits = -10;
+                // mesh.material = material;
+                // mesh.position = new Vector3(this.start_.x, this.start_.y, this.wall_height_);
+            } else if (CreateStatus.CREATE == this.status_) {
+                this.end_ = WhoaScene.ScreenToWorld(WhoaScene.GetScreenPosition());
+                this.OnCreate();
+                const mid = this.start_.Add(this.end_).Multiply(0.5);
+                const info = new EntityWallCreateInfo();
+                info.role_ = Whoa.WhoaFramework.EntityRole.ROOT;
+                info.type_ = Whoa.WhoaFramework.EntityType.WALL;
+                info.hovered_ = false;
+                info.selected_ = false;
+                info.visible_ = true;
+                info.pickable_ = true;
+                info.movable_ = true;
+                info.width_ = this.wall_width_;
+                info.height_ = WhoaMath.Vector3.FromPoint3(this.end_.Subtract(this.start_)).Length();
+                info.depth_ = this.wall_height_;
+                info.radian_ = this.radian_ + Math.PI / 2;
+                info.position_ = new Vector3(mid.x, mid.y, mid.z / 2);
                 EntityWallManager.get().create(info);
-                this.start = this.end;
-                this.wallMesh?.dispose();
-                this.wallMesh = undefined;
+                this.start_ = this.end_;
+                this.wall_mesh_?.dispose();
+                this.wall_mesh_ = undefined;
             }
         } else if (PointerButton.RIGHT == event.button) {
-            this.status = CreateStatus.START;
-            this.wallMidLine?.dispose();
-            this.wallMidLine = undefined;
-            this.wallMesh?.dispose();
-            this.wallMesh = undefined;
-            WhoaEvent.pub('STOP_DRAW_LINE');
+            this.status_ = CreateStatus.START;
+            this.wall_mid_line_?.dispose();
+            this.wall_mid_line_ = undefined;
+            this.wall_mesh_?.dispose();
+            this.wall_mesh_ = undefined;
+            WhoaEvent.Pub('STOP_DRAW_LINE');
         }
     }
 }

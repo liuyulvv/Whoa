@@ -1,11 +1,11 @@
 const modules = ['./WhoaFoundation.js', './WhoaUI.js', './WhoaFramework.js', './WhoaGeometry.js', './WhoaGeneral.js'];
 
-async function load() {
+async function Load() {
     for (const module of modules) {
         await import(module);
     }
 }
 
-await load();
+await Load();
 
 export {};

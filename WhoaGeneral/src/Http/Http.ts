@@ -1,21 +1,21 @@
 import axios, { AxiosInstance } from 'axios';
 
 export default class Http {
-    private static instance: Http;
-    private http: AxiosInstance;
+    private static instance_: Http;
+    private http_: AxiosInstance;
 
     private constructor() {
-        this.http = axios.create({
+        this.http_ = axios.create({
             // baseURL: 'https://liuyulvv.com/whoa/api/'
-            baseURL: 'http://localhost:8080'
+            baseURL: 'http_://localhost:8080'
         });
     }
 
-    public static get(): Http {
-        if (!Http.instance) {
-            Http.instance = new Http();
+    public static GetInstance(): Http {
+        if (!Http.instance_) {
+            Http.instance_ = new Http();
         }
-        return Http.instance;
+        return Http.instance_;
     }
 
     public GetToken() {
@@ -28,7 +28,7 @@ export default class Http {
                 password: 'admin'
             })
                 .then((res) => {
-                    this.http.defaults.headers.Authorization = `Bearer ${res.data.token}`;
+                    this.http_.defaults.headers.Authorization = `Bearer ${res.data.token}`;
                     localStorage.setItem('token', res.data.token);
                 })
                 .catch((err) => {
@@ -38,10 +38,10 @@ export default class Http {
     }
 
     public Get(url: string, params: object) {
-        return this.http.get(url, params);
+        return this.http_.get(url, params);
     }
 
     public Post(url: string, params: object) {
-        return this.http.post(url, params);
+        return this.http_.post(url, params);
     }
 }

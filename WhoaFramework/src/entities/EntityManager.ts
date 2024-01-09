@@ -5,62 +5,62 @@ import { EntityModelCreateInfo } from './EntityModel';
 import EntityOrnament from './EntityOrnament';
 
 export default class EntityManager {
-    private static instance: EntityManager;
-    private entities: Map<string, Entity>;
+    private static instance_: EntityManager;
+    private entities_: Map<string, Entity>;
 
     private constructor() {
-        this.entities = new Map<string, Entity>();
-        this.createControl();
+        this.entities_ = new Map<string, Entity>();
+        this.CreateControl();
     }
 
-    public static get(): EntityManager {
-        if (!this.instance) {
-            this.instance = new EntityManager();
+    public static Get(): EntityManager {
+        if (!this.instance_) {
+            this.instance_ = new EntityManager();
         }
-        return EntityManager.instance;
+        return EntityManager.instance_;
     }
 
-    private createControl(): void {
-        const controlMove3D = EntityControlMove3D.get();
-        const controlRotate2D = EntityControlRotate2D.get();
-        const controlRotate3D = EntityControlRotate3D.get();
-        this.entities.set(controlMove3D.id, controlMove3D);
-        this.entities.set(controlRotate2D.id, controlRotate2D);
-        this.entities.set(controlRotate3D.id, controlRotate3D);
+    private CreateControl(): void {
+        const control_move_3d = EntityControlMove3D.Get();
+        const control_rotate_2d = EntityControlRotate2D.Get();
+        const control_rotate_3d = EntityControlRotate3D.Get();
+        this.entities_.set(control_move_3d.GetID(), control_move_3d);
+        this.entities_.set(control_rotate_2d.GetID(), control_rotate_2d);
+        this.entities_.set(control_rotate_3d.GetID(), control_rotate_3d);
     }
 
-    public createOrnament(info: EntityModelCreateInfo): EntityOrnament {
-        const entityID = uuid();
-        const entity = new EntityOrnament(entityID, info);
-        this.entities.set(entityID, entity);
+    public CreateOrnament(info: EntityModelCreateInfo): EntityOrnament {
+        const entity_id = uuid();
+        const entity = new EntityOrnament(entity_id, info);
+        this.entities_.set(entity_id, entity);
         return entity;
     }
 
-    public addEntity(entityID: string, entity: Entity): void {
-        this.entities.set(entityID, entity);
+    public AddEntity(entity_id: string, entity: Entity): void {
+        this.entities_.set(entity_id, entity);
     }
 
-    public destroyEntityByID(entityID: string): void {
-        const entity = this.entities.get(entityID);
+    public DestroyEntityByID(entity_id: string): void {
+        const entity = this.entities_.get(entity_id);
         if (entity) {
-            this.entities.delete(entityID);
-            entity.destroy();
+            this.entities_.delete(entity_id);
+            entity.Destroy();
         }
     }
 
-    public updateEntityID(entityID: string, newEntityID: string): void {
-        const entity = this.entities.get(entityID);
+    public UpdateEntityID(entity_id: string, newEntityID: string): void {
+        const entity = this.entities_.get(entity_id);
         if (entity) {
-            this.entities.delete(entityID);
-            this.entities.set(newEntityID, entity);
+            this.entities_.delete(entity_id);
+            this.entities_.set(newEntityID, entity);
         }
     }
 
-    public getAllEntity(): Entity[] {
-        return Array.from(this.entities.values());
+    public GetAllEntity(): Entity[] {
+        return Array.from(this.entities_.values());
     }
 
-    public getEntityByID(entityID: string): Entity | undefined {
-        return this.entities.get(entityID);
+    public GetEntityByID(entity_id: string): Entity | undefined {
+        return this.entities_.get(entity_id);
     }
 }

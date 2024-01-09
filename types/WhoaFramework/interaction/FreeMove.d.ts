@@ -1,7 +1,7 @@
-/// <reference path="../../WhoaFramework/entities/Entity.d.ts" />
+/// <reference path="../entities/Entity.d.ts" />
 
 declare namespace Whoa {
-    export namespace WhoaGeneral {
+    export namespace WhoaFramework {
         export class FreeMove {
             public static Get(): FreeMove;
             public Attach(entity: WhoaFramework.Entity): void;

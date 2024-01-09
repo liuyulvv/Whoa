@@ -7,7 +7,7 @@ export default () => {
     const resize = () => {
         window.WhoaCanvas.width = window.WhoaCanvasContainer.clientWidth;
         window.WhoaCanvas.height = window.WhoaCanvasContainer.clientHeight;
-        WhoaEvent.pub('WHOA_WINDOW_RESIZE');
+        WhoaEvent.Pub('WHOA_WINDOW_RESIZE');
     };
 
     useEffect(() => {

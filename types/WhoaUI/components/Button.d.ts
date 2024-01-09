@@ -4,8 +4,8 @@ declare namespace WhoaUI {
     export class Button extends BaseComponent {
         public constructor();
 
-        public render();
+        public Render();
 
-        public destroy();
+        public Destroy();
     }
 }

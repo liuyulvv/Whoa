@@ -1,5 +1,6 @@
 import { CameraMode } from './babylon/Camera';
 import Scene from './babylon/Scene';
+import StandardMaterial from './babylon/StandardMaterial';
 import Entity from './entities/Entity';
 import EntityManager from './entities/EntityManager';
 import EntityModel from './entities/EntityModel';
@@ -13,6 +14,12 @@ import { Vector2, Vector3, Vector4 } from './math/Vector';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 (<any>window).Whoa = {};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+(<any>window).WhoaGeometryUtilModule().then((module: any) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (<any>window).WhoaGeometryUtil = module;
+});
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 (<any>window).WhoaGeometrySpaceModule().then((module: any) => {
@@ -42,6 +49,11 @@ import { Vector2, Vector3, Vector4 } from './math/Vector';
     Matrix: Matrix
 };
 
-window.WhoaScene = Scene.get();
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+(<any>window).Whoa3D = {
+    StandardMaterial: StandardMaterial
+};
 
-window.WhoaInteraction = Interaction.get();
+window.WhoaScene = Scene.Get();
+
+window.WhoaInteraction = Interaction.Get();

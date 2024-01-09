@@ -18,11 +18,11 @@ export default class EntityWallManager {
     }
 
     public create(info: EntityWallCreateInfo): EntityWall {
-        const entityID = uuid();
-        const entity = new EntityWall(entityID, info);
-        entity.updateBoundingBox();
-        this.entities.set(entityID, entity);
-        EntityManager.get().addEntity(entityID, entity);
+        const entity_id = uuid();
+        const entity = new EntityWall(entity_id, info);
+        entity.UpdateBoundingBox();
+        this.entities.set(entity_id, entity);
+        EntityManager.Get().AddEntity(entity_id, entity);
         return entity;
     }
 

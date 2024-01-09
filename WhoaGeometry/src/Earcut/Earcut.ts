@@ -1,27 +1,27 @@
 import earcut from 'earcut';
 
 export class EarcutResult {
-    public vertices: Array<number>;
-    public indices: Array<number>;
+    public vertices_: Array<number>;
+    public indices_: Array<number>;
 
-    public constructor(vertices: Array<number>, indices: Array<number>) {
-        this.vertices = vertices;
-        this.indices = indices;
+    public constructor(vertices_: Array<number>, indices_: Array<number>) {
+        this.vertices_ = vertices_;
+        this.indices_ = indices_;
     }
 }
 
 export default class Earcut {
-    public static triangulate2D(boundary: Array<WhoaMath.Vector3>): EarcutResult {
-        const inputVertices: Array<number> = [];
+    public static Triangulate2D(boundary: Array<WhoaMath.Vector3>): EarcutResult {
+        const input_vertices: Array<number> = [];
         const vertices: Array<number> = [];
         for (let i = 0; i < boundary.length; i++) {
-            inputVertices.push(boundary[i].x);
-            inputVertices.push(boundary[i].y);
+            input_vertices.push(boundary[i].x);
+            input_vertices.push(boundary[i].y);
             vertices.push(boundary[i].x);
             vertices.push(boundary[i].y);
             vertices.push(boundary[i].z);
         }
-        const indices = earcut(inputVertices);
+        const indices = earcut(input_vertices);
         return new EarcutResult(vertices, indices.reverse());
     }
 }

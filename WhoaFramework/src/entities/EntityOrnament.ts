@@ -1,49 +1,50 @@
 import { CameraMode } from 'src/babylon/Camera';
 import Scene from 'src/babylon/Scene';
+import FreeMove from 'src/interaction/FreeMove';
 import { EntityControlMove3D, EntityControlRotate2D, EntityControlRotate3D } from './EntityControl';
 import EntityModel, { EntityModelCreateInfo } from './EntityModel';
 
 export default class EntityOrnament extends EntityModel {
-    public constructor(entityID: string, info: EntityModelCreateInfo) {
-        super(entityID, info);
+    public constructor(id: string, info: EntityModelCreateInfo) {
+        super(id, info);
     }
 
-    public attachControl(): void {
-        if (Scene.get().getCameraMode() == CameraMode.MODE_2D) {
-            EntityControlRotate2D.get().attach(this);
+    public AttachControl(): void {
+        if (Scene.Get().GetCameraMode() == CameraMode.MODE_2D) {
+            EntityControlRotate2D.Get().Attach(this);
         } else {
-            EntityControlRotate3D.get().attach(this);
-            EntityControlMove3D.get().attach(this);
+            EntityControlRotate3D.Get().Attach(this);
+            EntityControlMove3D.Get().Attach(this);
         }
     }
 
-    public detachControl(): void {
-        EntityControlRotate2D.get().detach();
-        EntityControlRotate3D.get().detach();
-        EntityControlMove3D.get().detach();
+    public DetachControl(): void {
+        EntityControlRotate2D.Get().Detach();
+        EntityControlRotate3D.Get().Detach();
+        EntityControlMove3D.Get().Detach();
     }
 
-    public onSelect(selected?: boolean): void {
-        super.onSelect(selected);
+    public OnSelect(selected?: boolean): void {
+        super.OnSelect(selected);
         if (selected) {
-            Whoa.WhoaGeneral.FreeMove.get().attach(this);
-            this.attachControl();
+            FreeMove.Get().Attach(this);
+            this.AttachControl();
         } else {
-            this.detachControl();
+            this.DetachControl();
         }
     }
 
-    public onDragStart(): void {
-        this.detachControl();
-        Whoa.WhoaGeneral.FreeMove.get().onDragStart();
+    public OnDragStart(): void {
+        this.DetachControl();
+        FreeMove.Get().OnDragStart();
     }
 
-    public onDrag(): void {
-        Whoa.WhoaGeneral.FreeMove.get().onDrag();
+    public OnDrag(): void {
+        FreeMove.Get().OnDrag();
     }
 
-    public onDragEnd(): void {
-        this.attachControl();
-        Whoa.WhoaGeneral.FreeMove.get().onDragEnd();
+    public OnDragEnd(): void {
+        this.AttachControl();
+        FreeMove.Get().OnDragEnd();
     }
 }

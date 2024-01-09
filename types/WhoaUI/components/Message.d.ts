@@ -1,13 +1,13 @@
 declare namespace WhoaUI {
     export class Message {
-        public static info(message: string): void;
+        public static Info(message: string): void;
 
-        public static success(message: string): void;
+        public static Success(message: string): void;
 
-        public static warning(message: string): void;
+        public static Warning(message: string): void;
 
-        public static error(message: string): void;
+        public static Error(message: string): void;
 
-        public static normal(message: string): void;
+        public static Normal(message: string): void;
     }
 }
