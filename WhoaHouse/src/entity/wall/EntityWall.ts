@@ -10,7 +10,7 @@ export default class EntityWall extends Whoa.WhoaFramework.Entity {
     public constructor(entity_id: string, info: EntityWallCreateInfo) {
         super(entity_id, info);
         this.visible_ ? this.Show() : this.Hide();
-        this.material_.emissiveColor = new WhoaMath.Color3(1, 1, 1);
+        this.material_.SetEmissiveColor(new WhoaMath.Color3(1, 1, 1));
         this.mesh_ = Whoa3D.MeshBuilder.CreateBox(entity_id, {
             width: info.width_,
             height: info.height_,
