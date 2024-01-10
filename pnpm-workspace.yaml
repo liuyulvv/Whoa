@@ -3,6 +3,7 @@ packages:
     - 'WhoaFoundation'
     - 'WhoaUI'
     - 'WhoaFramework'
+    - 'WhoaHouse'
     - 'WhoaGeneral'
     - 'WhoaGeometry'
     - 'entry'

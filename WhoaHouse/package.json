@@ -1,0 +1,14 @@
+{
+    "name": "house",
+    "scripts": {
+        "dev": "rollup -c rollup.config.dev.js",
+        "build": "rollup -c rollup.config.prod.js"
+    },
+    "type": "module",
+    "dependencies": {
+        "uuid": "^9.0.1"
+    },
+    "devDependencies": {
+        "@types/uuid": "^9.0.7"
+    }
+}
