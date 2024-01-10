@@ -193,7 +193,7 @@ export default class CreateWallByLine {
     }
 
     private OnPointerUp(event: PointerEvent): void {
-        if (Whoa.WhoaFramework.PointerButton.LEFT == event.button) {
+        if (WhoaFramework.PointerButton.LEFT == event.button) {
             if (CreateStatus.START == this.status_) {
                 const screen_position = WhoaScene.GetScreenPosition();
                 // const radius = 5;
@@ -217,8 +217,8 @@ export default class CreateWallByLine {
                 this.OnCreate();
                 const mid = this.start_.Add(this.end_).Multiply(0.5);
                 const info = new EntityWallCreateInfo();
-                info.role_ = Whoa.WhoaFramework.EntityRole.ROOT;
-                info.type_ = Whoa.WhoaFramework.EntityType.WALL;
+                info.role_ = WhoaFramework.EntityRole.ROOT;
+                info.type_ = WhoaFramework.EntityType.WALL;
                 info.hovered_ = false;
                 info.selected_ = false;
                 info.visible_ = true;
@@ -234,7 +234,7 @@ export default class CreateWallByLine {
                 this.wall_mesh_?.Dispose();
                 this.wall_mesh_ = undefined;
             }
-        } else if (Whoa.WhoaFramework.PointerButton.RIGHT == event.button) {
+        } else if (WhoaFramework.PointerButton.RIGHT == event.button) {
             this.status_ = CreateStatus.START;
             this.wall_mid_line_?.Dispose();
             this.wall_mid_line_ = undefined;

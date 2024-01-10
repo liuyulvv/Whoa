@@ -18,3 +18,6 @@ declare namespace Whoa3D {
         public PickEntity(): PickInfo;
     }
 }
+
+// eslint-disable-next-line no-var, @typescript-eslint/naming-convention
+declare var WhoaScene: Whoa3D.WhoaScene;

@@ -1,4 +1,4 @@
-export class EntityWallCreateInfo extends Whoa.WhoaFramework.EntityCreateInfo {
+export class EntityWallCreateInfo extends WhoaFramework.EntityCreateInfo {
     width_: number = 0;
     height_: number = 0;
     depth_: number = 0;
@@ -6,7 +6,7 @@ export class EntityWallCreateInfo extends Whoa.WhoaFramework.EntityCreateInfo {
     position_: WhoaMath.Vector3 = new WhoaMath.Vector3(0, 0, 0);
 }
 
-export default class EntityWall extends Whoa.WhoaFramework.Entity {
+export default class EntityWall extends WhoaFramework.Entity {
     public constructor(entity_id: string, info: EntityWallCreateInfo) {
         super(entity_id, info);
         this.visible_ ? this.Show() : this.Hide();

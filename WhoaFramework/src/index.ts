@@ -33,7 +33,7 @@ import { PointerButton } from './utils/Pointer';
 });
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-(<any>window).Whoa.WhoaFramework = {
+(<any>window).WhoaFramework = {
     CameraMode: CameraMode,
     EntityRole: EntityRole,
     EntityType: EntityType,

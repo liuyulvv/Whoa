@@ -80,21 +80,11 @@ export default class Interaction {
 
         this.RegisterPointerEvent();
 
-        // WhoaEvent.Sub('START_DRAW_LINE', () => {
-        //     this.StartCreate();
-        //     CreateWallByLine.Get().OnCreateStart();
-        // });
-
-        // WhoaEvent.Sub('STOP_DRAW_LINE', () => {
-        //     this.StopCreate();
-        //     CreateWallByLine.Get().OnCreateEnd();
-        // });
-
         WhoaEvent.Sub('START_DRAW_BORDER', () => {
             this.StartCreate();
             const create_info = new EntityModelCreateInfo();
-            create_info.role_ = Whoa.WhoaFramework.EntityRole.ROOT;
-            create_info.type_ = Whoa.WhoaFramework.EntityType.ORNAMENT;
+            create_info.role_ = WhoaFramework.EntityRole.ROOT;
+            create_info.type_ = WhoaFramework.EntityType.ORNAMENT;
             create_info.hovered_ = false;
             create_info.selected_ = false;
             create_info.visible_ = true;
@@ -122,7 +112,7 @@ export default class Interaction {
         const pick_info = WhoaScene.PickEntity();
         if (pick_info.hit_) {
             const entity = EntityManager.Get().GetEntityByID(pick_info.mesh_id_);
-            if (entity && entity.GetType() == Whoa.WhoaFramework.EntityType.CONTROL) {
+            if (entity && entity.GetType() == WhoaFramework.EntityType.CONTROL) {
                 this.last_control_ = entity;
             }
         }
@@ -189,11 +179,11 @@ export default class Interaction {
                 const pick_info = WhoaScene.PickEntity();
                 if (pick_info.hit_) {
                     const entity = EntityManager.Get().GetEntityByID(pick_info.mesh_id_);
-                    if (entity && entity.GetType() == Whoa.WhoaFramework.EntityType.CONTROL) {
+                    if (entity && entity.GetType() == WhoaFramework.EntityType.CONTROL) {
                         this.last_control_ = entity;
                     } else {
                         this.last_control_ = undefined;
-                        if (entity && entity.GetType() != Whoa.WhoaFramework.EntityType.CONTROL) {
+                        if (entity && entity.GetType() != WhoaFramework.EntityType.CONTROL) {
                             if (this.last_select_ != entity) {
                                 this.last_select_?.OnSelect(false);
                                 this.last_select_ = entity;

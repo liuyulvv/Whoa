@@ -7,8 +7,8 @@ import { Color3 } from 'src/math/Color';
 import { Vector3 } from 'src/math/Vector';
 
 export class EntityCreateInfo {
-    role_: Whoa.WhoaFramework.EntityRole = Whoa.WhoaFramework.EntityRole.ROOT;
-    type_: Whoa.WhoaFramework.EntityType = Whoa.WhoaFramework.EntityType.NONE;
+    role_: WhoaFramework.EntityRole = WhoaFramework.EntityRole.ROOT;
+    type_: WhoaFramework.EntityType = WhoaFramework.EntityType.NONE;
     hovered_: boolean = false;
     selected_: boolean = false;
     visible_: boolean = true;
@@ -18,8 +18,8 @@ export class EntityCreateInfo {
 
 export default abstract class Entity {
     protected id_: string;
-    protected role_: Whoa.WhoaFramework.EntityRole;
-    protected type_: Whoa.WhoaFramework.EntityType;
+    protected role_: WhoaFramework.EntityRole;
+    protected type_: WhoaFramework.EntityType;
     protected hovered_: boolean;
     protected selected_: boolean;
     protected visible_: boolean;
@@ -33,8 +33,8 @@ export default abstract class Entity {
 
     public constructor(id: string, info?: EntityCreateInfo) {
         this.id_ = id;
-        this.role_ = Whoa.WhoaFramework.EntityRole.ROOT;
-        this.type_ = Whoa.WhoaFramework.EntityType.NONE;
+        this.role_ = WhoaFramework.EntityRole.ROOT;
+        this.type_ = WhoaFramework.EntityType.NONE;
         this.hovered_ = false;
         this.selected_ = false;
         this.visible_ = true;
@@ -65,23 +65,23 @@ export default abstract class Entity {
     }
 
     public SetID(id_: string) {
-        Whoa.WhoaFramework.EntityManager.Get().UpdateEntityID(this.id_, id_);
+        WhoaFramework.EntityManager.Get().UpdateEntityID(this.id_, id_);
         this.id_ = id_;
     }
 
-    public GetRole(): Whoa.WhoaFramework.EntityRole {
+    public GetRole(): WhoaFramework.EntityRole {
         return this.role_;
     }
 
-    public SetRole(role: Whoa.WhoaFramework.EntityRole) {
+    public SetRole(role: WhoaFramework.EntityRole) {
         this.role_ = role;
     }
 
-    public GetType(): Whoa.WhoaFramework.EntityType {
+    public GetType(): WhoaFramework.EntityType {
         return this.type_;
     }
 
-    public SetType(type: Whoa.WhoaFramework.EntityType) {
+    public SetType(type: WhoaFramework.EntityType) {
         this.type_ = type;
     }
 
@@ -150,7 +150,7 @@ export default abstract class Entity {
     public Destroy(): void {
         this.mesh_.GetMesh().dispose();
         this.material_.dispose();
-        Whoa.WhoaFramework.EntityManager.Get().DestroyEntityByID(this.id_);
+        WhoaFramework.EntityManager.Get().DestroyEntityByID(this.id_);
     }
 
     public GetBoundingBox(): BoundingBox {

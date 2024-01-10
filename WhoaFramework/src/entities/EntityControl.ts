@@ -42,8 +42,8 @@ export class EntityControlRotate2D extends EntityControl {
     private constructor() {
         const entity_id = 'ControlRotate2D';
         const info = new EntityModelCreateInfo();
-        info.role_ = Whoa.WhoaFramework.EntityRole.ROOT;
-        info.type_ = Whoa.WhoaFramework.EntityType.CONTROL;
+        info.role_ = WhoaFramework.EntityRole.ROOT;
+        info.type_ = WhoaFramework.EntityType.CONTROL;
         info.hovered_ = false;
         info.selected_ = false;
         info.visible_ = false;
@@ -112,8 +112,8 @@ export class EntityControlRotate3D extends EntityControl3D {
     private constructor() {
         const entity_id = 'ControlRotate3D';
         const info = new EntityModelCreateInfo();
-        info.role_ = Whoa.WhoaFramework.EntityRole.ROOT;
-        info.type_ = Whoa.WhoaFramework.EntityType.CONTROL;
+        info.role_ = WhoaFramework.EntityRole.ROOT;
+        info.type_ = WhoaFramework.EntityType.CONTROL;
         info.hovered_ = false;
         info.selected_ = false;
         info.visible_ = false;
@@ -148,8 +148,8 @@ export class EntityControlMove3D extends EntityControl3D {
     private constructor() {
         const entity_id = 'ControlMove3D';
         const info = new EntityModelCreateInfo();
-        info.role_ = Whoa.WhoaFramework.EntityRole.ROOT;
-        info.type_ = Whoa.WhoaFramework.EntityType.CONTROL;
+        info.role_ = WhoaFramework.EntityRole.ROOT;
+        info.type_ = WhoaFramework.EntityType.CONTROL;
         info.hovered_ = false;
         info.selected_ = false;
         info.visible_ = false;

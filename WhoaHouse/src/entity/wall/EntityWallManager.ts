@@ -21,7 +21,7 @@ export default class EntityWallManager {
         const entity = new EntityWall(entity_id, info);
         entity.UpdateBoundingBox();
         this.entities_.set(entity_id, entity);
-        Whoa.WhoaFramework.EntityManager.Get().AddEntity(entity_id, entity);
+        WhoaFramework.EntityManager.Get().AddEntity(entity_id, entity);
         return entity;
     }
 
