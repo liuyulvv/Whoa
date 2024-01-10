@@ -1,5 +1,5 @@
-import { Mesh } from '@babylonjs/core';
 import '@babylonjs/loaders/glTF';
+import Mesh from 'src/babylon/Mesh';
 import Scene from 'src/babylon/Scene';
 import Entity, { EntityCreateInfo } from './Entity';
 
@@ -31,13 +31,13 @@ export default abstract class EntityModel extends Entity {
             .ImportMeshAsync(this.model_url_, this.model_name_, this.id_)
             .then((meshes) => {
                 if (meshes.length > 0) {
-                    this.LoadModel(meshes[0], scale, rotation);
+                    this.LoadModel(new Mesh(meshes[0].id, meshes[0]), scale, rotation);
                 }
             });
     }
 
     private LoadModel(mesh: Mesh, scale: Array<number>, rotation: Array<number>) {
-        this.mesh_.dispose();
+        this.mesh_.GetMesh().dispose();
         this.mesh_ = mesh;
         this.UpdateBoundingBox();
         this.visible_ ? this.Show() : this.Hide();

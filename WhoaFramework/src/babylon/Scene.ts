@@ -192,10 +192,6 @@ export default class Scene {
         this.camera_3D_.DisableCameraInput();
     }
 
-    public get MeshBuilder(): typeof MeshBuilder {
-        return this.builder_;
-    }
-
     public ImportMeshAsync(baseURL: string, meshName: string, entity_id: string) {
         return SceneLoader.ImportMeshAsync('', baseURL, meshName, this.scene_).then((result) => {
             const meshes: BabylonMesh[] = [];

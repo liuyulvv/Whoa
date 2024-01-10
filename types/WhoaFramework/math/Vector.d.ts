@@ -58,6 +58,10 @@ declare namespace WhoaMath {
         public Normalize(): Vector3;
 
         public static FromPoint3(point: Point3): Vector3;
+
+        public static ToPoint3(vector: Vector3): Point3;
+
+        public Clone(): Vector3;
     }
 
     export class Vector4 {

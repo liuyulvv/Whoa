@@ -95,7 +95,9 @@ export class EntityControlRotate2D extends EntityControl {
     public RotateLocalY(radian: number): void {
         if (this.entity_) {
             const position = this.entity_.GetPosition();
-            this.mesh_.rotateAround(new Vector3(position.x, position.y, position.z), new Vector3(0, 0, 1), radian);
+            this.mesh_
+                .GetMesh()
+                .rotateAround(new Vector3(position.x, position.y, position.z), new Vector3(0, 0, 1), radian);
         }
     }
 }

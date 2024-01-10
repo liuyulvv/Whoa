@@ -3,6 +3,8 @@ declare namespace Whoa {
         class Interaction {
             public static Get(): Interaction;
             public SetPointerTouch(touch: boolean): void;
+            public Restore(): void;
+            public Pause(): void;
         }
     }
 }

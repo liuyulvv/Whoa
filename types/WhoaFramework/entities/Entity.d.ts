@@ -1,6 +1,8 @@
 /// <reference path="EntityRole.d.ts" />
 /// <reference path="EntityType.d.ts" />
 /// <reference path="../math/Point.d.ts" />
+/// <reference path="../3D/Mesh.d.ts" />
+/// <reference path="../3D/StandardMaterial.d.ts" />
 
 declare namespace Whoa {
     export namespace WhoaFramework {
@@ -24,8 +26,8 @@ declare namespace Whoa {
             protected pickable_: boolean;
             protected movable_: boolean;
 
-            protected mesh_: BabylonMesh;
-            protected material_: StandardMaterial;
+            protected mesh_: Whoa3D.Mesh;
+            protected material_: Whoa3D.StandardMaterial;
 
             protected bounding_box_: BoundingBox;
 

@@ -2,7 +2,6 @@ import Entity from 'src/entities/Entity';
 import EntityManager from 'src/entities/EntityManager';
 import { EntityModelCreateInfo } from 'src/entities/EntityModel';
 import { Point2 } from 'src/math/Point';
-import CreateWallByLine from 'src/wall/CreateWallByLine';
 
 export default class Interaction {
     private static instance_: Interaction;
@@ -43,14 +42,22 @@ export default class Interaction {
         return Interaction.instance_;
     }
 
+    public Restore(): void {
+        this.RegisterPointerEvent();
+    }
+
+    public Pause(): void {
+        this.UnregisterPointerEvent();
+    }
+
     private StartCreate(): void {
         this.creating_ = true;
-        this.UnregisterPointerEvent();
+        this.Pause();
     }
 
     private StopCreate(): void {
         this.creating_ = false;
-        this.RegisterPointerEvent();
+        this.Restore();
         WhoaEvent.Pub('STOP_CREATE');
     }
 
@@ -73,15 +80,15 @@ export default class Interaction {
 
         this.RegisterPointerEvent();
 
-        WhoaEvent.Sub('START_DRAW_LINE', () => {
-            this.StartCreate();
-            CreateWallByLine.Get().OnCreateStart();
-        });
+        // WhoaEvent.Sub('START_DRAW_LINE', () => {
+        //     this.StartCreate();
+        //     CreateWallByLine.Get().OnCreateStart();
+        // });
 
-        WhoaEvent.Sub('STOP_DRAW_LINE', () => {
-            this.StopCreate();
-            CreateWallByLine.Get().OnCreateEnd();
-        });
+        // WhoaEvent.Sub('STOP_DRAW_LINE', () => {
+        //     this.StopCreate();
+        //     CreateWallByLine.Get().OnCreateEnd();
+        // });
 
         WhoaEvent.Sub('START_DRAW_BORDER', () => {
             this.StartCreate();

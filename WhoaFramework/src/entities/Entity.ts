@@ -1,6 +1,6 @@
-import { Mesh as BabylonMesh, Mesh } from '@babylonjs/core';
 import BoundingBox from 'src/babylon/BoundingBox';
 import { LayerMask } from 'src/babylon/Camera';
+import Mesh from 'src/babylon/Mesh';
 import Scene from 'src/babylon/Scene';
 import StandardMaterial from 'src/babylon/StandardMaterial';
 import { Color3 } from 'src/math/Color';
@@ -26,7 +26,7 @@ export default abstract class Entity {
     protected pickable_: boolean;
     protected movable_: boolean;
 
-    protected mesh_: BabylonMesh;
+    protected mesh_: Mesh;
     protected material_: StandardMaterial;
 
     protected bounding_box_: BoundingBox;
@@ -52,10 +52,10 @@ export default abstract class Entity {
         }
 
         this.mesh_ = new Mesh(this.id_);
-        this.mesh_.layerMask = LayerMask.BOTH;
+        this.mesh_.GetMesh().layerMask = LayerMask.BOTH;
         this.material_ = new StandardMaterial(this.id_);
         this.material_.emissiveColor = new Color3(0.10196078431372549, 0.9215686274509803, 1);
-        this.mesh_.material = this.material_;
+        this.mesh_.GetMesh().material = this.material_;
         this.bounding_box_ = new BoundingBox();
         this.UpdateBoundingBox();
     }
@@ -114,35 +114,41 @@ export default abstract class Entity {
     }
 
     public GetPosition(): WhoaMath.Point3 {
-        const pos = this.mesh_.position;
+        const pos = this.mesh_.GetMesh().position;
         return new WhoaMath.Point3(pos.x, pos.y, pos.z);
     }
 
     public Show(): void {
-        this.mesh_.setEnabled(true);
+        this.mesh_.GetMesh().setEnabled(true);
         this.visible_ = true;
     }
 
     public Hide(): void {
-        this.mesh_.setEnabled(false);
+        this.mesh_.GetMesh().setEnabled(false);
         this.visible_ = false;
     }
 
     public ShowOverlay(): void {
-        this.mesh_.getChildMeshes().forEach((mesh) => {
-            mesh.overlayColor = Color3.Red();
-            mesh.renderOverlay = true;
-        });
+        this.mesh_
+            .GetMesh()
+            .getChildMeshes()
+            .forEach((mesh) => {
+                mesh.overlayColor = Color3.Red();
+                mesh.renderOverlay = true;
+            });
     }
 
     public HideOverlay(): void {
-        this.mesh_.getChildMeshes().forEach((mesh) => {
-            mesh.renderOverlay = false;
-        });
+        this.mesh_
+            .GetMesh()
+            .getChildMeshes()
+            .forEach((mesh) => {
+                mesh.renderOverlay = false;
+            });
     }
 
     public Destroy(): void {
-        this.mesh_.dispose();
+        this.mesh_.GetMesh().dispose();
         this.material_.dispose();
         Whoa.WhoaFramework.EntityManager.Get().DestroyEntityByID(this.id_);
     }
@@ -153,15 +159,15 @@ export default abstract class Entity {
     }
 
     public UpdateBoundingBox(): void {
-        this.bounding_box_ = new BoundingBox(this.mesh_.getBoundingInfo());
+        this.bounding_box_ = new BoundingBox(this.mesh_.GetMesh().getBoundingInfo());
     }
 
     public ShowBoundingBox(): void {
-        this.mesh_.showBoundingBox = true;
+        this.mesh_.GetMesh().showBoundingBox = true;
     }
 
     public HideBoundingBox(): void {
-        this.mesh_.showBoundingBox = false;
+        this.mesh_.GetMesh().showBoundingBox = false;
     }
 
     public OnEnter(): void {
@@ -202,42 +208,42 @@ export default abstract class Entity {
     public OnDragEnd(): void {}
 
     public RotateLocalX(radian: number): void {
-        this.mesh_.rotate(new Vector3(1, 0, 0), radian);
+        this.mesh_.GetMesh().rotate(new Vector3(1, 0, 0), radian);
     }
 
     public RotateLocalY(radian: number): void {
-        this.mesh_.rotate(new Vector3(0, 1, 0), radian);
+        this.mesh_.GetMesh().rotate(new Vector3(0, 1, 0), radian);
     }
 
     public RotateLocalZ(radian: number): void {
-        this.mesh_.rotate(new Vector3(0, 0, 1), radian);
+        this.mesh_.GetMesh().rotate(new Vector3(0, 0, 1), radian);
     }
 
     public RotateAround(point: Vector3, axis: Vector3, radian: number): void {
-        this.mesh_.rotateAround(point, axis, radian);
+        this.mesh_.GetMesh().rotateAround(point, axis, radian);
     }
 
     public Scale(x: number, y: number, z: number, relative: boolean = true): void {
         if (relative) {
-            this.mesh_.scaling = new Vector3(
-                this.mesh_.scaling.x * x,
-                this.mesh_.scaling.y * y,
-                this.mesh_.scaling.z * z
+            this.mesh_.GetMesh().scaling = new Vector3(
+                this.mesh_.GetMesh().scaling.x * x,
+                this.mesh_.GetMesh().scaling.y * y,
+                this.mesh_.GetMesh().scaling.z * z
             );
         } else {
-            this.mesh_.scaling = new Vector3(x, y, z);
+            this.mesh_.GetMesh().scaling = new Vector3(x, y, z);
         }
     }
 
     public Translate(x: number, y: number, z: number, relative: boolean = true): void {
         if (relative) {
-            this.mesh_.position = new Vector3(
-                this.mesh_.position.x + x,
-                this.mesh_.position.y + y,
-                this.mesh_.position.z + z
+            this.mesh_.GetMesh().position = new Vector3(
+                this.mesh_.GetMesh().position.x + x,
+                this.mesh_.GetMesh().position.y + y,
+                this.mesh_.GetMesh().position.z + z
             );
         } else {
-            this.mesh_.position = new Vector3(x, y, z);
+            this.mesh_.GetMesh().position = new Vector3(x, y, z);
         }
     }
 }

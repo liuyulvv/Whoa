@@ -1,7 +1,11 @@
 import { CameraMode } from './babylon/Camera';
+import LinesMesh from './babylon/LineMesh';
+import Mesh from './babylon/Mesh';
+import MeshBuilder from './babylon/MeshBuilder';
 import Scene from './babylon/Scene';
 import StandardMaterial from './babylon/StandardMaterial';
-import Entity from './entities/Entity';
+import VertexData from './babylon/VertexData';
+import Entity, { EntityCreateInfo } from './entities/Entity';
 import EntityManager from './entities/EntityManager';
 import EntityModel from './entities/EntityModel';
 import EntityRole from './entities/EntityRole';
@@ -11,6 +15,7 @@ import { Color3, Color4 } from './math/Color';
 import { Matrix } from './math/Matrix';
 import { Point2, Point3 } from './math/Point';
 import { Vector2, Vector3, Vector4 } from './math/Vector';
+import { PointerButton } from './utils/Pointer';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 (<any>window).Whoa = {};
@@ -32,9 +37,11 @@ import { Vector2, Vector3, Vector4 } from './math/Vector';
     CameraMode: CameraMode,
     EntityRole: EntityRole,
     EntityType: EntityType,
+    EntityCreateInfo: EntityCreateInfo,
     Entity: Entity,
     EntityModel: EntityModel,
-    EntityManager: EntityManager
+    EntityManager: EntityManager,
+    PointerButton: PointerButton
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -51,7 +58,11 @@ import { Vector2, Vector3, Vector4 } from './math/Vector';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 (<any>window).Whoa3D = {
-    StandardMaterial: StandardMaterial
+    MeshBuilder: MeshBuilder,
+    StandardMaterial: StandardMaterial,
+    VertexData: VertexData,
+    Mesh: Mesh,
+    LineMesh: LinesMesh
 };
 
 window.WhoaScene = Scene.Get();
