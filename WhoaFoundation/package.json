@@ -2,8 +2,7 @@
     "name": "foundation",
     "scripts": {
         "dev": "rollup -c rollup.config.dev.js",
-        "build": "rollup -c rollup.config.prod.js",
-        "test": "jest"
+        "build": "rollup -c rollup.config.prod.js"
     },
     "type": "module",
     "dependencies": {
