@@ -1,12 +1,11 @@
 import Entity from 'src/entities/Entity';
 import EntityManager from 'src/entities/EntityManager';
 import { EntityModelCreateInfo } from 'src/entities/EntityModel';
-import { Point2 } from 'src/math/Point';
 
 export default class Interaction {
     private static instance_: Interaction;
     private canvas_: HTMLCanvasElement;
-    private position_: Point2;
+    private position_: WhoaMath.Point2;
 
     private pointer_touched_: boolean;
     private pointer_moved_: boolean;
@@ -22,7 +21,7 @@ export default class Interaction {
 
     private constructor() {
         this.canvas_ = WhoaCanvas;
-        this.position_ = new Point2();
+        this.position_ = new WhoaMath.Point2();
         this.pointer_touched_ = false;
         this.pointer_moved_ = false;
         this.last_hover_ = undefined;

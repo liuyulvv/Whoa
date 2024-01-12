@@ -1,5 +1,3 @@
-import { Point2 } from 'src/math/Point';
-import { Vector2, Vector3 } from 'src/math/Vector';
 import Entity from './Entity';
 import EntityModel, { EntityModelCreateInfo } from './EntityModel';
 
@@ -80,8 +78,8 @@ export class EntityControlRotate2D extends EntityControl {
         if (this.entity_) {
             const position = WhoaScene.GetScreenPosition();
             const origin = WhoaScene.WorldToScreen(this.entity_.GetPosition());
-            const start = Vector2.FromPoint2(<Point2>this.start_position_2D_.Subtract(origin));
-            const now = Vector2.FromPoint2(<Point2>position.Subtract(origin));
+            const start = WhoaMath.Vector2.FromPoint2(<WhoaMath.Point2>this.start_position_2D_.Subtract(origin));
+            const now = WhoaMath.Vector2.FromPoint2(<WhoaMath.Point2>position.Subtract(origin));
             this.start_position_2D_ = position;
             const direction = start.x * now.y - start.y * now.x > 0 ? -1 : 1;
             const radian = start.GetRadianBetween(now) * direction;
@@ -95,9 +93,11 @@ export class EntityControlRotate2D extends EntityControl {
     public RotateLocalY(radian: number): void {
         if (this.entity_) {
             const position = this.entity_.GetPosition();
-            this.mesh_
-                .GetMesh()
-                .rotateAround(new Vector3(position.x, position.y, position.z), new Vector3(0, 0, 1), radian);
+            this.mesh_.RotateAround(
+                new WhoaMath.Vector3(position.x, position.y, position.z),
+                new WhoaMath.Vector3(0, 0, 1),
+                radian
+            );
         }
     }
 }

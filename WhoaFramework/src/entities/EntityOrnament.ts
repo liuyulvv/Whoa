@@ -1,5 +1,3 @@
-import { CameraMode } from 'src/babylon/Camera';
-import Scene from 'src/babylon/Scene';
 import FreeMove from 'src/interaction/FreeMove';
 import { EntityControlMove3D, EntityControlRotate2D, EntityControlRotate3D } from './EntityControl';
 import EntityModel, { EntityModelCreateInfo } from './EntityModel';
@@ -10,7 +8,7 @@ export default class EntityOrnament extends EntityModel {
     }
 
     public AttachControl(): void {
-        if (Scene.Get().GetCameraMode() == CameraMode.MODE_2D) {
+        if (WhoaScene.GetCameraMode() == Whoa3D.CameraMode.MODE_2D) {
             EntityControlRotate2D.Get().Attach(this);
         } else {
             EntityControlRotate3D.Get().Attach(this);
