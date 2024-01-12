@@ -1,10 +1,10 @@
 const modules = [
     './WhoaFoundation.js',
     './WhoaUI.js',
+    './WhoaKernel.js',
     './WhoaFramework.js',
-    './WhoaHouse.js',
     './WhoaGeometry.js',
-    './WhoaGeneral.js'
+    './WhoaHouse.js'
 ];
 
 async function Load() {
