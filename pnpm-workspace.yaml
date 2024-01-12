@@ -1,10 +1,10 @@
 packages:
     - 'server'
     - 'WhoaFoundation'
+    - 'WhoaKernel'
     - 'WhoaUI'
     - 'WhoaFramework'
-    - 'WhoaHouse'
-    - 'WhoaGeneral'
     - 'WhoaGeometry'
+    - 'WhoaHouse'
     - 'entry'
     - 'assets'
