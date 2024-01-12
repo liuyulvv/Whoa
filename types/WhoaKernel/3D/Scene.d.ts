@@ -1,5 +1,6 @@
 /// <reference path="../math/Point.d.ts" />
 /// <reference path="CameraMode.d.ts" />
+/// <reference path="Mesh.d.ts" />
 
 declare namespace Whoa3D {
     export interface PickInfo {
@@ -16,6 +17,7 @@ declare namespace Whoa3D {
         public SetEntityHoverColor(): void;
         public SetEntitySelectColor(): void;
         public PickEntity(): PickInfo;
+        ImportMeshAsync(url: string, name: string, id: string): Promise<Mesh | undefined>;
     }
 }
 

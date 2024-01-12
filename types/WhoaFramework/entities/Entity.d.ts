@@ -1,8 +1,8 @@
 /// <reference path="EntityRole.d.ts" />
 /// <reference path="EntityType.d.ts" />
-/// <reference path="../math/Point.d.ts" />
-/// <reference path="../3D/Mesh.d.ts" />
-/// <reference path="../3D/StandardMaterial.d.ts" />
+/// <reference path="../../WhoaKernel/math/Point.d.ts" />
+/// <reference path="../../WhoaKernel/3D/Mesh.d.ts" />
+/// <reference path="../../WhoaKernel/3D/StandardMaterial.d.ts" />
 
 declare namespace WhoaFramework {
     export class EntityCreateInfo {

@@ -1,3 +1,5 @@
+/// <reference path="Mesh.d.ts" />
+
 declare namespace Whoa3D {
     export class VertexData {
         public SetVertices(vertices: Array<number>): void;

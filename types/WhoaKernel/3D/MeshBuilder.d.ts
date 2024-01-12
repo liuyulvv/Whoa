@@ -1,3 +1,8 @@
+/// <reference path="./Mesh.d.ts" />
+/// <reference path="./LineMesh.d.ts" />
+/// <reference path="../math/Vector.d.ts" />
+/// <reference path="../math/Color.d.ts" />
+
 declare namespace Whoa3D {
     export class MeshBuilder {
         public static CreateBox(
@@ -7,11 +12,11 @@ declare namespace Whoa3D {
                 width?: number;
                 height?: number;
                 depth?: number;
-                faceUV?: Vector4[];
-                faceColors?: Color4[];
+                faceUV?: WhoaMath.Vector4[];
+                faceColors?: WhoaMath.Color4[];
                 sideOrientation?: number;
-                frontUVs?: Vector4;
-                backUVs?: Vector4;
+                frontUVs?: WhoaMath.Vector4;
+                backUVs?: WhoaMath.Vector4;
                 wrap?: boolean;
                 topBaseAt?: number;
                 bottomBaseAt?: number;
@@ -22,14 +27,12 @@ declare namespace Whoa3D {
         public static CreateLines(
             name: string,
             options: {
-                points: Vector3[];
+                points: WhoaMath.Vector3[];
                 updatable?: boolean;
-                instance?: Nullable<LinesMesh>;
-                colors?: Color4[];
+                instance?: Mesh;
+                colors?: WhoaMath.Color4[];
                 useVertexAlpha?: boolean;
-                material?: Material;
-            },
-            scene?: Nullable<Scene>
-        ): LinesMesh;
+            }
+        ): LineMesh;
     }
 }

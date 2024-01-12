@@ -1,3 +1,5 @@
+/// <reference path="./Vector.d.ts" />
+
 declare namespace WhoaMath {
     export class Matrix {
         public constructor();

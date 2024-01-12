@@ -1,4 +1,4 @@
-/// <reference path="../../WhoaFramework/math/Vector.d.ts" />
+/// <reference path="../../WhoaKernel/math/Vector.d.ts" />
 
 declare namespace WhoaGeometry {
     export class EarcutResult {

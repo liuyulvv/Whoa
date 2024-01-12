@@ -1,5 +1,5 @@
 /// <reference path="../../WhoaFramework/entities/Entity.d.ts" />
-/// <reference path="../../WhoaFramework/math/Vector.d.ts" />
+/// <reference path="../../WhoaKernel/math/Vector.d.ts" />
 
 declare namespace WhoaHouse {
     export class EntityWallCreateInfo extends WhoaFramework.EntityCreateInfo {
