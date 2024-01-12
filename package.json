@@ -12,8 +12,8 @@
         "WhoaFoundation",
         "WhoaUI",
         "WhoaKernel",
-        "WhoaFramework",
         "WhoaGeometry",
+        "WhoaFramework",
         "WhoaHouse",
         "entry",
         "assets"

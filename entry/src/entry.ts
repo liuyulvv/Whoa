@@ -2,8 +2,8 @@ const modules = [
     './WhoaFoundation.js',
     './WhoaUI.js',
     './WhoaKernel.js',
-    './WhoaFramework.js',
     './WhoaGeometry.js',
+    './WhoaFramework.js',
     './WhoaHouse.js'
 ];
 
