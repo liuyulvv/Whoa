@@ -103,7 +103,7 @@ export default class CreateWallByLine {
         } else {
             this.wall_mid_line_ = Whoa3D.MeshBuilder.CreateLines(this.wall_mid_line_.GetID(), {
                 points: [start, end],
-                instance: this.wall_mid_line_.GetMesh()
+                instance: this.wall_mid_line_
             });
             this.wall_mid_line_!.SetColor(new WhoaMath.Color3(1, 0, 0));
         }
