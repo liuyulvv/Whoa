@@ -1,0 +1,17 @@
+{
+    "name": "kernel",
+    "scripts": {
+        "dev": "rollup -c rollup.config.dev.js",
+        "build": "rollup -c rollup.config.prod.js"
+    },
+    "type": "module",
+    "dependencies": {
+        "@babylonjs/core": "^6.22.1",
+        "@babylonjs/loaders": "^6.24.0",
+        "@babylonjs/materials": "^6.22.1",
+        "uuid": "^9.0.1"
+    },
+    "devDependencies": {
+        "@types/uuid": "^9.0.4"
+    }
+}
