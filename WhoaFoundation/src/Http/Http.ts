@@ -7,7 +7,7 @@ export default class Http {
     private constructor() {
         this.http_ = axios.create({
             // baseURL: 'https://liuyulvv.com/whoa/api/'
-            baseURL: 'http_://localhost:8080'
+            baseURL: 'http://localhost:8080'
         });
     }
 

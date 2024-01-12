@@ -1,3 +1,5 @@
+import commonjs from '@rollup/plugin-commonjs';
+import json from '@rollup/plugin-json';
 import resolve from '@rollup/plugin-node-resolve';
 import terser from '@rollup/plugin-terser';
 import typescript from '@rollup/plugin-typescript';
@@ -10,6 +12,6 @@ export default [
             format: 'es',
             sourcemap: true
         },
-        plugins: [resolve(), terser(), typescript({ module: 'ESNext' })]
+        plugins: [commonjs(), json(), resolve(), terser(), typescript({ module: 'ESNext' })]
     }
 ];
