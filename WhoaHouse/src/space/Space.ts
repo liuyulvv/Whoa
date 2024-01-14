@@ -33,7 +33,12 @@ export default class Space {
         return this.ground_;
     }
 
+    public GetRoof(): Roof {
+        return this.roof_;
+    }
+
     public Destroy(): void {
         this.ground_.Destroy();
+        this.roof_.Destroy();
     }
 }

@@ -20,7 +20,9 @@ export default class SpaceManager {
         const space = new Space(points, layer_height);
         this.spaces_.set(space.GetID(), space);
         const ground = space.GetGround();
+        const roof = space.GetRoof();
         WhoaFramework.EntityManager.Get().AddEntity(ground.GetID(), ground);
+        WhoaFramework.EntityManager.Get().AddEntity(roof.GetID(), roof);
     }
 
     public Clear(): void {
