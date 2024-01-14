@@ -15,9 +15,11 @@
         "POINTERWHEEL",
         "Sider",
         "Skybox",
+        "Topo",
         "Unproject",
         "unsub",
         "vcpkg",
+        "wireframe",
         "zustand"
     ],
     "files.associations": {
