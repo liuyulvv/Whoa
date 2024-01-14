@@ -175,7 +175,19 @@ export default class Scene {
     }
 
     public PickEntity(): PickInfo {
-        const babylon_pick_info = this.scene_.pick(this.scene_.pointerX, this.scene_.pointerY);
+        const babylon_pick_info = this.scene_.pick(
+            this.scene_.pointerX,
+            this.scene_.pointerY,
+            undefined,
+            false,
+            undefined,
+            (p0, p1, p2, ray) => {
+                const p0_p1 = p0.subtract(p1);
+                const p2_p1 = p2.subtract(p1);
+                const normal = Vector3.Cross(p0_p1, p2_p1);
+                return Vector3.Dot(ray.direction, normal) < 0;
+            }
+        );
         const pick_info: PickInfo = {
             hit_: babylon_pick_info.hit,
             mesh_id_: babylon_pick_info.pickedMesh ? babylon_pick_info.pickedMesh.id : ''
