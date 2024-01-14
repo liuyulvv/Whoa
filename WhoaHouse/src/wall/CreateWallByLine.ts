@@ -1,6 +1,7 @@
 import Wall, { WallCreateInfo } from 'src/entities/Wall';
 import SpaceUtil from 'src/space/SpaceUtil';
 import { v4 as uuid } from 'uuid';
+import CreateWallUtil from './CreateWallUtil';
 import WallManager from './EntityWallManager';
 
 enum CreateStatus {
@@ -18,10 +19,10 @@ export default class CreateWallByLine {
     private wall_mesh_: Whoa3D.Mesh | undefined;
     private wall_mesh_material_: Whoa3D.StandardMaterial;
 
-    private orthogonal_: boolean = true;
-    private radian_: number = 0;
-    private wall_width_: number = 240;
-    private wall_height_: number = 2800;
+    private orthogonal_: boolean;
+    private radian_: number;
+    private wall_width_: number;
+    private wall_height_: number;
 
     private bind_pointer_move_: (event: PointerEvent) => void;
     private bind_pointer_up_: (event: PointerEvent) => void;
@@ -37,10 +38,16 @@ export default class CreateWallByLine {
         this.end_ = new WhoaMath.Point3(0, 0, 0);
         this.wall_mesh_material_ = new Whoa3D.StandardMaterial(uuid());
         this.wall_mesh_material_.SetEmissiveColor(new WhoaMath.Color3(1, 1, 1));
+        this.orthogonal_ = true;
+        this.radian_ = 0;
+        this.wall_width_ = CreateWallUtil.Get().GetWallWidth();
+        this.wall_height_ = CreateWallUtil.Get().GetWallHeight();
+
         this.bind_pointer_move_ = this.OnPointerMove.bind(this);
         this.bind_pointer_up_ = this.OnPointerUp.bind(this);
         this.bind_key_up_ = this.OnKeyUp.bind(this);
         this.RegisterEvent();
+
         this.all_walls_ = new Array<Wall>();
         this.wall_vector_points_ = new WhoaGeometrySpace.vector_string();
     }
@@ -239,8 +246,7 @@ export default class CreateWallByLine {
                 points += wall_points[2].x.toString() + ' ' + wall_points[2].y + ' ';
                 points += wall_points[3].x.toString() + ' ' + wall_points[3].y;
                 this.wall_vector_points_.push_back(points);
-                // this.GetSpace();
-                SpaceUtil.GetSpace(this.wall_vector_points_);
+                SpaceUtil.Get().GetSpace(this.wall_vector_points_);
             }
         } else if (WhoaFramework.PointerButton.RIGHT == event.button) {
             this.status_ = CreateStatus.START;
