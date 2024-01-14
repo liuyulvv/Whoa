@@ -48,22 +48,5 @@ declare namespace Whoa3D {
                 updatable?: boolean;
             }
         ): Mesh;
-
-        public static CreatePolygon(
-            name: string,
-            options: {
-                shape: Vector3[];
-                holes?: Vector3[][];
-                depth?: number;
-                smoothingThreshold?: number;
-                faceUV?: Vector4[];
-                faceColors?: Color4[];
-                updatable?: boolean;
-                sideOrientation?: number;
-                frontUVs?: Vector4;
-                backUVs?: Vector4;
-                wrap?: boolean;
-            }
-        ): Mesh;
     }
 }
