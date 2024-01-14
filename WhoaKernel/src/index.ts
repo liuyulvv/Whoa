@@ -1,14 +1,15 @@
+import BoundingBox from './3D/BoundingBox';
 import { CameraMode, LayerMask } from './3D/Camera';
 import Mesh from './3D/Mesh';
 import MeshBuilder from './3D/MeshBuilder';
 import Scene from './3D/Scene';
 import StandardMaterial from './3D/StandardMaterial';
-import VertexData from './3D/VertexData';
+import VertexData, { SideOrientation } from './3D/VertexData';
 import { Color3, Color4 } from './math/Color';
 import { Matrix } from './math/Matrix';
 import { Point2, Point3 } from './math/Point';
+import { Clamp, DegreesToRadians, RadiansToDegrees } from './math/Util';
 import { Vector2, Vector3, Vector4 } from './math/Vector';
-import BoundingBox from './3D/BoundingBox';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 (<any>window).WhoaGeometryUtilModule().then((module: any) => {
@@ -31,7 +32,10 @@ import BoundingBox from './3D/BoundingBox';
     Vector2: Vector2,
     Vector3: Vector3,
     Vector4: Vector4,
-    Matrix: Matrix
+    Matrix: Matrix,
+    Clamp: Clamp,
+    DegreesToRadians: DegreesToRadians,
+    RadiansToDegrees: RadiansToDegrees
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -42,6 +46,7 @@ import BoundingBox from './3D/BoundingBox';
     MeshBuilder: MeshBuilder,
     StandardMaterial: StandardMaterial,
     VertexData: VertexData,
+    SideOrientation: SideOrientation,
     Mesh: Mesh,
     BoundingBox: BoundingBox
 };

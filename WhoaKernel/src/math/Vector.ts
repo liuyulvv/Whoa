@@ -122,6 +122,14 @@ export class Vector3 extends BabylonVector3 {
     public static FromBabylonVector3(vector: BabylonVector3): Vector3 {
         return new Vector3(vector.x, vector.y, vector.z);
     }
+
+    public static Min(vector1: Vector3, vector2: Vector3): Vector3 {
+        return BabylonVector3.Minimize(vector1, vector2);
+    }
+
+    public static Max(vector1: Vector3, vector2: Vector3): Vector3 {
+        return BabylonVector3.Maximize(vector1, vector2);
+    }
 }
 
 export class Vector4 extends BabylonVector4 {

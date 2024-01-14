@@ -57,6 +57,10 @@ export default class Mesh {
         return this.mesh_.getChildMeshes();
     }
 
+    public ComputeWorldMatrix(force: boolean = false): void {
+        this.mesh_.computeWorldMatrix(force);
+    }
+
     public GetBoundingInfo() {
         return this.mesh_.getBoundingInfo();
     }
@@ -124,5 +128,21 @@ export default class Mesh {
 
     public GetMesh(): BabylonMesh {
         return this.mesh_;
+    }
+
+    public SetParent(parent: Mesh): void {
+        this.mesh_.setParent(parent.GetMesh());
+    }
+
+    public RefreshBoundingInfo(): void {
+        this.mesh_.refreshBoundingInfo();
+    }
+
+    public UpdateVertices(vertices: Array<number>): void {
+        this.mesh_.setVerticesData('position', vertices);
+    }
+
+    public UpdateIndices(indices: Array<number>): void {
+        this.mesh_.setIndices(indices);
     }
 }

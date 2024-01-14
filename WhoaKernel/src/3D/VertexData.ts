@@ -1,6 +1,12 @@
 import { VertexData as BabylonVertexData } from '@babylonjs/core';
 import Mesh from './Mesh';
 
+export enum SideOrientation {
+    FRONT = BabylonVertexData.BACKSIDE,
+    BACK = BabylonVertexData.FRONTSIDE,
+    DOUBLE = BabylonVertexData.DOUBLESIDE
+}
+
 export default class VertexData extends BabylonVertexData {
     public constructor() {
         super();
