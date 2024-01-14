@@ -1,7 +1,7 @@
 import Wall, { WallCreateInfo } from 'src/entities/Wall';
 import SpaceUtil from 'src/space/SpaceUtil';
 import { v4 as uuid } from 'uuid';
-import WallManager from './WallManager';
+import WallManager from './EntityWallManager';
 
 enum CreateStatus {
     START,

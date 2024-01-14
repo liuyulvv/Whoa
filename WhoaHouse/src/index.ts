@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import CreateWallByLine from './wall/CreateWallByLine';
-import WallManager from './wall/WallManager';
+import WallManager from './wall/EntityWallManager';
 
 const create_wall_by_line = CreateWallByLine.Get();
 
