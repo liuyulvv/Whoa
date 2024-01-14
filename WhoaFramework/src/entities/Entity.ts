@@ -8,8 +8,15 @@ export class EntityCreateInfo {
     movable_: boolean = true;
 }
 
-export default abstract class Entity {
+export default class Entity {
     protected id_: string;
+
+    protected mesh_: Whoa3D.Mesh;
+    protected material_: Whoa3D.StandardMaterial;
+    protected bounding_box_: Whoa3D.BoundingBox;
+
+    public name_: string;
+
     protected role_: WhoaFramework.EntityRole;
     protected type_: WhoaFramework.EntityType;
     protected hovered_: boolean;
@@ -18,13 +25,18 @@ export default abstract class Entity {
     protected pickable_: boolean;
     protected movable_: boolean;
 
-    protected mesh_: Whoa3D.Mesh;
-    protected material_: Whoa3D.StandardMaterial;
-
-    protected bounding_box_: Whoa3D.BoundingBox;
+    protected parent_: Entity;
 
     public constructor(id: string, info?: EntityCreateInfo) {
         this.id_ = id;
+
+        this.mesh_ = new Whoa3D.Mesh(this.id_);
+        this.material_ = new Whoa3D.StandardMaterial(this.id_);
+        this.material_.SetEmissiveColor(new WhoaMath.Color3(0.10196078431372549, 0.9215686274509803, 1));
+        this.mesh_.SetMaterial(this.material_);
+        this.bounding_box_ = new Whoa3D.BoundingBox();
+        this.name_ = this.id_;
+
         this.role_ = WhoaFramework.EntityRole.ROOT;
         this.type_ = WhoaFramework.EntityType.NONE;
         this.hovered_ = false;
@@ -32,6 +44,8 @@ export default abstract class Entity {
         this.visible_ = true;
         this.pickable_ = true;
         this.movable_ = true;
+
+        this.parent_ = this;
 
         if (info) {
             this.role_ = info.role_;
@@ -42,13 +56,7 @@ export default abstract class Entity {
             this.pickable_ = info.pickable_;
             this.movable_ = info.movable_;
         }
-
-        this.mesh_ = new Whoa3D.Mesh(this.id_);
-        this.mesh_.SetLayerMask(Whoa3D.LayerMask.BOTH);
-        this.material_ = new Whoa3D.StandardMaterial(this.id_);
-        this.material_.SetEmissiveColor(new WhoaMath.Color3(0.10196078431372549, 0.9215686274509803, 1));
-        this.mesh_.SetMaterial(this.material_);
-        this.bounding_box_ = new Whoa3D.BoundingBox();
+        this.ComputeWorldMatrix(true);
         this.UpdateBoundingBox();
     }
 
@@ -109,14 +117,26 @@ export default abstract class Entity {
         return this.mesh_.GetPosition();
     }
 
-    public Show(): void {
-        this.mesh_.Show();
-        this.visible_ = true;
+    public GetBoundingBox(): Whoa3D.BoundingBox {
+        this.UpdateBoundingBox();
+        return this.bounding_box_;
     }
 
-    public Hide(): void {
-        this.mesh_.Hide();
-        this.visible_ = false;
+    public ComputeWorldMatrix(force: boolean = false): void {
+        this.mesh_.ComputeWorldMatrix(force);
+    }
+
+    public UpdateBoundingBox(): void {
+        this.mesh_.RefreshBoundingInfo();
+        this.bounding_box_ = new Whoa3D.BoundingBox(this.mesh_.GetBoundingInfo());
+    }
+
+    public ShowBoundingBox(): void {
+        this.mesh_.ShowBoundingBox();
+    }
+
+    public HideBoundingBox(): void {
+        this.mesh_.HideBoundingBox();
     }
 
     public SetOverlayColor(color: WhoaMath.Color4): void {
@@ -131,27 +151,26 @@ export default abstract class Entity {
         this.mesh_.HideOverlay();
     }
 
+    public UpdateMesh(mesh: Whoa3D.Mesh): void {
+        this.mesh_ = mesh;
+        this.ComputeWorldMatrix(true);
+        this.UpdateBoundingBox();
+    }
+
+    public Show(): void {
+        this.mesh_.Show();
+        this.visible_ = true;
+    }
+
+    public Hide(): void {
+        this.mesh_.Hide();
+        this.visible_ = false;
+    }
+
     public Destroy(): void {
         this.mesh_.Dispose();
         this.material_.Dispose();
         WhoaFramework.EntityManager.Get().DestroyEntityByID(this.id_);
-    }
-
-    public GetBoundingBox(): Whoa3D.BoundingBox {
-        this.UpdateBoundingBox();
-        return this.bounding_box_;
-    }
-
-    public UpdateBoundingBox(): void {
-        this.bounding_box_ = new Whoa3D.BoundingBox(this.mesh_.GetBoundingInfo());
-    }
-
-    public ShowBoundingBox(): void {
-        this.mesh_.ShowBoundingBox();
-    }
-
-    public HideBoundingBox(): void {
-        this.mesh_.HideBoundingBox();
     }
 
     public OnEnter(): void {
@@ -170,9 +189,9 @@ export default abstract class Entity {
         }
     }
 
-    public OnSelect(selected: boolean = true) {
+    public OnSelect(selected: boolean): void {
         if (this.selected_ != selected) {
-            this.selected_ = selected;
+            this.SetSelect(selected);
             if (this.selected_) {
                 WhoaScene.SetEntitySelectColor();
                 this.ShowBoundingBox();
@@ -183,6 +202,10 @@ export default abstract class Entity {
                 this.HideBoundingBox();
             }
         }
+    }
+
+    public SetSelect(selected: boolean): void {
+        this.selected_ = selected;
     }
 
     public OnDragStart(): void {}
@@ -213,5 +236,22 @@ export default abstract class Entity {
 
     public Translate(x: number, y: number, z: number, relative: boolean = true): void {
         this.mesh_.Translate(x, y, z, relative);
+    }
+
+    public SetPosition(position: WhoaMath.Vector3): void {
+        this.mesh_.SetPosition(position);
+    }
+
+    public GetParent(): Entity {
+        return this.parent_;
+    }
+
+    public SetParent(parent: Entity): void {
+        this.mesh_.SetParent(parent.mesh_);
+        this.parent_ = parent;
+    }
+
+    public SetMaterial(material: Whoa3D.StandardMaterial): void {
+        this.mesh_.SetMaterial(material);
     }
 }

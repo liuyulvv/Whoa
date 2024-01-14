@@ -22,7 +22,7 @@ export default class EntityOrnament extends EntityModel {
         EntityControlMove3D.Get().Detach();
     }
 
-    public OnSelect(selected?: boolean): void {
+    public OnSelect(selected: boolean): void {
         super.OnSelect(selected);
         if (selected) {
             FreeMove.Get().Attach(this);

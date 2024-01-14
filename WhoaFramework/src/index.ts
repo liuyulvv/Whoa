@@ -1,4 +1,5 @@
 import Entity, { EntityCreateInfo } from './entities/Entity';
+import EntityGroup from './entities/EntityGroup';
 import EntityManager from './entities/EntityManager';
 import EntityModel from './entities/EntityModel';
 import EntityRole from './entities/EntityRole';
@@ -12,6 +13,7 @@ import { PointerButton } from './utils/Pointer';
     EntityType: EntityType,
     EntityCreateInfo: EntityCreateInfo,
     Entity: Entity,
+    EntityGroup: EntityGroup,
     EntityModel: EntityModel,
     EntityManager: EntityManager,
     PointerButton: PointerButton
