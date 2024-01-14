@@ -1,6 +1,12 @@
 /// <reference path="Mesh.d.ts" />
 
 declare namespace Whoa3D {
+    export enum SideOrientation {
+        FRONT,
+        BACK,
+        DOUBLE
+    }
+
     export class VertexData {
         public SetVertices(vertices: Array<number>): void;
 

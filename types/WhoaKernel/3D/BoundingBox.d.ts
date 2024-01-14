@@ -18,5 +18,9 @@ declare namespace Whoa3D {
         public Bottom(): Array<WhoaMath.Vector3>;
 
         public Top(): Array<WhoaMath.Vector3>;
+
+        public Clone(): BoundingBox;
+
+        public static Merge(bound_box_1: BoundingBox, bound_box_2: BoundingBox): BoundingBox;
     }
 }

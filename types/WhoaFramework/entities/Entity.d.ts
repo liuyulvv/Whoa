@@ -15,8 +15,15 @@ declare namespace WhoaFramework {
         movable_: boolean;
     }
 
-    export abstract class Entity {
+    export class Entity {
         protected id_: string;
+
+        protected mesh_: Whoa3D.Mesh;
+        protected material_: Whoa3D.StandardMaterial;
+        protected bounding_box_: Whoa3D.BoundingBox;
+
+        public name_: string;
+
         protected role_: EntityRole;
         protected type_: EntityType;
         protected hovered_: boolean;
@@ -25,15 +32,12 @@ declare namespace WhoaFramework {
         protected pickable_: boolean;
         protected movable_: boolean;
 
-        protected mesh_: Whoa3D.Mesh;
-        protected material_: Whoa3D.StandardMaterial;
-
-        protected bounding_box_: BoundingBox;
+        protected parent_: Entity;
 
         public constructor(id: string, info?: EntityCreateInfo);
 
         public GetID(): string;
-        public SetID(id_: string);
+        public SetID(id_: string): void;
         public GetRole(): EntityRole;
         public SetRole(role: EntityRole);
         public GetType(): EntityType;
@@ -46,26 +50,34 @@ declare namespace WhoaFramework {
         public IsMovable(): boolean;
         public SetMovable(movable: boolean);
         public GetPosition(): WhoaMath.Point3;
-        public Show(): void;
-        public Hide(): void;
-        public ShowOverlay(): void;
-        public HideOverlay(): void;
-        public Destroy(): void;
-        public GetBoundingBox(): BoundingBox;
+        public GetBoundingBox(): Whoa3D.BoundingBox;
+        public ComputeWorldMatrix(force?: boolean): void;
         public UpdateBoundingBox(): void;
         public ShowBoundingBox(): void;
         public HideBoundingBox(): void;
+        public SetOverlayColor(color: WhoaMath.Color4): void;
+        public ShowOverlay(): void;
+        public HideOverlay(): void;
+        public UpdateMesh(mesh: Whoa3D.Mesh): void;
+        public Show(): void;
+        public Hide(): void;
+        public Destroy(): void;
         public OnEnter(): void;
         public OnLeave(): void;
-        public OnSelect(selected: boolean = true);
+        public OnSelect(selected: boolean): void;
+        public SetSelect(selected: boolean): void;
         public OnDragStart(): void;
         public OnDrag(): void;
         public OnDragEnd(): void;
         public RotateLocalX(radian: number): void;
         public RotateLocalY(radian: number): void;
         public RotateLocalZ(radian: number): void;
-        public RotateAround(point: Vector3, axis: Vector3, radian: number): void;
-        public Scale(x: number, y: number, z: number, relative: boolean = true): void;
-        public Translate(x: number, y: number, z: number, relative: boolean = true): void;
+        public RotateAround(point: WhoaMath.Vector3, axis: WhoaMath.Vector3, radian: number): void;
+        public Scale(x: number, y: number, z: number, relative?: boolean /* true */): void;
+        public Translate(x: number, y: number, z: number, relative?: boolean /* true */): void;
+        public SetPosition(position: WhoaMath.Vector3): void;
+        public GetParent(): Entity;
+        public SetParent(parent: Entity): void;
+        public SetMaterial(material: Whoa3D.StandardMaterial): void;
     }
 }

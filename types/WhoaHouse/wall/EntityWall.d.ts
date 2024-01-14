@@ -10,9 +10,8 @@ declare namespace WhoaHouse {
         position_: WhoaFramework.Vector3;
     }
 
-    export class EntityWall {
-        public static Get(): EntityWall;
-
-        public UpdateEntityID(entity_id: string, newEntityID: string): void;
+    export class EntityWall extends WhoaFramework.EntityGroup {
+        // public static Get(): EntityWall;
+        // public UpdateEntityID(entity_id: string, newEntityID: string): void;
     }
 }

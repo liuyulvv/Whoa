@@ -23,6 +23,8 @@ declare namespace Whoa3D {
 
         public HideOverlay(): void;
 
+        public ComputeWorldMatrix(force: boolean = false): void;
+
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         public GetBoundingInfo(): any;
 
@@ -47,5 +49,13 @@ declare namespace Whoa3D {
         public Scale(x: number, y: number, z: number, relative: boolean = true): void;
 
         public Translate(x: number, y: number, z: number, relative: boolean = true): void;
+
+        public SetParent(parent: Mesh): void;
+
+        public RefreshBoundingInfo(): void;
+
+        public UpdateVertices(vertices: Array<number>): void;
+
+        public UpdateIndices(indices: Array<number>): void;
     }
 }

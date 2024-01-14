@@ -62,6 +62,10 @@ declare namespace WhoaMath {
         public static ToPoint3(vector: Vector3): Point3;
 
         public Clone(): Vector3;
+
+        public static Min(vector1: Vector3, vector2: Vector3): Vector3;
+
+        public static Max(vector1: Vector3, vector2: Vector3): Vector3;
     }
 
     export class Vector4 {
