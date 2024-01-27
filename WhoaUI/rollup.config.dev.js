@@ -2,6 +2,7 @@ import commonjs from '@rollup/plugin-commonjs';
 import json from '@rollup/plugin-json';
 import resolve from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
+import svgr from '@svgr/rollup';
 import copy from 'rollup-plugin-copy';
 import postcss from 'rollup-plugin-postcss';
 
@@ -20,6 +21,7 @@ export default {
         banner: GLOBAL
     },
     plugins: [
+        svgr(),
         resolve(),
         commonjs(),
         json(),

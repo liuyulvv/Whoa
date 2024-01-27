@@ -3,6 +3,7 @@ import json from '@rollup/plugin-json';
 import resolve from '@rollup/plugin-node-resolve';
 import terser from '@rollup/plugin-terser';
 import typescript from '@rollup/plugin-typescript';
+import svgr from '@svgr/rollup';
 import copy from 'rollup-plugin-copy';
 import postcss from 'rollup-plugin-postcss';
 
@@ -17,10 +18,10 @@ export default {
     output: {
         file: '../dist/script/WhoaUI.js',
         format: 'es',
-        sourcemap: true,
         banner: GLOBAL
     },
     plugins: [
+        svgr(),
         resolve(),
         commonjs(),
         terser(),
