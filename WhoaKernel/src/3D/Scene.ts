@@ -59,6 +59,8 @@ export default class Scene {
         ground_mesh_material.gridRatio = 1000;
         ground_mesh_material.useMaxLine = true;
         ground_mesh_material.opacity = 0.5;
+        ground_mesh_material.zOffset = 1;
+        ground_mesh_material.zOffsetUnits = 10;
         this.ground_mesh_.material = ground_mesh_material;
 
         this.engine_.runRenderLoop(() => {

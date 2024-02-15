@@ -35,6 +35,8 @@ export default class Mesh {
     }
 
     public SetOverlayColor(color: WhoaMath.Color4): void {
+        this.mesh_.overlayColor = new Color3(color.r, color.g, color.b);
+        this.mesh_.overlayAlpha = color.a;
         this.mesh_.getChildMeshes().forEach((mesh) => {
             mesh.overlayColor = new Color3(color.r, color.g, color.b);
             mesh.overlayAlpha = color.a;
@@ -42,12 +44,14 @@ export default class Mesh {
     }
 
     public ShowOverlay(): void {
+        this.mesh_.renderOverlay = true;
         this.mesh_.getChildMeshes().forEach((mesh) => {
             mesh.renderOverlay = true;
         });
     }
 
     public HideOverlay(): void {
+        this.mesh_.renderOverlay = false;
         this.mesh_.getChildMeshes().forEach((mesh) => {
             mesh.renderOverlay = false;
         });
