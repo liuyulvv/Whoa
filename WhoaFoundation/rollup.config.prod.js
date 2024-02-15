@@ -9,9 +9,8 @@ export default [
         input: 'src/index.ts',
         output: {
             file: '../dist/script/WhoaFoundation.js',
-            format: 'es',
-            sourcemap: true
+            format: 'es'
         },
-        plugins: [commonjs(), json(), resolve(), terser(), typescript({ module: 'ESNext' })]
+        plugins: [commonjs(), json(), resolve({ browser: true }), terser(), typescript({ module: 'ESNext' })]
     }
 ];

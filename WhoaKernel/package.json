@@ -9,9 +9,11 @@
         "@babylonjs/core": "^6.22.1",
         "@babylonjs/loaders": "^6.24.0",
         "@babylonjs/materials": "^6.22.1",
+        "earcut": "^2.2.4",
         "uuid": "^9.0.1"
     },
     "devDependencies": {
+        "@types/earcut": "^2.1.4",
         "@types/uuid": "^9.0.4"
     }
 }

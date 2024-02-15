@@ -7,8 +7,7 @@ export default [
         input: 'src/index.ts',
         output: {
             file: '../dist/script/WhoaFramework.js',
-            format: 'es',
-            sourcemap: true
+            format: 'es'
         },
         plugins: [resolve(), terser(), typescript({ module: 'ESNext' })],
         onwarn(warning, warn) {
