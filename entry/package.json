@@ -1,8 +1,8 @@
 {
     "name": "entry",
     "scripts": {
-        "dev": "rollup --config",
-        "build": "rollup --config"
+        "dev": "rollup -c rollup.config.dev.js",
+        "build": "rollup -c rollup.config.prod.js"
     },
     "type": "module"
 }
