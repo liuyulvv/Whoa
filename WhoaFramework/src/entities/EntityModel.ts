@@ -41,8 +41,8 @@ export default abstract class EntityModel extends Entity {
         }
         if (rotation.length == 3) {
             this.RotateLocalX(rotation[0]);
-            this.RotateLocalX(rotation[1]);
-            this.RotateLocalX(rotation[2]);
+            this.RotateLocalY(rotation[1]);
+            this.RotateLocalZ(rotation[2]);
         }
     }
 }

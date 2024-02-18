@@ -50,7 +50,6 @@ export class EntityControlRotate2D extends EntityControl {
         info.model_url_ = 'assets/models/';
         info.model_name_ = 'arrow_2D.glb';
         info.scale_ = [1000000, 1000000, 1000000];
-        info.rotation_ = [Math.PI / 2, 0, 0];
         super(entity_id, info);
     }
 
@@ -122,7 +121,6 @@ export class EntityControlRotate3D extends EntityControl3D {
         info.model_url_ = 'assets/models/';
         info.model_name_ = 'arrow_3D.glb';
         info.scale_ = [1000000, 1000000, 1000000];
-        info.rotation_ = [Math.PI / 2, 0, 0];
         super(entity_id, info);
     }
 
@@ -158,7 +156,6 @@ export class EntityControlMove3D extends EntityControl3D {
         info.model_url_ = 'assets/models/';
         info.model_name_ = 'arrow_move.glb';
         info.scale_ = [1000000, 1000000, 1000000];
-        info.rotation_ = [Math.PI / 2, 0, 0];
         super(entity_id, info);
     }
 

@@ -28,11 +28,10 @@ export class Camera2D {
     public constructor(engine: BabylonEngine, scene: BabylonScene) {
         this.engine_ = engine;
         this.scene_ = scene;
-        this.camera_ = new ArcRotateCamera('2D', Math.PI / 2, 0, 20000, Vector3.Zero(), this.scene_);
+        this.camera_ = new ArcRotateCamera('2D', -Math.PI / 2, 0, 20000, Vector3.Zero(), this.scene_);
         this.camera_.minZ = 1000;
         this.camera_.maxZ = 10000000;
         this.camera_.layerMask = LayerMask.ONLY_2D;
-        this.camera_.upVector = new Vector3(0, 0, 1);
         this.camera_.lowerBetaLimit = -20000;
         this.camera_.upperBetaLimit = 20000;
         this.camera_.lowerAlphaLimit = -20000;
@@ -88,11 +87,10 @@ export class Camera3D {
     public constructor(engine: BabylonEngine, scene: BabylonScene) {
         this.engine_ = engine;
         this.scene_ = scene;
-        this.camera_ = new ArcRotateCamera('3D', Math.PI / 2, Math.PI / 4, 30000, Vector3.Zero(), this.scene_);
+        this.camera_ = new ArcRotateCamera('3D', -Math.PI / 2, -Math.PI / 4, 30000, Vector3.Zero(), this.scene_);
         this.camera_.minZ = 1000;
         this.camera_.maxZ = 10000000;
         this.camera_.layerMask = LayerMask.ONLY_3D;
-        this.camera_.upVector = new Vector3(0, 0, 1);
     }
 
     public Attach(): void {

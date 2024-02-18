@@ -22,6 +22,6 @@ export default class Earcut {
             vertices.push(boundary[i].z);
         }
         const indices = earcut(input_vertices);
-        return new EarcutResult(vertices, indices.reverse());
+        return new EarcutResult(vertices, indices);
     }
 }

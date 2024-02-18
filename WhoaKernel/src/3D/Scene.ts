@@ -1,4 +1,5 @@
 import {
+    AxesViewer,
     Engine as BabylonEngine,
     Mesh as BabylonMesh,
     Scene as BabylonScene,
@@ -6,8 +7,7 @@ import {
     MeshBuilder,
     PointerEventTypes,
     PointerInfo,
-    SceneLoader,
-    VertexData
+    SceneLoader
 } from '@babylonjs/core';
 import '@babylonjs/loaders/glTF';
 import { GridMaterial } from '@babylonjs/materials';
@@ -36,8 +36,8 @@ export default class Scene {
         this.canvas_ = WhoaCanvas;
         this.engine_ = new BabylonEngine(this.canvas_);
         this.scene_ = new BabylonScene(this.engine_);
+        new AxesViewer(this.scene_, 1000);
         this.scene_.clearColor = new Color4(1.0, 1.0, 1.0, 1.0);
-        this.scene_.useRightHandedSystem = true;
         const helper = this.scene_.createDefaultEnvironment({
             environmentTexture: '/assets/env/environmentSpecular.env',
             createGround: false,
@@ -47,12 +47,9 @@ export default class Scene {
         this.camera_2D_ = new Camera2D(this.engine_, this.scene_);
         this.camera_3D_ = new Camera3D(this.engine_, this.scene_);
         this.EnableCameraInput();
-        this.ground_mesh_ = MeshBuilder.CreatePlane(
-            'ground',
-            { width: 1000000, height: 1000000, sideOrientation: VertexData.BACKSIDE },
-            this.scene_
-        );
+        this.ground_mesh_ = MeshBuilder.CreatePlane('ground', { width: 1000000, height: 1000000 }, this.scene_);
         this.ground_mesh_.isPickable = false;
+        this.ground_mesh_.rotate(new Vector3(1, 0, 0), Math.PI / 2);
         const ground_mesh_material = new GridMaterial('ground', this.scene_);
         ground_mesh_material.majorUnitFrequency = 1;
         ground_mesh_material.minorUnitVisibility = 0.5;
@@ -134,7 +131,7 @@ export default class Scene {
                 this.camera_2D_.GetViewport().toGlobal(this.engine_.getRenderWidth(), this.engine_.getRenderHeight())
             );
             res.x = project.x;
-            res.y = project.y;
+            res.y = project.z;
         } else {
             const project = Vector3.Project(
                 new Vector3(point.x, point.y, point.z),
@@ -143,7 +140,7 @@ export default class Scene {
                 this.camera_3D_.GetViewport().toGlobal(this.engine_.getRenderWidth(), this.engine_.getRenderHeight())
             );
             res.x = project.x;
-            res.y = project.y;
+            res.y = project.z;
         }
         return res;
     }

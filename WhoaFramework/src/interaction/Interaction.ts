@@ -92,7 +92,6 @@ export default class Interaction {
             create_info.model_url_ = 'assets/models/';
             create_info.model_name_ = 'deer.glb';
             create_info.scale_ = [30000, 30000, 30000];
-            create_info.rotation_ = [Math.PI / 2, 0, 0];
             EntityManager.Get().CreateOrnament(create_info);
         });
 
